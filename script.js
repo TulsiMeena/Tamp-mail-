@@ -509,6 +509,9 @@ function applyTilt() {
     const cards = document.querySelectorAll('.generator-card, .info-card-3d, .profile-card, .inbox-container');
 
     cards.forEach(card => {
+        // Skip tilt for Home section elements
+        if (card.closest('#home-section')) return;
+
         card.addEventListener('mousemove', (e) => {
             const rect = card.getBoundingClientRect();
             const x = e.clientX - rect.left;
