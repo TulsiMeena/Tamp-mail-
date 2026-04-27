@@ -3,15 +3,49 @@ let currentAccount = JSON.parse(localStorage.getItem('temp_mail_account'));
 let token = localStorage.getItem('temp_mail_token');
 let refreshInterval = null;
 
+// DOM Elements
 const emailInput = document.getElementById('email-address');
 const inboxList = document.getElementById('inbox-list');
 const messageView = document.getElementById('message-view');
 const msgIframe = document.getElementById('message-iframe');
 const statusText = document.getElementById('status');
+const navLinks = document.querySelectorAll('.nav-link, .nav-logo');
+const sections = document.querySelectorAll('.content-section');
+
+// SPA Routing
+function showSection(sectionId) {
+    sections.forEach(section => {
+        section.classList.add('hidden');
+    });
+    document.getElementById(`${sectionId}-section`).classList.remove('hidden');
+
+    // Update active nav link
+    document.querySelectorAll('.nav-link').forEach(link => {
+        if (link.dataset.section === sectionId) {
+            link.classList.add('active');
+        } else {
+            link.classList.remove('active');
+        }
+    });
+
+    // Reset message view if going to home
+    if (sectionId === 'home') {
+        messageView.classList.add('hidden');
+        document.querySelector('.inbox-section').classList.remove('hidden');
+    }
+}
+
+navLinks.forEach(link => {
+    link.addEventListener('click', (e) => {
+        e.preventDefault();
+        const sectionId = link.dataset.section;
+        showSection(sectionId);
+    });
+});
 
 // Helper to update status
 function updateStatus(text) {
-    statusText.textContent = text;
+    if (statusText) statusText.textContent = text;
 }
 
 // 1. Fetch available domains
@@ -81,7 +115,6 @@ async function fetchMessages() {
         });
 
         if (response.status === 401) {
-            // Token expired, try to get a new one
             await getToken();
             return fetchMessages();
         }
@@ -100,6 +133,7 @@ async function fetchMessages() {
 
 // 5. Render Inbox
 function renderInbox(messages) {
+    if (!inboxList) return;
     if (messages.length === 0) {
         inboxList.innerHTML = '<div class="empty-inbox">Your inbox is empty</div>';
         return;
@@ -146,11 +180,10 @@ async function viewMessage(id) {
 
         const content = msg.html ? msg.html[0] : (msg.text || 'No content');
 
-        // Use iframe with srcdoc for safety
         msgIframe.srcdoc = `
             <html>
                 <head>
-                    <style>body { font-family: sans-serif; line-height: 1.6; color: #333; }</style>
+                    <style>body { font-family: sans-serif; line-height: 1.6; color: #333; padding: 20px; }</style>
                 </head>
                 <body>${content}</body>
             </html>
@@ -185,24 +218,35 @@ document.getElementById('new-btn').onclick = () => {
 document.getElementById('copy-btn').onclick = async () => {
     try {
         await navigator.clipboard.writeText(emailInput.value);
-        const originalText = document.getElementById('copy-btn').textContent;
-        document.getElementById('copy-btn').textContent = 'Copied!';
+        const originalBtn = document.getElementById('copy-btn');
+        const originalHTML = originalBtn.innerHTML;
+        originalBtn.innerHTML = '<i class="fas fa-check"></i> Copied!';
         setTimeout(() => {
-            document.getElementById('copy-btn').textContent = originalText;
+            originalBtn.innerHTML = originalHTML;
         }, 2000);
     } catch (err) {
         console.error('Failed to copy: ', err);
     }
 };
 
+// Contact Form
+const contactForm = document.getElementById('contact-form');
+if (contactForm) {
+    contactForm.onsubmit = (e) => {
+        e.preventDefault();
+        alert('Thank you for your message! This is a demo form.');
+        contactForm.reset();
+    };
+}
+
 function startAutoRefresh() {
     if (refreshInterval) clearInterval(refreshInterval);
-    refreshInterval = setInterval(fetchMessages, 10000); // Every 10 seconds
+    refreshInterval = setInterval(fetchMessages, 10000);
 }
 
 // Initial Load
 if (currentAccount && token) {
-    emailInput.value = currentAccount.address;
+    if (emailInput) emailInput.value = currentAccount.address;
     fetchMessages();
     startAutoRefresh();
 } else {
