@@ -448,6 +448,11 @@ button:hover { transform: translateY(-5px) scale(1.05); }
 .info-card-3d h3 { font-size: 1.5rem; margin-bottom: 15px; }
 .info-card-3d p { color: var(--text-muted); line-height: 1.7; }
 
+.hiw-steps { display: flex; flex-direction: column; gap: 15px; margin-top: 15px; }
+.hiw-step { display: flex; align-items: center; gap: 15px; background: rgba(0,0,0,0.02); padding: 10px; border-radius: 12px; }
+.step-num { width: 24px; height: 24px; background: var(--primary); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: 900; }
+.hiw-step p { font-size: 0.85rem !important; margin: 0 !important; font-weight: 700; color: var(--text); }
+
 .benefit-list { list-style: none; margin-top: 15px; }
 .benefit-list li { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; font-weight: 600; }
 .benefit-list i { color: var(--success); font-size: 0.9rem; }

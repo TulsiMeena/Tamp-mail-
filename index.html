@@ -97,6 +97,7 @@
                             <div class="note-row">
                                 <input type="text" id="mailbox-note" placeholder="Add a note for this email...">
                                 <button id="save-note-btn" class="btn-primary"><i class="fas fa-save"></i></button>
+                                <button id="delete-mailbox-btn" class="btn-danger"><i class="fas fa-trash"></i></button>
                             </div>
                         </div>
 
@@ -115,9 +116,12 @@
                             <i class="fas fa-search"></i>
                             <input type="text" id="search-mail" placeholder="Search emails...">
                         </div>
-                        <div class="status-indicator">
-                            <span id="status-dot"></span>
-                            <span id="status-text">Syncing...</span>
+                        <div class="inbox-actions" style="display: flex; align-items: center; gap: 15px;">
+                            <button id="refresh-now-btn" class="btn-icon" title="Refresh Now"><i class="fas fa-sync"></i></button>
+                            <div class="status-indicator">
+                                <span id="status-dot"></span>
+                                <span id="status-text">Syncing...</span>
+                            </div>
                         </div>
                     </div>
                     <div id="inbox-list" class="inbox-list">
@@ -202,8 +206,25 @@
                     </div>
                     <div class="info-card-3d glass">
                         <div class="info-icon"><i class="fas fa-cogs"></i></div>
-                        <h3>How It Works</h3>
-                        <p>When you visit TempMail, we automatically generate a unique mailbox for you. Any email sent to this address appears instantly in your dashboard. After you close the tab or session, the data is eventually purged.</p>
+                        <h3 id="hiw-title">How It Works</h3>
+                        <div class="hiw-steps">
+                            <div class="hiw-step">
+                                <span class="step-num">1</span>
+                                <p id="step-1">Generate a unique address instantly.</p>
+                            </div>
+                            <div class="hiw-step">
+                                <span class="step-num">2</span>
+                                <p id="step-2">Use it on any site or app.</p>
+                            </div>
+                            <div class="hiw-step">
+                                <span class="step-num">3</span>
+                                <p id="step-3">Mails arrive in 1-2 seconds.</p>
+                            </div>
+                            <div class="hiw-step">
+                                <span class="step-num">4</span>
+                                <p id="step-4">Close the tab to purge data.</p>
+                            </div>
+                        </div>
                     </div>
                     <div class="info-card-3d glass">
                         <div class="info-icon"><i class="fas fa-shield-alt"></i></div>

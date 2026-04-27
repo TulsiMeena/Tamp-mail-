@@ -4,7 +4,7 @@ let currentAccount = JSON.parse(localStorage.getItem('temp_mail_account'));
 let token = localStorage.getItem('temp_mail_token');
 let refreshInterval = null;
 let domains = [];
-let timeLeft = 10;
+let timeLeft = 7;
 let lastMsgCount = 0;
 let allMessages = [];
 let readMessages = JSON.parse(localStorage.getItem('read_messages')) || [];
@@ -54,7 +54,8 @@ const translations = {
         h4: "Download your emails and attachments easily.",
         qr_t: "Scan QR Code", qr_p: "Scan this code to open this mailbox on your mobile device.",
         saved_label: "Saved Mailboxes:", note_ph: "Add a note for this email...",
-        tools: "Advanced Tools", export: "Export Backup", import: "Import Backup"
+        tools: "Advanced Tools", export: "Export Backup", import: "Import Backup",
+        hiw_t: "How It Works", s1: "Generate a unique address instantly.", s2: "Use it on any site or app.", s3: "Mails arrive in 1-2 seconds.", s4: "Close the tab to purge data."
     },
     hi: {
         home: "मुख्य", about: "हमारे बारे में", contact: "संपर्क", privacy: "गोपनीयता",
@@ -81,7 +82,8 @@ const translations = {
         h4: "अपने ईमेल और अटैचमेंट आसानी से डाउनलोड करें।",
         qr_t: "QR कोड स्कैन करें", qr_p: "अपने मोबाइल डिवाइस पर इस मेलबॉक्स को खोलने के लिए इस कोड को स्कैन करें।",
         saved_label: "सहेजे गए मेलबॉक्स:", note_ph: "इस ईमेल के लिए एक नोट जोड़ें...",
-        tools: "उन्नत टूल", export: "बैकअप एक्सपोर्ट करें", import: "बैकअप इम्पोर्ट करें"
+        tools: "उन्नत टूल", export: "बैकअप एक्सपोर्ट करें", import: "बैकअप इम्पोर्ट करें",
+        hiw_t: "यह कैसे काम करता है", s1: "तुरंत एक अद्वितीय पता जनरेट करें।", s2: "इसे किसी भी साइट या ऐप पर उपयोग करें।", s3: "मेल 1-2 सेकंड में आते हैं।", s4: "डेटा साफ़ करने के लिए टैब बंद करें।"
     }
 };
 
@@ -358,6 +360,13 @@ function updateUIText() {
     document.getElementById('help-4').textContent = t.h4;
     document.getElementById('qr-title').textContent = t.qr_t;
     document.getElementById('qr-desc').textContent = t.qr_p;
+
+    // Update HIW
+    document.getElementById('hiw-title').textContent = t.hiw_t;
+    document.getElementById('step-1').textContent = t.s1;
+    document.getElementById('step-2').textContent = t.s2;
+    document.getElementById('step-3').textContent = t.s3;
+    document.getElementById('step-4').textContent = t.s4;
     if (searchInput) searchInput.placeholder = currentLang === 'en' ? 'Search emails...' : 'ईमेल खोजें...';
 }
 
@@ -639,19 +648,19 @@ function updateExpiryTimer() {
 }
 
 function startAutoRefresh() {
-    timeLeft = 10;
+    timeLeft = 7;
     if (refreshInterval) clearInterval(refreshInterval);
 
     refreshInterval = setInterval(() => {
         timeLeft -= 0.1;
         if (timeLeft <= 0) {
-            timeLeft = 10;
+            timeLeft = 7;
             fetchMessages();
             updateExpiryTimer();
         }
 
         if (progressFill) {
-            const percent = (timeLeft / 10) * 100;
+            const percent = (timeLeft / 7) * 100;
             progressFill.style.width = `${percent}%`;
         }
         if (timerText) {
@@ -819,6 +828,31 @@ if ('serviceWorker' in navigator) {
         navigator.serviceWorker.register('./sw.js').catch(err => console.log('SW registration failed:', err));
     });
 }
+
+// Speed Up / Manual Refresh
+document.getElementById('refresh-now-btn').onclick = () => {
+    fetchMessages();
+    timeLeft = 7;
+    const btn = document.getElementById('refresh-now-btn');
+    btn.style.transform = 'rotate(360deg)';
+    setTimeout(() => btn.style.transform = 'rotate(0deg)', 500);
+};
+
+// Delete Mailbox
+document.getElementById('delete-mailbox-btn').onclick = () => {
+    if (accounts.length <= 1) {
+        alert('You must have at least one mailbox.');
+        return;
+    }
+    if (confirm('Delete this mailbox permanently?')) {
+        const index = accounts.findIndex(a => a.address === currentAccount.address);
+        if (index > -1) {
+            accounts.splice(index, 1);
+            localStorage.setItem('temp_mail_accounts', JSON.stringify(accounts));
+            switchAccount(accounts[0].address);
+        }
+    }
+};
 
 // Start
 init();
