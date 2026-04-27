@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="manifest" href="manifest.json">
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 </head>
 <body>
     <div class="glass-bg"></div>
@@ -62,8 +63,14 @@
 
                 <div class="generator-card glass">
                     <div class="generator-header">
-                        <span class="badge">Your Temp Address</span>
+                        <div class="badge-row">
+                            <div id="user-avatar" class="user-avatar"></div>
+                            <span class="badge">Your Temp Address</span>
+                        </div>
                         <div class="refresh-container">
+                            <div class="expiry-timer" id="expiry-box" title="Session Expiry">
+                                <i class="fas fa-clock"></i> <span id="expiry-timer">24h</span>
+                            </div>
                             <span id="refresh-timer">10s</span>
                             <div class="progress-bar">
                                 <div id="progress-fill"></div>
@@ -149,6 +156,39 @@
                         <div id="attachment-list" class="attachment-list hidden">
                             <h4><i class="fas fa-paperclip"></i> Attachments</h4>
                             <div id="attachments-container"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Preferences & Settings -->
+                <div class="preferences-card glass">
+                    <h3 id="pref-title">Experience Preferences</h3>
+                    <div class="pref-grid">
+                        <div class="pref-item">
+                            <label><i class="fas fa-volume-up"></i> <span id="pref-sound">New Mail Sound</span></label>
+                            <input type="checkbox" id="toggle-sound" checked>
+                        </div>
+                        <div class="pref-item">
+                            <label><i class="fas fa-magic"></i> <span id="pref-confetti">Confetti Effect</span></label>
+                            <input type="checkbox" id="toggle-confetti" checked>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Usage Analytics -->
+                <div class="analytics-row">
+                    <div class="stat-card glass">
+                        <i class="fas fa-envelope-open-text"></i>
+                        <div class="stat-info">
+                            <span id="stat-emails">0</span>
+                            <p id="stat-label-1">Total Emails Received</p>
+                        </div>
+                    </div>
+                    <div class="stat-card glass">
+                        <i class="fas fa-hourglass-half"></i>
+                        <div class="stat-info">
+                            <span id="stat-time">0m</span>
+                            <p id="stat-label-2">Time Saved (Est.)</p>
                         </div>
                     </div>
                 </div>

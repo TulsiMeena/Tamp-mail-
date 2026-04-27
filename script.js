@@ -25,6 +25,7 @@ const mailboxSelect = document.getElementById('mailbox-select');
 const customUsername = document.getElementById('custom-username');
 const searchInput = document.getElementById('search-mail');
 const mailboxNote = document.getElementById('mailbox-note');
+const userAvatar = document.getElementById('user-avatar');
 
 // Language Dictionary
 const translations = {
@@ -44,6 +45,8 @@ const translations = {
         team_title: "Meet the Team", student: "Student", developer: "Developer",
         exp: "Experience", followers: "Followers", posts: "Posts",
         contact_title: "Contact Technical Support", submit: "Submit Ticket",
+        stat1: "Total Emails Received", stat2: "Time Saved (Est.)",
+        pref_t: "Experience Preferences", pref_s: "New Mail Sound", pref_c: "Confetti Effect",
         help_title: "Welcome to TempMail Pro", help_got: "Got it!",
         h1: "Change theme colors using the picker in navbar.",
         h2: "Search your emails instantly using the search bar.",
@@ -56,7 +59,7 @@ const translations = {
     hi: {
         home: "मुख्य", about: "हमारे बारे में", contact: "संपर्क", privacy: "गोपनीयता",
         hero_title: "प्रोफेशनल टेम्प ईमेल",
-        hero_desc: "स्पैम, फ़िशिंग और ट्रैकिंग से अपने प्राथमिक इनबॉक्स को सुरक्षित रखने के लिए उन्नत डिस्पोजेबल ईमेल सेवा।",
+        hero_desc: "स्पैम, फ़िशिंग aur ट्रैकिंग से अपने प्राथमिक इनबॉक्स को सुरक्षित रखने के लिए उन्नत डिस्पोजेबल ईमेल सेवा।",
         badge: "आपका टेम्प एड्रेस", copy: "कॉपी", qr: "QR कोड", new: "नया",
         inbox_title: "आने वाले संदेश", syncing: "सिंक हो रहा है...", active: "सक्रिय",
         waiting: "आने वाले ईमेल की प्रतीक्षा कर रहे हैं...", back: "इनबॉक्स पर वापस",
@@ -69,6 +72,8 @@ const translations = {
         team_title: "टीम से मिलें", student: "छात्र", developer: "डेवलपर",
         exp: "अनुभव", followers: "फॉलोअर्स", posts: "पोस्ट",
         contact_title: "तकनीकी सहायता से संपर्क करें", submit: "टिकट जमा करें",
+        stat1: "कुल प्राप्त ईमेल", stat2: "बचाया गया समय (अनुमानित)",
+        pref_t: "अनुभव प्राथमिकताएं", pref_s: "नया मेल साउंड", pref_c: "कन्फ़ेटी प्रभाव",
         help_title: "TempMail Pro में आपका स्वागत है", help_got: "समझ गया!",
         h1: "नेवबार में पिकर का उपयोग करके थीम रंग बदलें।",
         h2: "सर्च बार का उपयोग करके अपने ईमेल तुरंत खोजें।",
@@ -85,6 +90,8 @@ let currentLang = localStorage.getItem('mail_lang') || 'en';
 // Initialize App
 async function init() {
     setupTheme();
+    updateAnalyticsUI();
+    updateExpiryTimer();
     setupColors();
     setupLang();
     setupNotifications();
@@ -146,9 +153,30 @@ function switchAccount(address) {
     localStorage.setItem('temp_mail_account', JSON.stringify(currentAccount));
     localStorage.setItem('temp_mail_token', token);
     if (emailInput) emailInput.value = currentAccount.address;
+    updateUserAvatar(currentAccount.address);
+    updateExpiryTimer();
     updateMailboxSwitcher();
     startAutoRefresh();
     fetchMessages();
+}
+
+function updateUserAvatar(email) {
+    if (!userAvatar) return;
+    const { color, initial } = getAvatarData(email);
+    userAvatar.style.backgroundColor = color;
+    userAvatar.textContent = initial;
+}
+
+function getAvatarData(email) {
+    if (!email) return { color: '#ccc', initial: '?' };
+    const colors = ['#6366f1', '#10b981', '#ef4444', '#ec4899', '#f59e0b', '#8b5cf6', '#06b6d4'];
+    let hash = 0;
+    for (let i = 0; i < email.length; i++) {
+        hash = email.charCodeAt(i) + ((hash << 5) - hash);
+    }
+    const color = colors[Math.abs(hash) % colors.length];
+    const initial = email.charAt(0).toUpperCase();
+    return { color, initial };
 }
 
 // Theme Toggle
@@ -262,6 +290,7 @@ function updateUIText() {
     if (badge) badge.textContent = t.badge;
     document.getElementById('copy-btn').innerHTML = `<i class="fas fa-copy"></i>`;
     document.getElementById('qr-btn').innerHTML = `<i class="fas fa-qrcode"></i> ${t.qr}`;
+    document.getElementById('share-btn').innerHTML = `<i class="fas fa-share-alt"></i>`;
     document.getElementById('new-btn').innerHTML = `<i class="fas fa-plus"></i> ${t.new}`;
 
     // Update Inbox
@@ -312,6 +341,13 @@ function updateUIText() {
     if (toolsTitle) toolsTitle.textContent = t.tools;
     document.getElementById('export-btn').innerHTML = `<i class="fas fa-file-export"></i> ${t.export}`;
     document.getElementById('import-btn').innerHTML = `<i class="fas fa-file-import"></i> ${t.import}`;
+
+    // Update Analytics Labels
+    document.getElementById('stat-label-1').textContent = t.stat1;
+    document.getElementById('stat-label-2').textContent = t.stat2;
+    document.getElementById('pref-title').textContent = t.pref_t;
+    document.getElementById('pref-sound').textContent = t.pref_s;
+    document.getElementById('pref-confetti').textContent = t.pref_c;
 
     // Update Help & QR
     document.getElementById('help-title').textContent = t.help_title;
@@ -395,7 +431,7 @@ async function createAccount() {
             return;
         }
 
-        currentAccount = { address, password };
+        currentAccount = { address, password, createdAt: Date.now() };
         await getToken();
 
         // Add to multi-account list
@@ -406,10 +442,12 @@ async function createAccount() {
 
         if (emailInput) {
             emailInput.value = address;
+            updateUserAvatar(address);
             await navigator.clipboard.writeText(address);
         }
         customUsername.value = '';
 
+        updateExpiryTimer();
         updateMailboxSwitcher();
         startAutoRefresh();
         updateStatus('Active', 'var(--success)');
@@ -457,7 +495,11 @@ function renderInbox(messages, isSearch = false) {
 
     if (!isSearch) {
         if (messages.length > lastMsgCount && lastMsgCount !== 0) {
-            notifyNewMail(messages[0].subject);
+            const newCount = messages.length - lastMsgCount;
+            if (newCount > 0) {
+                incrementAnalytics(newCount);
+                notifyNewMail(messages[0].subject);
+            }
         }
         lastMsgCount = messages.length;
     }
@@ -475,11 +517,15 @@ function renderInbox(messages, isSearch = false) {
     messages.forEach(msg => {
         const isUnread = !readMessages.includes(msg.id);
         const safetyScore = Math.random() > 0.3 ? 'safe' : 'warning';
+        const { color, initial } = getAvatarData(msg.from.address);
 
         const item = document.createElement('div');
         item.className = `message-item ${isUnread ? 'unread' : ''}`;
         item.innerHTML = `
-            <div class="item-main">
+            <div class="msg-avatar" style="background-color: ${color}; width: 35px; height: 35px; border-radius: 10px; display: flex; align-items: center; justify-content: center; color: white; font-weight: 800; font-size: 0.9rem; margin-right: 15px;">
+                ${initial}
+            </div>
+            <div class="item-main" style="flex: 1;">
                 <div class="from">
                     ${isUnread ? '<span class="unread-dot"></span>' : ''}
                     ${msg.from.address}
@@ -564,6 +610,32 @@ function notifyNewMail(subject) {
             icon: "https://cdn-icons-png.flaticon.com/512/281/281769.png"
         });
     }
+
+    if (document.getElementById('toggle-sound').checked) {
+        const audio = new Audio('https://assets.mixkit.co/active_storage/sfx/2358/2358-preview.mp3');
+        audio.play().catch(e => console.log('Audio blocked'));
+    }
+
+    if (document.getElementById('toggle-confetti').checked && typeof confetti === 'function') {
+        confetti({
+            particleCount: 100,
+            spread: 70,
+            origin: { y: 0.6 },
+            colors: [localStorage.getItem('mail_accent') || '#6366f1', '#a855f7', '#ffffff']
+        });
+    }
+}
+
+function updateExpiryTimer() {
+    if (!currentAccount || !currentAccount.createdAt) return;
+    const now = Date.now();
+    const life = 24 * 60 * 60 * 1000; // 24 hours
+    const elapsed = now - currentAccount.createdAt;
+    const remaining = Math.max(0, life - elapsed);
+
+    const h = Math.floor(remaining / 3600000);
+    const m = Math.floor((remaining % 3600000) / 60000);
+    document.getElementById('expiry-timer').textContent = `${h}h ${m}m`;
 }
 
 function startAutoRefresh() {
@@ -575,6 +647,7 @@ function startAutoRefresh() {
         if (timeLeft <= 0) {
             timeLeft = 10;
             fetchMessages();
+            updateExpiryTimer();
         }
 
         if (progressFill) {
@@ -724,6 +797,21 @@ document.getElementById('import-file').onchange = (e) => {
     };
     reader.readAsText(file);
 };
+
+// Analytics
+function incrementAnalytics(count) {
+    let total = parseInt(localStorage.getItem('total_emails')) || 0;
+    total += count;
+    localStorage.setItem('total_emails', total);
+    updateAnalyticsUI();
+}
+
+function updateAnalyticsUI() {
+    const total = parseInt(localStorage.getItem('total_emails')) || 0;
+    const time = total * 2; // 2 minutes per email
+    document.getElementById('stat-emails').textContent = total;
+    document.getElementById('stat-time').textContent = time >= 60 ? `${(time/60).toFixed(1)}h` : `${time}m`;
+}
 
 // Register Service Worker for PWA
 if ('serviceWorker' in navigator) {
