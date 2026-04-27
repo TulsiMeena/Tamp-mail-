@@ -292,3 +292,33 @@ if (contactForm) {
 
 // Start
 init();
+
+// --- Interactive 3D Tilt Effect ---
+function applyTilt() {
+    const cards = document.querySelectorAll('.generator-card, .info-card-3d, .profile-card, .inbox-container');
+
+    cards.forEach(card => {
+        card.addEventListener('mousemove', (e) => {
+            const rect = card.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+
+            const centerX = rect.width / 2;
+            const centerY = rect.height / 2;
+
+            const rotateX = (y - centerY) / 20;
+            const rotateY = (centerX - x) / 20;
+
+            card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-5px)`;
+            card.style.boxShadow = `${(centerX - x) / 10}px ${(centerY - y) / 10}px 30px rgba(0,0,0,0.2), var(--glow)`;
+        });
+
+        card.addEventListener('mouseleave', () => {
+            card.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) translateY(0)`;
+            card.style.boxShadow = `var(--shadow), var(--glow)`;
+        });
+    });
+}
+
+// Small delay to ensure elements are rendered
+setTimeout(applyTilt, 200);
