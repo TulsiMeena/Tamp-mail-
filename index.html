@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Temp Mail - Disposable Temporary Email</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Temp Mail</h1>
+            <p>Your Disposable Email Address</p>
+        </header>
+
+        <main>
+            <section class="email-generator">
+                <div class="email-box">
+                    <input type="text" id="email-address" readonly placeholder="Generating email...">
+                    <div class="actions">
+                        <button id="copy-btn" title="Copy to clipboard">Copy</button>
+                        <button id="refresh-btn" title="Refresh Inbox">Refresh</button>
+                        <button id="new-btn" title="Get New Address">New Address</button>
+                    </div>
+                </div>
+            </section>
+
+            <section class="inbox-section">
+                <div class="inbox-header">
+                    <h2>Inbox</h2>
+                    <span id="status">Ready</span>
+                </div>
+                <div id="inbox-list" class="inbox-list">
+                    <div class="empty-inbox">Your inbox is empty</div>
+                </div>
+            </section>
+
+            <section id="message-view" class="message-view hidden">
+                <button id="back-btn">Back to Inbox</button>
+                <div id="message-header">
+                    <h3 id="msg-subject"></h3>
+                    <div class="msg-meta">
+                        <strong>From:</strong> <span id="msg-from"></span><br>
+                        <strong>Date:</strong> <span id="msg-date"></span>
+                    </div>
+                </div>
+                <iframe id="message-iframe" sandbox title="Email content"></iframe>
+            </section>
+        </main>
+
+        <footer>
+            <p>&copy; 2025 Temp Mail Service. Powered by Mail.tm</p>
+        </footer>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
