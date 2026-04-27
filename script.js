@@ -17,18 +17,20 @@ const progressFill = document.getElementById('progress-fill');
 const timerText = document.getElementById('refresh-timer');
 const themeToggle = document.getElementById('theme-toggle');
 
-// 1. Initialize App
+// Initialize App
 async function init() {
     setupTheme();
     await fetchDomains();
 
     if (currentAccount && token) {
-        emailInput.value = currentAccount.address;
+        if (emailInput) emailInput.value = currentAccount.address;
         startAutoRefresh();
         fetchMessages();
     } else {
         await createAccount();
     }
+
+    setupRouting();
 }
 
 // Theme Toggle
@@ -51,6 +53,33 @@ function updateThemeIcon(theme) {
     icon.className = theme === 'light' ? 'fas fa-moon' : 'fas fa-sun';
 }
 
+// Routing logic
+function setupRouting() {
+    document.querySelectorAll('.nav-link, .nav-logo').forEach(link => {
+        link.onclick = (e) => {
+            e.preventDefault();
+            const section = link.dataset.section;
+
+            // Hide all sections
+            document.querySelectorAll('.content-section').forEach(s => s.classList.add('hidden'));
+
+            // Show target section
+            const target = document.getElementById(`${section}-section`);
+            if (target) {
+                target.classList.remove('hidden');
+                window.scrollTo(0, 0);
+            }
+
+            // Update active nav
+            document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+            if (link.classList.contains('nav-link')) link.classList.add('active');
+
+            // Special handling for message view
+            if (section === 'home') messageView.classList.add('hidden');
+        };
+    });
+}
+
 // Domain Management
 async function fetchDomains() {
     try {
@@ -58,13 +87,15 @@ async function fetchDomains() {
         const data = await response.json();
         domains = data['hydra:member'].map(d => d.domain);
 
-        domainSelect.innerHTML = '';
-        domains.forEach(d => {
-            const opt = document.createElement('option');
-            opt.value = d;
-            opt.textContent = `@${d}`;
-            domainSelect.appendChild(opt);
-        });
+        if (domainSelect) {
+            domainSelect.innerHTML = '';
+            domains.forEach(d => {
+                const opt = document.createElement('option');
+                opt.value = d;
+                opt.textContent = `@${d}`;
+                domainSelect.appendChild(opt);
+            });
+        }
     } catch (error) {
         console.error('Error fetching domains', error);
     }
@@ -89,7 +120,7 @@ async function createAccount(customDomain = null) {
 
         currentAccount = { address, password };
         localStorage.setItem('temp_mail_account', JSON.stringify(currentAccount));
-        emailInput.value = address;
+        if (emailInput) emailInput.value = address;
 
         await getToken();
         startAutoRefresh();
@@ -133,6 +164,7 @@ async function fetchMessages() {
 }
 
 function renderInbox(messages) {
+    if (!inboxList) return;
     if (messages.length === 0) {
         inboxList.innerHTML = `
             <div class="empty-state">
@@ -177,6 +209,7 @@ async function viewMessage(id) {
 
         messageView.classList.remove('hidden');
         updateStatus('Viewing', 'var(--primary)');
+        window.scrollTo(0, 0);
     } catch (error) {
         console.error(error);
     }
@@ -184,8 +217,8 @@ async function viewMessage(id) {
 
 // UI Helpers
 function updateStatus(text, color) {
-    statusText.textContent = text;
-    statusDot.style.backgroundColor = color;
+    if (statusText) statusText.textContent = text;
+    if (statusDot) statusDot.style.backgroundColor = color;
 }
 
 function startAutoRefresh() {
@@ -199,9 +232,13 @@ function startAutoRefresh() {
             fetchMessages();
         }
 
-        const percent = (timeLeft / 10) * 100;
-        progressFill.style.width = `${percent}%`;
-        timerText.textContent = `${Math.ceil(timeLeft)}s`;
+        if (progressFill) {
+            const percent = (timeLeft / 10) * 100;
+            progressFill.style.width = `${percent}%`;
+        }
+        if (timerText) {
+            timerText.textContent = `${Math.ceil(timeLeft)}s`;
+        }
     }, 100);
 }
 
@@ -231,28 +268,27 @@ const qrModal = document.getElementById('qr-modal');
 const qrBtn = document.getElementById('qr-btn');
 const closeQr = document.querySelector('.close-modal');
 
-qrBtn.onclick = () => {
-    const address = emailInput.value;
-    const qrContainer = document.getElementById('qr-container');
-    qrContainer.innerHTML = `<img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(address)}" alt="QR Code">`;
-    qrModal.classList.remove('hidden');
-};
+if (qrBtn) {
+    qrBtn.onclick = () => {
+        const address = emailInput.value;
+        const qrContainer = document.getElementById('qr-container');
+        qrContainer.innerHTML = `<img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(address)}" alt="QR Code">`;
+        qrModal.classList.remove('hidden');
+    };
+}
 
-closeQr.onclick = () => qrModal.classList.add('hidden');
+if (closeQr) closeQr.onclick = () => qrModal.classList.add('hidden');
 window.onclick = (e) => { if (e.target === qrModal) qrModal.classList.add('hidden'); };
 
-// SPA Routing
-document.querySelectorAll('.nav-link, .nav-logo').forEach(link => {
-    link.onclick = (e) => {
+// Contact Form
+const contactForm = document.getElementById('contact-form');
+if (contactForm) {
+    contactForm.onsubmit = (e) => {
         e.preventDefault();
-        const section = link.dataset.section;
-        document.querySelectorAll('.content-section').forEach(s => s.classList.add('hidden'));
-        document.getElementById(`${section}-section`).classList.remove('hidden');
-        document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
-        if (link.classList.contains('nav-link')) link.classList.add('active');
-        if (section === 'home') messageView.classList.add('hidden');
+        alert('Ticket submitted successfully! Amit Meena will review it soon.');
+        contactForm.reset();
     };
-});
+}
 
 // Start
 init();
