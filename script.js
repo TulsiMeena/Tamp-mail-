@@ -2,65 +2,79 @@ const API_URL = 'https://api.mail.tm';
 let currentAccount = JSON.parse(localStorage.getItem('temp_mail_account'));
 let token = localStorage.getItem('temp_mail_token');
 let refreshInterval = null;
+let domains = [];
+let timeLeft = 10;
 
 // DOM Elements
 const emailInput = document.getElementById('email-address');
+const domainSelect = document.getElementById('domain-select');
 const inboxList = document.getElementById('inbox-list');
 const messageView = document.getElementById('message-view');
 const msgIframe = document.getElementById('message-iframe');
-const statusText = document.getElementById('status');
-const navLinks = document.querySelectorAll('.nav-link, .nav-logo');
-const sections = document.querySelectorAll('.content-section');
+const statusText = document.getElementById('status-text');
+const statusDot = document.getElementById('status-dot');
+const progressFill = document.getElementById('progress-fill');
+const timerText = document.getElementById('refresh-timer');
+const themeToggle = document.getElementById('theme-toggle');
 
-// SPA Routing
-function showSection(sectionId) {
-    sections.forEach(section => {
-        section.classList.add('hidden');
-    });
-    document.getElementById(`${sectionId}-section`).classList.remove('hidden');
+// 1. Initialize App
+async function init() {
+    setupTheme();
+    await fetchDomains();
 
-    // Update active nav link
-    document.querySelectorAll('.nav-link').forEach(link => {
-        if (link.dataset.section === sectionId) {
-            link.classList.add('active');
-        } else {
-            link.classList.remove('active');
-        }
-    });
-
-    // Reset message view if going to home
-    if (sectionId === 'home') {
-        messageView.classList.add('hidden');
-        document.querySelector('.inbox-section').classList.remove('hidden');
+    if (currentAccount && token) {
+        emailInput.value = currentAccount.address;
+        startAutoRefresh();
+        fetchMessages();
+    } else {
+        await createAccount();
     }
 }
 
-navLinks.forEach(link => {
-    link.addEventListener('click', (e) => {
-        e.preventDefault();
-        const sectionId = link.dataset.section;
-        showSection(sectionId);
-    });
-});
+// Theme Toggle
+function setupTheme() {
+    const savedTheme = localStorage.getItem('theme') || 'light';
+    document.documentElement.setAttribute('data-theme', savedTheme);
+    updateThemeIcon(savedTheme);
 
-// Helper to update status
-function updateStatus(text) {
-    if (statusText) statusText.textContent = text;
+    themeToggle.onclick = () => {
+        const currentTheme = document.documentElement.getAttribute('data-theme');
+        const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+        document.documentElement.setAttribute('data-theme', newTheme);
+        localStorage.setItem('theme', newTheme);
+        updateThemeIcon(newTheme);
+    };
 }
 
-// 1. Fetch available domains
-async function getDomains() {
-    const response = await fetch(`${API_URL}/domains`);
-    const data = await response.json();
-    return data['hydra:member'].map(d => d.domain);
+function updateThemeIcon(theme) {
+    const icon = themeToggle.querySelector('i');
+    icon.className = theme === 'light' ? 'fas fa-moon' : 'fas fa-sun';
 }
 
-// 2. Create a random account
-async function createAccount() {
+// Domain Management
+async function fetchDomains() {
     try {
-        updateStatus('Generating email...');
-        const domains = await getDomains();
-        const domain = domains[0];
+        const response = await fetch(`${API_URL}/domains`);
+        const data = await response.json();
+        domains = data['hydra:member'].map(d => d.domain);
+
+        domainSelect.innerHTML = '';
+        domains.forEach(d => {
+            const opt = document.createElement('option');
+            opt.value = d;
+            opt.textContent = `@${d}`;
+            domainSelect.appendChild(opt);
+        });
+    } catch (error) {
+        console.error('Error fetching domains', error);
+    }
+}
+
+// Account Creation
+async function createAccount(customDomain = null) {
+    try {
+        updateStatus('Creating...', 'orange');
+        const domain = customDomain || domains[0];
         const randomString = Math.random().toString(36).substring(2, 10);
         const address = `${randomString}@${domain}`;
         const password = Math.random().toString(36).substring(2, 15);
@@ -71,7 +85,7 @@ async function createAccount() {
             body: JSON.stringify({ address, password })
         });
 
-        if (!response.ok) throw new Error('Failed to create account');
+        if (!response.ok) throw new Error('Account creation failed');
 
         currentAccount = { address, password };
         localStorage.setItem('temp_mail_account', JSON.stringify(currentAccount));
@@ -79,37 +93,29 @@ async function createAccount() {
 
         await getToken();
         startAutoRefresh();
-        updateStatus('Ready');
+        updateStatus('Active', 'var(--success)');
     } catch (error) {
+        updateStatus('Error', 'var(--danger)');
         console.error(error);
-        updateStatus('Error creating account');
     }
 }
 
-// 3. Get JWT Token
 async function getToken() {
-    try {
-        const response = await fetch(`${API_URL}/token`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(currentAccount)
-        });
-        const data = await response.json();
-        token = data.token;
-        localStorage.setItem('temp_mail_token', token);
-        return token;
-    } catch (error) {
-        console.error('Failed to get token', error);
-        return null;
-    }
+    const response = await fetch(`${API_URL}/token`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(currentAccount)
+    });
+    const data = await response.json();
+    token = data.token;
+    localStorage.setItem('temp_mail_token', token);
 }
 
-// 4. Fetch messages
+// Mail Logic
 async function fetchMessages() {
     if (!token) return;
 
     try {
-        updateStatus('Checking for new mail...');
         const response = await fetch(`${API_URL}/messages`, {
             headers: { 'Authorization': `Bearer ${token}` }
         });
@@ -120,22 +126,19 @@ async function fetchMessages() {
         }
 
         const data = await response.json();
-        const messages = data['hydra:member'];
-
-        renderInbox(messages);
-        updateStatus('Updated');
-        setTimeout(() => updateStatus('Ready'), 2000);
+        renderInbox(data['hydra:member']);
     } catch (error) {
-        console.error(error);
-        updateStatus('Error fetching messages');
+        console.error('Fetch error', error);
     }
 }
 
-// 5. Render Inbox
 function renderInbox(messages) {
-    if (!inboxList) return;
     if (messages.length === 0) {
-        inboxList.innerHTML = '<div class="empty-inbox">Your inbox is empty</div>';
+        inboxList.innerHTML = `
+            <div class="empty-state">
+                <i class="fas fa-envelope-open"></i>
+                <p>Waiting for incoming emails...</p>
+            </div>`;
         return;
     }
 
@@ -143,32 +146,23 @@ function renderInbox(messages) {
     messages.forEach(msg => {
         const item = document.createElement('div');
         item.className = 'message-item';
-
-        const dateSpan = document.createElement('span');
-        dateSpan.className = 'date';
-        dateSpan.textContent = new Date(msg.createdAt).toLocaleTimeString();
-
-        const fromDiv = document.createElement('div');
-        fromDiv.className = 'from';
-        fromDiv.textContent = msg.from.address;
-
-        const subjectDiv = document.createElement('div');
-        subjectDiv.className = 'subject';
-        subjectDiv.textContent = msg.subject || '(No Subject)';
-
-        item.appendChild(dateSpan);
-        item.appendChild(fromDiv);
-        item.appendChild(subjectDiv);
-
+        item.innerHTML = `
+            <div class="item-main">
+                <div class="from">${msg.from.address}</div>
+                <div class="subject">${msg.subject || '(No Subject)'}</div>
+            </div>
+            <div class="item-meta">
+                <div class="time">${new Date(msg.createdAt).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</div>
+            </div>
+        `;
         item.onclick = () => viewMessage(msg.id);
         inboxList.appendChild(item);
     });
 }
 
-// 6. View a specific message
 async function viewMessage(id) {
     try {
-        updateStatus('Loading message...');
+        updateStatus('Loading...', 'orange');
         const response = await fetch(`${API_URL}/messages/${id}`, {
             headers: { 'Authorization': `Bearer ${token}` }
         });
@@ -179,76 +173,86 @@ async function viewMessage(id) {
         document.getElementById('msg-date').textContent = new Date(msg.createdAt).toLocaleString();
 
         const content = msg.html ? msg.html[0] : (msg.text || 'No content');
-
-        msgIframe.srcdoc = `
-            <html>
-                <head>
-                    <style>body { font-family: sans-serif; line-height: 1.6; color: #333; padding: 20px; }</style>
-                </head>
-                <body>${content}</body>
-            </html>
-        `;
+        msgIframe.srcdoc = `<html><head><style>body{font-family:sans-serif;line-height:1.6;color:#333;padding:20px;background:#fff;}</style></head><body>${content}</body></html>`;
 
         messageView.classList.remove('hidden');
-        document.querySelector('.inbox-section').classList.add('hidden');
-        updateStatus('Message loaded');
+        updateStatus('Viewing', 'var(--primary)');
     } catch (error) {
         console.error(error);
-        updateStatus('Error loading message');
     }
 }
 
-// UI Controls
-document.getElementById('back-btn').onclick = () => {
-    messageView.classList.add('hidden');
-    document.querySelector('.inbox-section').classList.remove('hidden');
-    updateStatus('Ready');
-};
-
-document.getElementById('refresh-btn').onclick = fetchMessages;
-
-document.getElementById('new-btn').onclick = () => {
-    if (confirm('Create a new email address? The current one will be lost.')) {
-        localStorage.clear();
-        clearInterval(refreshInterval);
-        createAccount();
-    }
-};
-
-document.getElementById('copy-btn').onclick = async () => {
-    try {
-        await navigator.clipboard.writeText(emailInput.value);
-        const originalBtn = document.getElementById('copy-btn');
-        const originalHTML = originalBtn.innerHTML;
-        originalBtn.innerHTML = '<i class="fas fa-check"></i> Copied!';
-        setTimeout(() => {
-            originalBtn.innerHTML = originalHTML;
-        }, 2000);
-    } catch (err) {
-        console.error('Failed to copy: ', err);
-    }
-};
-
-// Contact Form
-const contactForm = document.getElementById('contact-form');
-if (contactForm) {
-    contactForm.onsubmit = (e) => {
-        e.preventDefault();
-        alert('Thank you for your message! This is a demo form.');
-        contactForm.reset();
-    };
+// UI Helpers
+function updateStatus(text, color) {
+    statusText.textContent = text;
+    statusDot.style.backgroundColor = color;
 }
 
 function startAutoRefresh() {
+    timeLeft = 10;
     if (refreshInterval) clearInterval(refreshInterval);
-    refreshInterval = setInterval(fetchMessages, 10000);
+
+    refreshInterval = setInterval(() => {
+        timeLeft -= 0.1;
+        if (timeLeft <= 0) {
+            timeLeft = 10;
+            fetchMessages();
+        }
+
+        const percent = (timeLeft / 10) * 100;
+        progressFill.style.width = `${percent}%`;
+        timerText.textContent = `${Math.ceil(timeLeft)}s`;
+    }, 100);
 }
 
-// Initial Load
-if (currentAccount && token) {
-    if (emailInput) emailInput.value = currentAccount.address;
-    fetchMessages();
-    startAutoRefresh();
-} else {
-    createAccount();
-}
+// Event Handlers
+document.getElementById('copy-btn').onclick = async () => {
+    await navigator.clipboard.writeText(emailInput.value);
+    const btn = document.getElementById('copy-btn');
+    const old = btn.innerHTML;
+    btn.innerHTML = '<i class="fas fa-check"></i> Copied';
+    setTimeout(() => btn.innerHTML = old, 2000);
+};
+
+document.getElementById('new-btn').onclick = () => {
+    if (confirm('Get a new email address? All current messages will be lost.')) {
+        localStorage.clear();
+        createAccount(domainSelect.value);
+    }
+};
+
+document.getElementById('back-btn').onclick = () => {
+    messageView.classList.add('hidden');
+    updateStatus('Active', 'var(--success)');
+};
+
+// QR Code
+const qrModal = document.getElementById('qr-modal');
+const qrBtn = document.getElementById('qr-btn');
+const closeQr = document.querySelector('.close-modal');
+
+qrBtn.onclick = () => {
+    const address = emailInput.value;
+    const qrContainer = document.getElementById('qr-container');
+    qrContainer.innerHTML = `<img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(address)}" alt="QR Code">`;
+    qrModal.classList.remove('hidden');
+};
+
+closeQr.onclick = () => qrModal.classList.add('hidden');
+window.onclick = (e) => { if (e.target === qrModal) qrModal.classList.add('hidden'); };
+
+// SPA Routing
+document.querySelectorAll('.nav-link, .nav-logo').forEach(link => {
+    link.onclick = (e) => {
+        e.preventDefault();
+        const section = link.dataset.section;
+        document.querySelectorAll('.content-section').forEach(s => s.classList.add('hidden'));
+        document.getElementById(`${section}-section`).classList.remove('hidden');
+        document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+        if (link.classList.contains('nav-link')) link.classList.add('active');
+        if (section === 'home') messageView.classList.add('hidden');
+    };
+});
+
+// Start
+init();
