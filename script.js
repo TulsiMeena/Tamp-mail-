@@ -24,6 +24,7 @@ const langToggle = document.getElementById('lang-toggle');
 const mailboxSelect = document.getElementById('mailbox-select');
 const customUsername = document.getElementById('custom-username');
 const searchInput = document.getElementById('search-mail');
+const mailboxNote = document.getElementById('mailbox-note');
 
 // Language Dictionary
 const translations = {
@@ -48,7 +49,9 @@ const translations = {
         h2: "Search your emails instantly using the search bar.",
         h3: "Create multiple accounts and switch between them.",
         h4: "Download your emails and attachments easily.",
-        qr_t: "Scan QR Code", qr_p: "Scan this code to open this mailbox on your mobile device."
+        qr_t: "Scan QR Code", qr_p: "Scan this code to open this mailbox on your mobile device.",
+        saved_label: "Saved Mailboxes:", note_ph: "Add a note for this email...",
+        tools: "Advanced Tools", export: "Export Backup", import: "Import Backup"
     },
     hi: {
         home: "मुख्य", about: "हमारे बारे में", contact: "संपर्क", privacy: "गोपनीयता",
@@ -71,7 +74,9 @@ const translations = {
         h2: "सर्च बार का उपयोग करके अपने ईमेल तुरंत खोजें।",
         h3: "कई अकाउंट बनाएं और उनके बीच स्विच करें।",
         h4: "अपने ईमेल और अटैचमेंट आसानी से डाउनलोड करें।",
-        qr_t: "QR कोड स्कैन करें", qr_p: "अपने मोबाइल डिवाइस पर इस मेलबॉक्स को खोलने के लिए इस कोड को स्कैन करें।"
+        qr_t: "QR कोड स्कैन करें", qr_p: "अपने मोबाइल डिवाइस पर इस मेलबॉक्स को खोलने के लिए इस कोड को स्कैन करें।",
+        saved_label: "सहेजे गए मेलबॉक्स:", note_ph: "इस ईमेल के लिए एक नोट जोड़ें...",
+        tools: "उन्नत टूल", export: "बैकअप एक्सपोर्ट करें", import: "बैकअप इम्पोर्ट करें"
     }
 };
 
@@ -104,8 +109,17 @@ async function init() {
 
 function setupMailboxEvents() {
     mailboxSelect.onchange = () => {
-        if (mailboxSelect.value === 'current') return;
         switchAccount(mailboxSelect.value);
+    };
+
+    document.getElementById('save-note-btn').onclick = () => {
+        const acc = accounts.find(a => a.address === currentAccount.address);
+        if (acc) {
+            acc.note = mailboxNote.value;
+            localStorage.setItem('temp_mail_accounts', JSON.stringify(accounts));
+            updateMailboxSwitcher();
+            alert('Note saved!');
+        }
     };
 }
 
@@ -115,8 +129,11 @@ function updateMailboxSwitcher() {
     accounts.forEach(acc => {
         const opt = document.createElement('option');
         opt.value = acc.address;
-        opt.textContent = acc.address;
-        if (currentAccount && acc.address === currentAccount.address) opt.selected = true;
+        opt.textContent = acc.note ? `${acc.address} (${acc.note})` : acc.address;
+        if (currentAccount && acc.address === currentAccount.address) {
+            opt.selected = true;
+            mailboxNote.value = acc.note || '';
+        }
         mailboxSelect.appendChild(opt);
     });
 }
@@ -136,7 +153,13 @@ function switchAccount(address) {
 
 // Theme Toggle
 function setupTheme() {
-    const savedTheme = localStorage.getItem('theme') || 'light';
+    const getSystemTheme = () => window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    let savedTheme = localStorage.getItem('theme');
+
+    if (!savedTheme) {
+        savedTheme = getSystemTheme();
+    }
+
     document.documentElement.setAttribute('data-theme', savedTheme);
     updateThemeIcon(savedTheme);
 
@@ -147,6 +170,15 @@ function setupTheme() {
         localStorage.setItem('theme', newTheme);
         updateThemeIcon(newTheme);
     };
+
+    // Auto sync with system
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
+        if (!localStorage.getItem('theme')) {
+            const newTheme = e.matches ? 'dark' : 'light';
+            document.documentElement.setAttribute('data-theme', newTheme);
+            updateThemeIcon(newTheme);
+        }
+    });
 }
 
 function updateThemeIcon(theme) {
@@ -269,6 +301,17 @@ function updateUIText() {
     // Update Contact
     const contactH2 = document.querySelector('#contact-section h2');
     if (contactH2) contactH2.textContent = t.contact_title;
+
+    // Update Notes label
+    const savedLabel = document.getElementById('saved-label');
+    if (savedLabel) savedLabel.textContent = t.saved_label;
+    if (mailboxNote) mailboxNote.placeholder = t.note_ph;
+
+    // Update Tools
+    const toolsTitle = document.getElementById('tools-title');
+    if (toolsTitle) toolsTitle.textContent = t.tools;
+    document.getElementById('export-btn').innerHTML = `<i class="fas fa-file-export"></i> ${t.export}`;
+    document.getElementById('import-btn').innerHTML = `<i class="fas fa-file-import"></i> ${t.import}`;
 
     // Update Help & QR
     document.getElementById('help-title').textContent = t.help_title;
@@ -557,6 +600,23 @@ document.getElementById('new-btn').onclick = () => {
     createAccount();
 };
 
+document.getElementById('share-btn').onclick = async () => {
+    const address = emailInput.value;
+    if (navigator.share) {
+        try {
+            await navigator.share({
+                title: 'My Temp Email',
+                text: `Here is my temporary email address: ${address}`,
+                url: window.location.href
+            });
+        } catch (err) {
+            console.log('Share failed:', err);
+        }
+    } else {
+        alert(`Your temp email: ${address}\n\n(Share API not supported in this browser)`);
+    }
+};
+
 document.getElementById('back-btn').onclick = () => {
     messageView.classList.add('hidden');
     updateStatus('Active', 'var(--success)');
@@ -576,6 +636,30 @@ document.getElementById('download-btn').onclick = () => {
     a.download = `email-${Date.now()}.txt`;
     a.click();
     URL.revokeObjectURL(url);
+};
+
+document.getElementById('print-btn').onclick = () => {
+    const win = window.open('', '_blank');
+    const subject = document.getElementById('msg-subject').textContent;
+    const from = document.getElementById('msg-from').textContent;
+    const date = document.getElementById('msg-date').textContent;
+    const content = msgIframe.srcdoc;
+
+    win.document.write(`
+        <html>
+            <head><title>Print Email</title><style>body{font-family:sans-serif;padding:40px;} .meta{border-bottom:2px solid #eee;padding-bottom:20px;margin-bottom:20px;}</style></head>
+            <body>
+                <div class="meta">
+                    <h1>${subject}</h1>
+                    <p><strong>From:</strong> ${from}</p>
+                    <p><strong>Date:</strong> ${date}</p>
+                </div>
+                <div>${content}</div>
+            </body>
+        </html>
+    `);
+    win.document.close();
+    win.print();
 };
 
 // QR Code
@@ -604,6 +688,42 @@ if (contactForm) {
         contactForm.reset();
     };
 }
+
+// Backup & Restore
+document.getElementById('export-btn').onclick = () => {
+    const data = JSON.stringify(accounts);
+    const blob = new Blob([data], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `tempmail-backup-${Date.now()}.json`;
+    a.click();
+    URL.revokeObjectURL(url);
+};
+
+document.getElementById('import-btn').onclick = () => document.getElementById('import-file').click();
+
+document.getElementById('import-file').onchange = (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = (event) => {
+        try {
+            const imported = JSON.parse(event.target.result);
+            if (Array.isArray(imported)) {
+                accounts = [...accounts, ...imported];
+                // Remove duplicates
+                accounts = accounts.filter((v,i,a)=>a.findIndex(t=>(t.address === v.address))===i);
+                localStorage.setItem('temp_mail_accounts', JSON.stringify(accounts));
+                updateMailboxSwitcher();
+                alert('Backup imported successfully!');
+            }
+        } catch (err) {
+            alert('Invalid backup file');
+        }
+    };
+    reader.readAsText(file);
+};
 
 // Register Service Worker for PWA
 if ('serviceWorker' in navigator) {

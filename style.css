@@ -257,11 +257,22 @@ header p { color: var(--text-muted); font-size: 1.2rem; max-width: 700px; margin
 .mailbox-switcher {
     display: flex;
     flex-direction: column;
-    gap: 10px;
-    padding: 15px;
+    gap: 15px;
+    padding: 20px;
     background: rgba(0,0,0,0.03);
-    border-radius: 15px;
+    border-radius: 20px;
 }
+
+.switcher-row, .note-row {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.note-row { flex-direction: row; align-items: center; }
+.note-row input { flex: 1; padding: 12px; border-radius: 12px; border: 1px solid var(--border); background: var(--bg); color: var(--text); font-weight: 600; }
+.note-row button { padding: 12px; border-radius: 12px; }
+
 .mailbox-switcher label { font-weight: 800; font-size: 0.85rem; color: var(--text-muted); }
 #mailbox-select {
     padding: 12px;
