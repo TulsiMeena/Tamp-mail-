@@ -215,7 +215,25 @@ header p { color: var(--text-muted); font-size: 1.2rem; max-width: 700px; margin
 #progress-fill { height: 100%; background: var(--primary); width: 100%; transition: width 0.1s linear; }
 
 .generator-controls { display: flex; flex-direction: column; gap: 25px; }
+.account-manager { display: flex; flex-direction: column; gap: 15px; }
 .input-group { display: flex; gap: 15px; }
+.mailbox-switcher {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 15px;
+    background: rgba(0,0,0,0.03);
+    border-radius: 15px;
+}
+.mailbox-switcher label { font-weight: 800; font-size: 0.85rem; color: var(--text-muted); }
+#mailbox-select {
+    padding: 12px;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    background: var(--card-bg);
+    color: var(--text);
+    font-weight: 700;
+}
 
 #email-address {
     flex: 1;
@@ -358,6 +376,24 @@ iframe { width: 100%; height: 100%; border: none; }
 
 .skill-tags { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin-top: 20px; }
 .skill-tags span { background: var(--border); padding: 6px 15px; border-radius: 10px; font-size: 0.85rem; font-weight: 700; }
+
+/* Brand Story & Work Grid */
+.brand-story { margin-top: 60px; text-align: center; border-top: 1px solid var(--border); padding-top: 60px; }
+.work-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 25px;
+    margin-top: 30px;
+}
+.work-item {
+    padding: 30px;
+    border-radius: 20px;
+    text-align: left;
+    transition: transform 0.3s;
+}
+.work-item:hover { transform: translateY(-10px); }
+.work-item h4 { color: var(--primary); margin-bottom: 12px; font-size: 1.2rem; display: flex; align-items: center; gap: 10px; }
+.work-item p { font-size: 0.95rem; color: var(--text-muted); line-height: 1.6; }
 
 /* Form Elements */
 .pro-form { display: flex; flex-direction: column; gap: 25px; margin-top: 30px; }

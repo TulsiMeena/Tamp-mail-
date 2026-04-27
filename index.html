@@ -9,6 +9,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="manifest" href="manifest.json">
 </head>
 <body>
     <div class="glass-bg"></div>
@@ -24,7 +25,10 @@
                 <li><a href="#" class="nav-link" data-section="privacy">Privacy</a></li>
             </ul>
             <div class="nav-actions">
-                <button id="theme-toggle" title="Toggle Dark/Light Mode">
+                <button id="lang-toggle" class="btn-icon" title="Switch Language">
+                    <span id="lang-text">HI</span>
+                </button>
+                <button id="theme-toggle" class="btn-icon" title="Toggle Dark/Light Mode">
                     <i class="fas fa-moon"></i>
                 </button>
             </div>
@@ -58,14 +62,27 @@
                         </div>
                     </div>
                     <div class="generator-controls">
-                        <div class="input-group">
-                            <input type="text" id="email-address" readonly placeholder="Generating...">
-                            <select id="domain-select" title="Select Domain"></select>
+                        <div class="account-manager">
+                            <div class="input-group">
+                                <input type="text" id="custom-username" placeholder="Username (optional)">
+                                <select id="domain-select" title="Select Domain"></select>
+                            </div>
+                            <div class="input-group">
+                                <input type="text" id="email-address" readonly placeholder="Generating...">
+                                <button id="copy-btn" class="btn-primary"><i class="fas fa-copy"></i></button>
+                            </div>
                         </div>
+
+                        <div class="mailbox-switcher">
+                            <label>Saved Mailboxes:</label>
+                            <select id="mailbox-select">
+                                <option value="current">Current Session</option>
+                            </select>
+                        </div>
+
                         <div class="action-buttons">
-                            <button id="copy-btn" class="btn-primary"><i class="fas fa-copy"></i> Copy</button>
-                            <button id="qr-btn" class="btn-secondary"><i class="fas fa-qrcode"></i> QR Code</button>
-                            <button id="new-btn" class="btn-danger"><i class="fas fa-redo"></i> New</button>
+                            <button id="qr-btn" class="btn-secondary"><i class="fas fa-qrcode"></i> QR</button>
+                            <button id="new-btn" class="btn-danger"><i class="fas fa-plus"></i> Create</button>
                         </div>
                     </div>
                 </div>
@@ -87,8 +104,9 @@
                 </div>
 
                 <div id="message-view" class="message-view hidden glass">
-                    <div class="msg-view-header">
-                        <button id="back-btn" class="btn-text"><i class="fas fa-arrow-left"></i> Back to Inbox</button>
+                    <div class="msg-view-header" style="display: flex; justify-content: space-between; align-items: center;">
+                        <button id="back-btn" class="btn-text"><i class="fas fa-arrow-left"></i> Back</button>
+                        <button id="download-btn" class="btn-text" title="Download Email"><i class="fas fa-download"></i></button>
                     </div>
                     <div class="msg-full-card">
                         <div class="msg-details">
@@ -190,8 +208,25 @@
                 </div>
 
                 <div class="brand-story">
-                    <h3>Our Vision</h3>
-                    <p>TempMail was conceptualized by Aman Meena and brought to life by Amit Meena. We believe in a web where privacy is a right, not a luxury. Our goal is to provide tools that empower users to control their digital footprint.</p>
+                    <h3>Professional Work & Expertise</h3>
+                    <div class="work-grid">
+                        <div class="work-item glass">
+                            <h4><i class="fas fa-code"></i> Amit's Portfolio</h4>
+                            <p>Full-stack developer specializing in React, Node.js, and Modern CSS. Built over 50+ high-performance web applications with a focus on UX and 3D interactivity.</p>
+                        </div>
+                        <div class="work-item glass">
+                            <h4><i class="fas fa-bullhorn"></i> Aman's Influence</h4>
+                            <p>Digital content creator and influencer. Expert in social media strategy, brand building, and community engagement with a reach of 15K+ active followers.</p>
+                        </div>
+                        <div class="work-item glass">
+                            <h4><i class="fas fa-project-diagram"></i> Joint Ventures</h4>
+                            <p>Collaborative projects focusing on Privacy Tools, Open Source security modules, and Next-Gen communication platforms.</p>
+                        </div>
+                    </div>
+                    <div class="vision-box glass" style="margin-top: 30px; padding: 20px; border-radius: 20px;">
+                        <h3>Our Vision</h3>
+                        <p>TempMail was conceptualized by Aman Meena and brought to life by Amit Meena. We believe in a web where privacy is a right, not a luxury. Our goal is to provide tools that empower users to control their digital footprint.</p>
+                    </div>
                 </div>
             </div>
         </section>
