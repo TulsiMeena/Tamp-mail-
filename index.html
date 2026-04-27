@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Temp Mail - Safe & Secure Temporary Email</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="manifest" href="manifest.json">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <meta name="theme-color" content="#2563eb">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo" data-section="home">
+                <i class="fas fa-envelope-open-text"></i>
+                <span>TempMail</span>
+            </div>
+            <ul class="nav-links">
+                <li data-section="home" class="active" id="nav-home">Home</li>
+                <li data-section="inbox" id="nav-inbox">Inbox</li>
+                <li data-section="about" id="nav-about">About Us</li>
+                <li data-section="contact" id="nav-contact">Contact Us</li>
+            </ul>
+            <div class="nav-actions">
+                <button id="lang-toggle" class="btn-icon"><i class="fas fa-globe"></i> <span id="lang-text">HI</span></button>
+                <button id="theme-toggle" class="btn-icon"><i class="fas fa-moon"></i></button>
+            </div>
+            <div class="menu-toggle" id="mobile-menu">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </nav>
+
+    <main class="content">
+        <!-- Home Section -->
+        <section id="home" class="section active">
+            <div class="hero">
+                <h1 id="hero-title">Your Secure Temporary Email</h1>
+                <p id="hero-subtitle">Protect your privacy and stay anonymous with our disposable email service.</p>
+
+                <div class="email-generator">
+                    <div class="email-display">
+                        <input type="text" id="temp-email" readonly placeholder="Generating email...">
+                        <button id="copy-email" class="btn-action"><i class="fas fa-copy"></i> Copy</button>
+                        <button id="refresh-email" class="btn-action"><i class="fas fa-sync-alt"></i> New</button>
+                    </div>
+                    <div class="email-controls">
+                        <button id="show-qr" class="btn-secondary"><i class="fas fa-qrcode"></i> QR Code</button>
+                        <div id="qr-container" class="hidden">
+                            <img id="qr-code" src="" alt="QR Code">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="refresh-status">
+                    <span id="refresh-label">Refreshing in: <span id="timer">10</span>s</span>
+                    <div class="progress-bar-container">
+                        <div id="progress-bar" class="progress-bar"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="info-grid">
+                <div class="info-card">
+                    <i class="fas fa-shield-alt"></i>
+                    <h3 id="info-1-title">Privacy Protection</h3>
+                    <p id="info-1-desc">Stop spam in your personal inbox and stay safe from trackers.</p>
+                </div>
+                <div class="info-card">
+                    <i class="fas fa-bolt"></i>
+                    <h3 id="info-2-title">Instant Setup</h3>
+                    <p id="info-2-desc">No registration required. Get a random address in seconds.</p>
+                </div>
+                <div class="info-card">
+                    <i class="fas fa-trash-alt"></i>
+                    <h3 id="info-3-title">Auto Disposal</h3>
+                    <p id="info-3-desc">Emails are automatically deleted after a period of time.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Inbox Section -->
+        <section id="inbox" class="section">
+            <div class="inbox-container">
+                <div class="inbox-header">
+                    <h2>Inbox</h2>
+                    <button id="force-refresh" class="btn-secondary"><i class="fas fa-sync"></i> Refresh</button>
+                </div>
+                <div class="inbox-layout">
+                    <div class="message-list" id="message-list">
+                        <div class="empty-inbox">
+                            <i class="fas fa-inbox"></i>
+                            <p>Your inbox is empty</p>
+                        </div>
+                    </div>
+                    <div class="message-view" id="message-view">
+                        <div class="no-selection">
+                            <p>Select an email to read</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Us Section -->
+        <section id="about" class="section">
+            <div class="about-container">
+                <h1 id="about-title">About TempMail</h1>
+                <p id="about-desc">TempMail is a free temporary email service that provides you with a disposable email address. This address can be used for any service that requires email verification, helping you keep your real inbox clean and secure.</p>
+
+                <div class="features-grid">
+                    <div class="feature">
+                        <i class="fas fa-check-circle"></i>
+                        <span>100% Free & Unlimited</span>
+                    </div>
+                    <div class="feature">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Anonymous Usage</span>
+                    </div>
+                    <div class="feature">
+                        <i class="fas fa-check-circle"></i>
+                        <span>No Password Required</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Us Section -->
+        <section id="contact" class="section">
+            <div class="contact-container">
+                <h1 id="contact-title">Contact Us</h1>
+                <p id="contact-desc">Have questions or feedback? We'd love to hear from you.</p>
+                <form id="contact-form" class="contact-form">
+                    <div class="form-group">
+                        <label for="name">Name</label>
+                        <input type="text" id="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Message</label>
+                        <textarea id="message" rows="5" required></textarea>
+                    </div>
+                    <button type="submit" class="btn-primary">Send Message</button>
+                </form>
+            </div>
+        </section>
+
+        <!-- Privacy Policy Section -->
+        <section id="privacy" class="section">
+            <div class="privacy-container">
+                <h1 id="privacy-title">Privacy Policy</h1>
+                <p>At TempMail, we prioritize your privacy. We do not store any personal information about our users.</p>
+                <h3>Data Collection</h3>
+                <p>We do not collect or store any personal data. Emails received are temporary and deleted automatically.</p>
+                <h3>Cookies</h3>
+                <p>We use local storage only to remember your temporary account details and theme preferences for a better user experience.</p>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-info">
+                <p>&copy; 2024 TempMail. All rights reserved.</p>
+            </div>
+            <div class="footer-links">
+                <span data-section="privacy" id="footer-privacy">Privacy Policy</span>
+                <span data-section="about" id="footer-about">About Us</span>
+            </div>
+            <div class="accent-picker">
+                <div class="accent-color blue active" data-color="#2563eb"></div>
+                <div class="accent-color green" data-color="#10b981"></div>
+                <div class="accent-color red" data-color="#ef4444"></div>
+                <div class="accent-color pink" data-color="#ec4899"></div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js');
+            });
+        }
+    </script>
+</body>
+</html>
