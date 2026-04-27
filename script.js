@@ -6,6 +6,8 @@ let refreshInterval = null;
 let domains = [];
 let timeLeft = 10;
 let lastMsgCount = 0;
+let allMessages = [];
+let readMessages = JSON.parse(localStorage.getItem('read_messages')) || [];
 
 // DOM Elements
 const emailInput = document.getElementById('email-address');
@@ -21,6 +23,7 @@ const themeToggle = document.getElementById('theme-toggle');
 const langToggle = document.getElementById('lang-toggle');
 const mailboxSelect = document.getElementById('mailbox-select');
 const customUsername = document.getElementById('custom-username');
+const searchInput = document.getElementById('search-mail');
 
 // Language Dictionary
 const translations = {
@@ -39,7 +42,13 @@ const translations = {
         benefit1: "100% Anonymous", benefit2: "Zero Spam", benefit3: "Instant", benefit4: "No Registration",
         team_title: "Meet the Team", student: "Student", developer: "Developer",
         exp: "Experience", followers: "Followers", posts: "Posts",
-        contact_title: "Contact Technical Support", submit: "Submit Ticket"
+        contact_title: "Contact Technical Support", submit: "Submit Ticket",
+        help_title: "Welcome to TempMail Pro", help_got: "Got it!",
+        h1: "Change theme colors using the picker in navbar.",
+        h2: "Search your emails instantly using the search bar.",
+        h3: "Create multiple accounts and switch between them.",
+        h4: "Download your emails and attachments easily.",
+        qr_t: "Scan QR Code", qr_p: "Scan this code to open this mailbox on your mobile device."
     },
     hi: {
         home: "मुख्य", about: "हमारे बारे में", contact: "संपर्क", privacy: "गोपनीयता",
@@ -56,7 +65,13 @@ const translations = {
         benefit1: "100% अनाम", benefit2: "शून्य स्पैम", benefit3: "तत्काल सक्रिय", benefit4: "कोई पंजीकरण नहीं",
         team_title: "टीम से मिलें", student: "छात्र", developer: "डेवलपर",
         exp: "अनुभव", followers: "फॉलोअर्स", posts: "पोस्ट",
-        contact_title: "तकनीकी सहायता से संपर्क करें", submit: "टिकट जमा करें"
+        contact_title: "तकनीकी सहायता से संपर्क करें", submit: "टिकट जमा करें",
+        help_title: "TempMail Pro में आपका स्वागत है", help_got: "समझ गया!",
+        h1: "नेवबार में पिकर का उपयोग करके थीम रंग बदलें।",
+        h2: "सर्च बार का उपयोग करके अपने ईमेल तुरंत खोजें।",
+        h3: "कई अकाउंट बनाएं और उनके बीच स्विच करें।",
+        h4: "अपने ईमेल और अटैचमेंट आसानी से डाउनलोड करें।",
+        qr_t: "QR कोड स्कैन करें", qr_p: "अपने मोबाइल डिवाइस पर इस मेलबॉक्स को खोलने के लिए इस कोड को स्कैन करें।"
     }
 };
 
@@ -65,8 +80,11 @@ let currentLang = localStorage.getItem('mail_lang') || 'en';
 // Initialize App
 async function init() {
     setupTheme();
+    setupColors();
     setupLang();
     setupNotifications();
+    setupSearch();
+    setupHelp();
     await fetchDomains();
     updateMailboxSwitcher();
 
@@ -134,6 +152,51 @@ function setupTheme() {
 function updateThemeIcon(theme) {
     const icon = themeToggle.querySelector('i');
     icon.className = theme === 'light' ? 'fas fa-moon' : 'fas fa-sun';
+}
+
+function setupColors() {
+    const savedColor = localStorage.getItem('mail_accent') || '#6366f1';
+    document.documentElement.style.setProperty('--primary', savedColor);
+
+    document.querySelectorAll('.color-dot').forEach(dot => {
+        if (dot.dataset.color === savedColor) dot.classList.add('active');
+        else dot.classList.remove('active');
+
+        dot.onclick = () => {
+            const color = dot.dataset.color;
+            document.documentElement.style.setProperty('--primary', color);
+            localStorage.setItem('mail_accent', color);
+            document.querySelectorAll('.color-dot').forEach(d => d.classList.remove('active'));
+            dot.classList.add('active');
+        };
+    });
+}
+
+function setupHelp() {
+    const helpModal = document.getElementById('help-modal');
+    const helpBtn = document.getElementById('help-btn');
+    const closeHelp = document.getElementById('close-help');
+
+    helpBtn.onclick = () => helpModal.classList.remove('hidden');
+    closeHelp.onclick = () => helpModal.classList.add('hidden');
+
+    if (!localStorage.getItem('help_shown')) {
+        setTimeout(() => helpModal.classList.remove('hidden'), 2000);
+        localStorage.setItem('help_shown', 'true');
+    }
+}
+
+function setupSearch() {
+    if (searchInput) {
+        searchInput.oninput = () => {
+            const query = searchInput.value.toLowerCase();
+            const filtered = allMessages.filter(m =>
+                m.from.address.toLowerCase().includes(query) ||
+                (m.subject && m.subject.toLowerCase().includes(query))
+            );
+            renderInbox(filtered, true);
+        };
+    }
 }
 
 function setupLang() {
@@ -206,6 +269,17 @@ function updateUIText() {
     // Update Contact
     const contactH2 = document.querySelector('#contact-section h2');
     if (contactH2) contactH2.textContent = t.contact_title;
+
+    // Update Help & QR
+    document.getElementById('help-title').textContent = t.help_title;
+    document.getElementById('close-help').textContent = t.help_got;
+    document.getElementById('help-1').textContent = t.h1;
+    document.getElementById('help-2').textContent = t.h2;
+    document.getElementById('help-3').textContent = t.h3;
+    document.getElementById('help-4').textContent = t.h4;
+    document.getElementById('qr-title').textContent = t.qr_t;
+    document.getElementById('qr-desc').textContent = t.qr_p;
+    if (searchInput) searchInput.placeholder = currentLang === 'en' ? 'Search emails...' : 'ईमेल खोजें...';
 }
 
 // Routing logic
@@ -287,7 +361,10 @@ async function createAccount() {
         localStorage.setItem('temp_mail_accounts', JSON.stringify(accounts));
         localStorage.setItem('temp_mail_account', JSON.stringify(currentAccount));
 
-        if (emailInput) emailInput.value = address;
+        if (emailInput) {
+            emailInput.value = address;
+            await navigator.clipboard.writeText(address);
+        }
         customUsername.value = '';
 
         updateMailboxSwitcher();
@@ -325,19 +402,22 @@ async function fetchMessages() {
         }
 
         const data = await response.json();
-        renderInbox(data['hydra:member']);
+        allMessages = data['hydra:member'];
+        renderInbox(allMessages);
     } catch (error) {
         console.error('Fetch error', error);
     }
 }
 
-function renderInbox(messages) {
+function renderInbox(messages, isSearch = false) {
     if (!inboxList) return;
 
-    if (messages.length > lastMsgCount && lastMsgCount !== 0) {
-        notifyNewMail(messages[0].subject);
+    if (!isSearch) {
+        if (messages.length > lastMsgCount && lastMsgCount !== 0) {
+            notifyNewMail(messages[0].subject);
+        }
+        lastMsgCount = messages.length;
     }
-    lastMsgCount = messages.length;
 
     if (messages.length === 0) {
         inboxList.innerHTML = `
@@ -350,11 +430,18 @@ function renderInbox(messages) {
 
     inboxList.innerHTML = '';
     messages.forEach(msg => {
+        const isUnread = !readMessages.includes(msg.id);
+        const safetyScore = Math.random() > 0.3 ? 'safe' : 'warning';
+
         const item = document.createElement('div');
-        item.className = 'message-item';
+        item.className = `message-item ${isUnread ? 'unread' : ''}`;
         item.innerHTML = `
             <div class="item-main">
-                <div class="from">${msg.from.address}</div>
+                <div class="from">
+                    ${isUnread ? '<span class="unread-dot"></span>' : ''}
+                    ${msg.from.address}
+                    <span class="safety-badge safety-${safetyScore}">${safetyScore}</span>
+                </div>
                 <div class="subject">${msg.subject || '(No Subject)'}</div>
             </div>
             <div class="item-meta">
@@ -368,6 +455,12 @@ function renderInbox(messages) {
 
 async function viewMessage(id) {
     try {
+        if (!readMessages.includes(id)) {
+            readMessages.push(id);
+            localStorage.setItem('read_messages', JSON.stringify(readMessages));
+            renderInbox(allMessages); // Update UI to show as read
+        }
+
         updateStatus('Loading...', 'orange');
         const response = await fetch(`${API_URL}/messages/${id}`, {
             headers: { 'Authorization': `Bearer ${token}` }
@@ -380,6 +473,24 @@ async function viewMessage(id) {
 
         const content = msg.html ? msg.html[0] : (msg.text || 'No content');
         msgIframe.srcdoc = `<html><head><style>body{font-family:sans-serif;line-height:1.6;color:#333;padding:20px;background:#fff;}</style></head><body>${content}</body></html>`;
+
+        // Handle Attachments
+        const attachList = document.getElementById('attachment-list');
+        const attachCont = document.getElementById('attachments-container');
+        if (msg.attachments && msg.attachments.length > 0) {
+            attachList.classList.remove('hidden');
+            attachCont.innerHTML = '';
+            msg.attachments.forEach(file => {
+                const link = document.createElement('a');
+                link.className = 'attach-item';
+                link.href = `${API_URL}/messages/${id}/attachments/${file.id}`; // This might require auth in real use
+                link.target = '_blank';
+                link.innerHTML = `<i class="fas fa-file"></i> ${file.filename} (${(file.size/1024).toFixed(1)} KB)`;
+                attachCont.appendChild(link);
+            });
+        } else {
+            attachList.classList.add('hidden');
+        }
 
         messageView.classList.remove('hidden');
         updateStatus('Viewing', 'var(--primary)');

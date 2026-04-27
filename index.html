@@ -25,11 +25,20 @@
                 <li><a href="#" class="nav-link" data-section="privacy">Privacy</a></li>
             </ul>
             <div class="nav-actions">
+                <div class="color-picker-container">
+                    <button class="color-dot color-default active" data-color="#6366f1" title="Blue"></button>
+                    <button class="color-dot color-green" data-color="#10b981" title="Green"></button>
+                    <button class="color-dot color-red" data-color="#ef4444" title="Red"></button>
+                    <button class="color-dot color-pink" data-color="#ec4899" title="Pink"></button>
+                </div>
                 <button id="lang-toggle" class="btn-icon" title="Switch Language">
                     <span id="lang-text">HI</span>
                 </button>
                 <button id="theme-toggle" class="btn-icon" title="Toggle Dark/Light Mode">
                     <i class="fas fa-moon"></i>
+                </button>
+                <button id="help-btn" class="btn-icon" title="Help Guide">
+                    <i class="fas fa-question-circle"></i>
                 </button>
             </div>
         </div>
@@ -90,6 +99,10 @@
                 <div class="inbox-container glass">
                     <div class="inbox-header">
                         <h2><i class="fas fa-inbox"></i> Incoming Messages</h2>
+                        <div class="search-box">
+                            <i class="fas fa-search"></i>
+                            <input type="text" id="search-mail" placeholder="Search emails...">
+                        </div>
                         <div class="status-indicator">
                             <span id="status-dot"></span>
                             <span id="status-text">Syncing...</span>
@@ -124,6 +137,10 @@
                         </div>
                         <div class="iframe-container">
                             <iframe id="message-iframe" sandbox title="Email content"></iframe>
+                        </div>
+                        <div id="attachment-list" class="attachment-list hidden">
+                            <h4><i class="fas fa-paperclip"></i> Attachments</h4>
+                            <div id="attachments-container"></div>
                         </div>
                     </div>
                 </div>
@@ -287,9 +304,36 @@
     <div id="qr-modal" class="modal hidden">
         <div class="modal-content glass">
             <span class="close-modal">&times;</span>
-            <h3>Scan QR Code</h3>
+            <h3 id="qr-title">Scan QR Code</h3>
             <div id="qr-container"></div>
-            <p>Scan this code to open this mailbox on your mobile device.</p>
+            <p id="qr-desc">Scan this code to open this mailbox on your mobile device.</p>
+        </div>
+    </div>
+
+    <!-- Help Guide Modal -->
+    <div id="help-modal" class="modal hidden">
+        <div class="modal-content glass help-content">
+            <span class="close-modal">&times;</span>
+            <h2 id="help-title">Welcome to TempMail Pro</h2>
+            <div class="help-grid">
+                <div class="help-item">
+                    <i class="fas fa-palette"></i>
+                    <p id="help-1">Change theme colors using the picker in navbar.</p>
+                </div>
+                <div class="help-item">
+                    <i class="fas fa-search"></i>
+                    <p id="help-2">Search your emails instantly using the search bar.</p>
+                </div>
+                <div class="help-item">
+                    <i class="fas fa-user-plus"></i>
+                    <p id="help-3">Create multiple accounts and switch between them.</p>
+                </div>
+                <div class="help-item">
+                    <i class="fas fa-file-download"></i>
+                    <p id="help-4">Download your emails and attachments easily.</p>
+                </div>
+            </div>
+            <button id="close-help" class="btn-primary" style="margin-top: 20px; width: 100%;">Got it!</button>
         </div>
     </div>
 
