@@ -141,7 +141,8 @@ const translations = {
         g1t: "Phishing", g1d: "A cyber attack that uses disguised email as a weapon to steal sensitive data.",
         g2t: "TLS/SSL", g2d: "Encryption protocols that ensure data sent between a browser and a server is private.",
         g3t: "Data Purge", g3d: "The permanent removal of data from a storage system so it cannot be recovered.",
-        g4t: "Digital Footprint", g4d: "The trail of data you leave behind while using the internet."
+        g4t: "Digital Footprint", g4d: "The trail of data you leave behind while using the internet.",
+        review_title: "User Reviews"
     },
     hi: {
         home: "मुख्य", about: "हमारे बारे में", contact: "संपर्क", privacy: "गोपनीयता",
@@ -219,7 +220,8 @@ const translations = {
         g1t: "फ़िशिंग", g1d: "एक साइबर हमला जो संवेदनशील डेटा चुराने के लिए हथियार के रूप में भेस बदले हुए ईमेल का उपयोग करता है।",
         g2t: "TLS/SSL", g2d: "एन्क्रिप्शन प्रोटोकॉल जो सुनिश्चित करते हैं कि ब्राउज़र और सर्वर के बीच भेजा गया डेटा निजी है।",
         g3t: "डेटा पर्ज", g3d: "स्टोरेज सिस्टम से डेटा को स्थायी रूप से हटाना ताकि इसे रिकवर न किया जा सके।",
-        g4t: "डिजिटल फुटप्रिंट", g4d: "इंटरनेट का उपयोग करते समय आपके द्वारा छोड़े गए डेटा का निशान।"
+        g4t: "डिजिटल फुटप्रिंट", g4d: "इंटरनेट का उपयोग करते समय आपके द्वारा छोड़े गए डेटा का निशान।",
+        review_title: "उपयोगकर्ता समीक्षा"
     }
 };
 
@@ -686,6 +688,16 @@ function setupFAQEvents() {
 
 // Routing logic
 function setupRouting() {
+    const menuToggle = document.getElementById('menu-toggle');
+    const navMenu = document.getElementById('nav-menu');
+
+    if (menuToggle && navMenu) {
+        menuToggle.onclick = () => {
+            navMenu.classList.toggle('active');
+            menuToggle.querySelector('i').className = navMenu.classList.contains('active') ? 'fas fa-times' : 'fas fa-bars';
+        };
+    }
+
     document.querySelectorAll('.nav-link, .nav-logo').forEach(link => {
         link.onclick = (e) => {
             e.preventDefault();
@@ -707,6 +719,12 @@ function setupRouting() {
 
             // Special handling for message view
             if (section === 'home' && messageView) messageView.classList.add('hidden');
+
+            // Close mobile menu on click
+            if (navMenu) {
+                navMenu.classList.remove('active');
+                if (menuToggle) menuToggle.querySelector('i').className = 'fas fa-bars';
+            }
         };
     });
 }
