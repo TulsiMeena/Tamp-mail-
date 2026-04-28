@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TempMail - Professional Disposable Email Service</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="manifest" href="manifest.json">
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+</head>
+<body>
+    <div class="glass-bg"></div>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="#" class="nav-logo" data-section="home">
+                <i class="fas fa-envelope-shield"></i> TempMail
+            </a>
+            <button class="menu-toggle" id="menu-toggle">
+                <i class="fas fa-bars"></i>
+            </button>
+            <ul class="nav-menu" id="nav-menu">
+                <li><a href="#" class="nav-link active" data-section="home">Home</a></li>
+                <li><a href="#" class="nav-link" data-section="about">About & Creators</a></li>
+                <li><a href="#" class="nav-link" data-section="contact">Contact</a></li>
+                <li><a href="#" class="nav-link" data-section="privacy">Privacy</a></li>
+            </ul>
+            <div class="nav-actions">
+                <div class="color-picker-container">
+                    <button class="color-dot color-default active" data-color="#6366f1" title="Blue"></button>
+                    <button class="color-dot color-green" data-color="#10b981" title="Green"></button>
+                    <button class="color-dot color-red" data-color="#ef4444" title="Red"></button>
+                    <button class="color-dot color-pink" data-color="#ec4899" title="Pink"></button>
+                </div>
+                <button id="lang-toggle" class="btn-icon" title="Switch Language">
+                    <span id="lang-text">HI</span>
+                </button>
+                <button id="theme-toggle" class="btn-icon" title="Toggle Dark/Light Mode">
+                    <i class="fas fa-moon"></i>
+                </button>
+                <button id="help-btn" class="btn-icon" title="Help Guide">
+                    <i class="fas fa-question-circle"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <!-- Home Section -->
+        <section id="home-section" class="content-section">
+            <header>
+                <h1 class="gradient-text text-3d">Professional Temporary Email</h1>
+                <p>Advanced disposable email service to keep your primary inbox clean and protected from spam, phishing, and tracking.</p>
+            </header>
+
+            <main>
+                <!-- 3D Floating Elements -->
+                <div class="floating-shapes">
+                    <div class="shape s1"></div>
+                    <div class="shape s2"></div>
+                    <div class="shape s3"></div>
+                </div>
+
+                <div class="generator-card glass">
+                    <div class="generator-header">
+                        <div class="badge-row">
+                            <div id="user-avatar" class="user-avatar"></div>
+                            <span class="badge">Your Temp Address</span>
+                        </div>
+                        <div class="refresh-container">
+                            <div class="expiry-timer" id="expiry-box" title="Session Expiry">
+                                <i class="fas fa-clock"></i> <span id="expiry-timer">24h</span>
+                            </div>
+                            <span id="refresh-timer">10s</span>
+                            <div class="progress-bar">
+                                <div id="progress-fill"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="generator-controls">
+                        <div class="account-manager">
+                            <div class="input-group">
+                                <input type="text" id="custom-username" placeholder="Username (optional)">
+                                <select id="domain-select" title="Select Domain"></select>
+                            </div>
+                            <div class="input-group">
+                                <input type="text" id="email-address" readonly placeholder="Generating...">
+                                <button id="copy-btn" class="btn-primary"><i class="fas fa-copy"></i></button>
+                            </div>
+                        </div>
+
+                        <div class="mailbox-switcher">
+                            <div class="switcher-row">
+                                <label id="saved-label">Saved Mailboxes:</label>
+                                <select id="mailbox-select"></select>
+                            </div>
+                            <div class="note-row">
+                                <input type="text" id="mailbox-note" placeholder="Add a note for this email...">
+                                <button id="save-note-btn" class="btn-primary"><i class="fas fa-save"></i></button>
+                                <button id="delete-mailbox-btn" class="btn-danger"><i class="fas fa-trash"></i></button>
+                            </div>
+                        </div>
+
+                        <div class="action-buttons">
+                            <button id="qr-btn" class="btn-secondary"><i class="fas fa-qrcode"></i> QR</button>
+                            <button id="share-btn" class="btn-secondary"><i class="fas fa-share-alt"></i></button>
+                            <button id="new-btn" class="btn-danger"><i class="fas fa-plus"></i> Create</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="inbox-container glass">
+                    <div class="inbox-header">
+                        <h2><i class="fas fa-inbox"></i> Incoming Messages</h2>
+                        <div class="search-box">
+                            <i class="fas fa-search"></i>
+                            <input type="text" id="search-mail" placeholder="Search emails...">
+                        </div>
+                        <div class="inbox-actions" style="display: flex; align-items: center; gap: 15px;">
+                            <button id="refresh-now-btn" class="btn-icon" title="Refresh Now"><i class="fas fa-sync"></i></button>
+                            <div class="status-indicator">
+                                <span id="status-dot"></span>
+                                <span id="status-text">Syncing...</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="inbox-list" class="inbox-list">
+                        <div class="empty-state">
+                            <i class="fas fa-envelope-open"></i>
+                            <p>Waiting for incoming emails...</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="message-view" class="message-view hidden glass">
+                    <div class="msg-view-header" style="display: flex; justify-content: space-between; align-items: center;">
+                        <button id="back-btn" class="btn-text"><i class="fas fa-arrow-left"></i> Back</button>
+                        <div class="msg-actions">
+                            <button id="print-btn" class="btn-text" title="Print Email"><i class="fas fa-print"></i></button>
+                            <button id="download-btn" class="btn-text" title="Download Email"><i class="fas fa-download"></i></button>
+                        </div>
+                    </div>
+                    <div class="msg-full-card">
+                        <div class="msg-details">
+                            <h2 id="msg-subject"></h2>
+                            <div class="msg-meta-info">
+                                <div class="meta-item">
+                                    <span class="label">From:</span>
+                                    <span id="msg-from" class="value"></span>
+                                </div>
+                                <div class="meta-item">
+                                    <span class="label">Date:</span>
+                                    <span id="msg-date" class="value"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="iframe-container">
+                            <iframe id="message-iframe" sandbox title="Email content"></iframe>
+                        </div>
+                        <div id="attachment-list" class="attachment-list hidden">
+                            <h4><i class="fas fa-paperclip"></i> Attachments</h4>
+                            <div id="attachments-container"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Preferences & Settings -->
+                <div class="preferences-card glass">
+                    <h3 id="pref-title">Experience Preferences</h3>
+                    <div class="pref-grid">
+                        <div class="pref-item">
+                            <label><i class="fas fa-volume-up"></i> <span id="pref-sound">New Mail Sound</span></label>
+                            <input type="checkbox" id="toggle-sound" checked>
+                        </div>
+                        <div class="pref-item">
+                            <label><i class="fas fa-magic"></i> <span id="pref-confetti">Confetti Effect</span></label>
+                            <input type="checkbox" id="toggle-confetti" checked>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Usage Analytics -->
+                <div class="analytics-row">
+                    <div class="stat-card glass">
+                        <i class="fas fa-envelope-open-text"></i>
+                        <div class="stat-info">
+                            <span id="stat-emails">0</span>
+                            <p id="stat-label-1">Total Emails Received</p>
+                        </div>
+                    </div>
+                    <div class="stat-card glass">
+                        <i class="fas fa-hourglass-half"></i>
+                        <div class="stat-info">
+                            <span id="stat-time">0m</span>
+                            <p id="stat-label-2">Time Saved (Est.)</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Pro Tips Section -->
+                <div class="info-card glass" style="margin-top: 60px;">
+                    <h2 id="protips-title" class="section-title">Pro Tips for Power Users</h2>
+                    <div class="tips-grid">
+                        <div class="tip-item glass">
+                            <i class="fas fa-keyboard"></i>
+                            <h4 id="tip-1-t">Custom Usernames</h4>
+                            <p id="tip-1-d">Enter a custom name in the username field before clicking "Create" to have a professional-looking email like yourname@domain.com.</p>
+                        </div>
+                        <div class="tip-item glass">
+                            <i class="fas fa-file-import"></i>
+                            <h4 id="tip-2-t">Session Backup</h4>
+                            <p id="tip-2-d">Use the "Export Backup" tool in the Privacy section to save your mailboxes. You can restore them later using the "Import" tool.</p>
+                        </div>
+                        <div class="tip-item glass">
+                            <i class="fas fa-bell"></i>
+                            <h4 id="tip-3-t">Desktop Alerts</h4>
+                            <p id="tip-3-d">Enable browser notifications to get alerted about new emails even when you are on another tab.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Use Cases Section -->
+                <div class="info-card glass" style="margin-top: 60px;">
+                    <h2 id="usecases-title" class="section-title">Where to Use TempMail?</h2>
+                    <div class="usecases-grid">
+                        <div class="usecase-item">
+                            <i class="fas fa-gamepad"></i>
+                            <h4 id="uc-1-t">Gaming & Beta Tests</h4>
+                            <p id="uc-1-d">Register for game trials and beta tests without risking your main account to marketing spam.</p>
+                        </div>
+                        <div class="usecase-item">
+                            <i class="fas fa-shopping-cart"></i>
+                            <h4 id="uc-2-t">Online Shopping</h4>
+                            <p id="uc-2-d">Get one-time discount codes from stores without being added to their permanent mailing lists.</p>
+                        </div>
+                        <div class="usecase-item">
+                            <i class="fas fa-wifi"></i>
+                            <h4 id="uc-3-t">Public Wi-Fi</h4>
+                            <p id="uc-3-d">Safely sign up for airport or cafe Wi-Fi that requires email verification.</p>
+                        </div>
+                        <div class="usecase-item">
+                            <i class="fas fa-download"></i>
+                            <h4 id="uc-4-t">Free Downloads</h4>
+                            <p id="uc-4-d">Access eBooks, templates, or software that "require email" before downloading.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- NEW: Informational Sections -->
+                <!-- Comparison Table -->
+                <div class="info-card glass" style="margin-top: 60px;">
+                    <h2 id="comp-title" class="section-title">Why TempMail Pro?</h2>
+                    <div class="table-container">
+                        <table class="comp-table">
+                            <thead>
+                                <tr>
+                                    <th id="th-feature">Feature</th>
+                                    <th id="th-standard">Standard Service</th>
+                                    <th id="th-pro" class="highlight">TempMail Pro</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td id="td-1-f">Custom Username</td>
+                                    <td>❌ No</td>
+                                    <td class="highlight">✅ Yes</td>
+                                </tr>
+                                <tr>
+                                    <td id="td-2-f">Multi-Mailbox</td>
+                                    <td>❌ No</td>
+                                    <td class="highlight">✅ Yes</td>
+                                </tr>
+                                <tr>
+                                    <td id="td-3-f">Backups</td>
+                                    <td>❌ No</td>
+                                    <td class="highlight">✅ Yes (Export/Import)</td>
+                                </tr>
+                                <tr>
+                                    <td id="td-4-f">3D Interface</td>
+                                    <td>❌ No</td>
+                                    <td class="highlight">✅ Yes (Glassmorphism)</td>
+                                </tr>
+                                <tr>
+                                    <td id="td-5-f">Bilingual Support</td>
+                                    <td>❌ No</td>
+                                    <td class="highlight">✅ English & Hindi</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="info-grid">
+                    <div class="info-card-3d glass">
+                        <div class="info-icon"><i class="fas fa-question-circle"></i></div>
+                        <h3>What is Temp Mail?</h3>
+                        <p>Temporary email (or disposable email) is a service that provides a short-lived email address. It is used to receive confirmation links or download files without exposing your real email to potential spam.</p>
+                    </div>
+                    <div class="info-card-3d glass">
+                        <div class="info-icon"><i class="fas fa-cogs"></i></div>
+                        <h3 id="hiw-title">How It Works</h3>
+                        <div class="hiw-steps">
+                            <div class="hiw-step">
+                                <span class="step-num">1</span>
+                                <p id="step-1">Generate a unique address instantly.</p>
+                            </div>
+                            <div class="hiw-step">
+                                <span class="step-num">2</span>
+                                <p id="step-2">Use it on any site or app.</p>
+                            </div>
+                            <div class="hiw-step">
+                                <span class="step-num">3</span>
+                                <p id="step-3">Mails arrive in 1-2 seconds.</p>
+                            </div>
+                            <div class="hiw-step">
+                                <span class="step-num">4</span>
+                                <p id="step-4">Close the tab to purge data.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="info-card-3d glass">
+                        <div class="info-icon"><i class="fas fa-shield-alt"></i></div>
+                        <h3>Key Benefits</h3>
+                        <ul class="benefit-list">
+                            <li><i class="fas fa-check"></i> 100% Anonymous</li>
+                            <li><i class="fas fa-check"></i> Zero Spam in Real Inbox</li>
+                            <li><i class="fas fa-check"></i> Instant Activation</li>
+                            <li><i class="fas fa-check"></i> No Registration Required</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Testimonials Section -->
+                <div class="testimonials-section">
+                    <h2 id="review-title" class="section-title">User Reviews</h2>
+                    <div class="testimonials-grid">
+                        <div class="review-card glass">
+                            <div class="user-info">
+                                <img src="https://i.pravatar.cc/150?u=1" alt="User" class="user-img">
+                                <div class="user-meta">
+                                    <h4>Rajesh Kumar</h4>
+                                    <div class="rating"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                                </div>
+                            </div>
+                            <p class="review-text">"Best temporary mail service! The UI is super smooth and it works perfectly for my gaming signups."</p>
+                        </div>
+                        <div class="review-card glass">
+                            <div class="user-info">
+                                <img src="https://i.pravatar.cc/150?u=2" alt="User" class="user-img">
+                                <div class="user-meta">
+                                    <h4>Priya Sharma</h4>
+                                    <div class="rating"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i></div>
+                                </div>
+                            </div>
+                            <p class="review-text">"The Hindi support is a lifesaver. Very professional and secure. I use it daily to avoid spam."</p>
+                        </div>
+                        <div class="review-card glass">
+                            <div class="user-info">
+                                <img src="https://i.pravatar.cc/150?u=3" alt="User" class="user-img">
+                                <div class="user-meta">
+                                    <h4>Ankit Verma</h4>
+                                    <div class="rating"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                                </div>
+                            </div>
+                            <p class="review-text">"Love the 3D design and how fast the emails arrive. Great job by Aman and Amit!"</p>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </section>
+
+        <!-- About Section -->
+        <section id="about-section" class="content-section hidden">
+            <div class="info-card glass">
+                <h2 id="team-title" class="section-title">Meet the Team</h2>
+                <div class="team-grid">
+                    <!-- Aman Meena -->
+                    <div class="profile-card glass">
+                        <div class="profile-img-container">
+                            <img src="https://raw.githubusercontent.com/Amitmeena55/Aman-Meena-/main/aman1.jpg" alt="Aman Meena" class="profile-img" loading="lazy">
+                            <div class="status-badge">Pro</div>
+                        </div>
+                        <div class="profile-info">
+                            <h3>Aman Meena</h3>
+                            <p class="handle">@_technical_01</p>
+                            <div class="stats-row">
+                                <div class="stat-item">
+                                    <span class="stat-val">15K+</span>
+                                    <span class="stat-label">Followers</span>
+                                </div>
+                                <div class="stat-item">
+                                    <span class="stat-val">200+</span>
+                                    <span class="stat-label">Posts</span>
+                                </div>
+                                <div class="stat-item">
+                                    <span class="stat-val">5+ Yrs</span>
+                                    <span class="stat-label">Experience</span>
+                                </div>
+                            </div>
+                            <div class="profile-links">
+                                <a href="https://www.instagram.com/_technical_01?igsh=MTdydjJkbWl3Y3ppeg==" target="_blank" class="social-btn insta"><i class="fab fa-instagram"></i> Instagram</a>
+                                <a href="https://whatsapp.com/channel/0029VaDFCbF9hXFDBUx8fe3E" target="_blank" class="social-btn whatsapp"><i class="fab fa-whatsapp"></i> Channel</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Amit Meena -->
+                    <div class="profile-card glass">
+                        <div class="profile-img-container">
+                            <img src="https://raw.githubusercontent.com/Amitmeena55/Aman-Meena-/main/Amit%20meena.jpg" alt="Amit Meena" class="profile-img" loading="lazy">
+                            <div class="status-badge dev">Developer</div>
+                        </div>
+                        <div class="profile-info">
+                            <h3>Amit Meena</h3>
+                            <p class="bio">The creative mind behind the architecture and development of this advanced platform.</p>
+                            <div class="skill-tags">
+                                <span>Web Developer</span>
+                                <span>UI/UX Designer</span>
+                                <span>Software Engineer</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="brand-story">
+                    <h3 id="expertise-title">Professional Work & Expertise</h3>
+                    <div class="work-grid">
+                        <div class="work-item glass">
+                            <h4 id="work-1-t"><i class="fas fa-code"></i> Amit's Portfolio</h4>
+                            <p id="work-1-d">Full-stack developer specializing in React, Node.js, and Modern CSS. Built over 50+ high-performance web applications with a focus on UX and 3D interactivity.</p>
+                        </div>
+                        <div class="work-item glass">
+                            <h4 id="work-2-t"><i class="fas fa-bullhorn"></i> Aman's Influence</h4>
+                            <p id="work-2-d">Digital content creator and influencer. Expert in social media strategy, brand building, and community engagement with a reach of 15K+ active followers.</p>
+                        </div>
+                        <div class="work-item glass">
+                            <h4 id="work-3-t"><i class="fas fa-project-diagram"></i> Joint Ventures</h4>
+                            <p id="work-3-d">Collaborative projects focusing on Privacy Tools, Open Source security modules, and Next-Gen communication platforms.</p>
+                        </div>
+                    </div>
+                    <div class="vision-box glass" style="margin-top: 30px; padding: 20px; border-radius: 20px;">
+                        <h3 id="vision-title">Our Vision</h3>
+                        <p id="vision-desc">TempMail was conceptualized by Aman Meena and brought to life by Amit Meena. We believe in a web where privacy is a right, not a luxury. Our goal is to provide tools that empower users to control their digital footprint.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact-section" class="content-section hidden">
+            <div class="info-card glass">
+                <h2>Contact Technical Support</h2>
+                <p>Experiencing issues? Our team is here to help.</p>
+                <form id="contact-form" class="pro-form">
+                    <div class="input-row">
+                        <div class="form-control">
+                            <label>Name</label>
+                            <input type="text" placeholder="John Doe" required>
+                        </div>
+                        <div class="form-control">
+                            <label>Email</label>
+                            <input type="email" placeholder="john@example.com" required>
+                        </div>
+                    </div>
+                    <div class="form-control">
+                        <label>Issue Description</label>
+                        <textarea rows="5" placeholder="Tell us what's happening..." required></textarea>
+                    </div>
+                    <button type="submit" class="btn-primary block">Submit Ticket</button>
+                </form>
+            </div>
+        </section>
+
+        <!-- Privacy Section -->
+        <section id="privacy-section" class="content-section hidden">
+            <!-- Extended Security Guide -->
+            <div class="info-card glass" style="margin-bottom: 40px;">
+                <h2 id="sec-title">Ultimate Privacy & Security Guide</h2>
+                <div class="security-content">
+                    <p id="sec-intro">In today's digital world, your email is your digital identity. Exposing it to every website you visit is dangerous. Here is why online privacy matters:</p>
+                    <div class="sec-grid">
+                        <div class="sec-box">
+                            <h4 id="sec-1-t">Phishing Protection</h4>
+                            <p id="sec-1-d">TempMail shields you from phishing links. If an attacker gets your temp address, your real mailbox remains hidden and safe.</p>
+                        </div>
+                        <div class="sec-box">
+                            <h4 id="sec-2-t">Spam Defense</h4>
+                            <p id="sec-2-d">90% of internet traffic is spam. By using disposable emails, you keep your primary inbox 100% clean and organized.</p>
+                        </div>
+                        <div class="sec-box">
+                            <h4 id="sec-3-t">Data Privacy</h4>
+                            <p id="sec-3-d">Websites sell your email to advertisers. With TempMail, they only get data that will eventually disappear.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="info-card glass">
+                <div class="tools-section glass" style="padding: 20px; border-radius: 20px; margin-bottom: 40px;">
+                    <h2 id="tools-title">Advanced Tools</h2>
+                    <div class="tools-grid" style="display: flex; gap: 15px; margin-top: 15px;">
+                        <button id="export-btn" class="btn-secondary" style="flex: 1;"><i class="fas fa-file-export"></i> Export Backup</button>
+                        <button id="import-btn" class="btn-secondary" style="flex: 1;"><i class="fas fa-file-import"></i> Import Backup</button>
+                        <input type="file" id="import-file" style="display: none;" accept=".json">
+                    </div>
+                </div>
+
+                <h2>Privacy & Compliance</h2>
+                <p>Effective Date: October 2025</p>
+                <div class="policy-section">
+                    <h3>1. Data Sovereignty</h3>
+                    <p>We do not store your data beyond the temporary session. Once you generate a new address or clear your cache, previous data is permanently purged.</p>
+                    <h3>2. Encryption</h3>
+                    <p>All traffic between your browser and our servers is encrypted using Industry Standard TLS/SSL.</p>
+                    <h3>3. Cookies</h3>
+                    <p>We only use essential functional cookies (LocalStorage) to maintain your session.</p>
+                </div>
+
+                <!-- Glossary Section -->
+                <div class="glossary-section glass" style="margin-top: 40px; padding: 25px; border-radius: 20px;">
+                    <h2 id="glos-title">Privacy Glossary</h2>
+                    <div class="glossary-grid">
+                        <div class="glos-item">
+                            <strong id="glos-1-t">Phishing:</strong>
+                            <p id="glos-1-d">A cyber attack that uses disguised email as a weapon to steal sensitive data.</p>
+                        </div>
+                        <div class="glos-item">
+                            <strong id="glos-2-t">TLS/SSL:</strong>
+                            <p id="glos-2-d">Encryption protocols that ensure data sent between a browser and a server is private.</p>
+                        </div>
+                        <div class="glos-item">
+                            <strong id="glos-3-t">Data Purge:</strong>
+                            <p id="glos-3-d">The permanent removal of data from a storage system so it cannot be recovered.</p>
+                        </div>
+                        <div class="glos-item">
+                            <strong id="glos-4-t">Digital Footprint:</strong>
+                            <p id="glos-4-d">The trail of data you leave behind while using the internet.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+                <!-- FAQ Section -->
+                <div id="faq-main-section" class="info-card glass" style="margin-top: 80px;">
+                    <h2 id="faq-main-title" class="section-title">Frequently Asked Questions</h2>
+                    <div id="faq-container" class="faq-list">
+                        <!-- FAQ Items will be injected or listed here -->
+                    </div>
+                </div>
+            </main>
+        </section>
+
+        <footer>
+            <div class="footer-bottom">
+                <p>&copy; 2025 TempMail Pro. Created by Amit Meena for Aman Meena.</p>
+                <div class="footer-links">
+                    <a href="#">API Documentation</a>
+                    <a href="#">Terms of Service</a>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- QR Modal -->
+    <div id="qr-modal" class="modal hidden">
+        <div class="modal-content glass">
+            <span class="close-modal">&times;</span>
+            <h3 id="qr-title">Scan QR Code</h3>
+            <div id="qr-container"></div>
+            <p id="qr-desc">Scan this code to open this mailbox on your mobile device.</p>
+        </div>
+    </div>
+
+    <!-- Help Guide Modal -->
+    <div id="help-modal" class="modal hidden">
+        <div class="modal-content glass help-content">
+            <span class="close-modal">&times;</span>
+            <h2 id="help-title">Welcome to TempMail Pro</h2>
+            <div class="help-grid">
+                <div class="help-item">
+                    <i class="fas fa-palette"></i>
+                    <p id="help-1">Change theme colors using the picker in navbar.</p>
+                </div>
+                <div class="help-item">
+                    <i class="fas fa-search"></i>
+                    <p id="help-2">Search your emails instantly using the search bar.</p>
+                </div>
+                <div class="help-item">
+                    <i class="fas fa-user-plus"></i>
+                    <p id="help-3">Create multiple accounts and switch between them.</p>
+                </div>
+                <div class="help-item">
+                    <i class="fas fa-file-download"></i>
+                    <p id="help-4">Download your emails and attachments easily.</p>
+                </div>
+            </div>
+            <button id="close-help" class="btn-primary" style="margin-top: 20px; width: 100%;">Got it!</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
