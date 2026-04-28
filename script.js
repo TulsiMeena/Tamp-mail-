@@ -88,7 +88,18 @@ const translations = {
         w3t: "Joint Ventures", w3d: "Collaborative projects focusing on Privacy Tools, Open Source security modules, and Next-Gen communication platforms.",
         v_t: "Our Vision", v_d: "TempMail was conceptualized by Aman Meena and brought to life by Amit Meena. We believe in a web where privacy is a right, not a luxury. Our goal is to provide tools that empower users to control their digital footprint.",
         amit_bio: "The creative mind behind the architecture and development of this advanced platform.",
-        s1: "Web Developer", s2: "UI/UX Designer", s3: "Software Engineer"
+        s1: "Web Developer", s2: "UI/UX Designer", s3: "Software Engineer",
+        tips_t: "Pro Tips for Power Users",
+        t1t: "Custom Usernames", t1d: "Enter a custom name in the username field before clicking \"Create\" to have a professional-looking email like yourname@domain.com.",
+        t2t: "Session Backup", t2d: "Use the \"Export Backup\" tool in the Privacy section to save your mailboxes. You can restore them later using the \"Import\" tool.",
+        t3t: "Desktop Alerts", t3d: "Enable browser notifications to get alerted about new emails even when you are on another tab.",
+        comp_t: "Why TempMail Pro?", f_feat: "Feature", f_std: "Standard Service", f_pro: "TempMail Pro",
+        td1: "Custom Username", td2: "Multi-Mailbox", td3: "Backups", td4: "3D Interface", td5: "Bilingual Support",
+        glos_t: "Privacy Glossary",
+        g1t: "Phishing", g1d: "A cyber attack that uses disguised email as a weapon to steal sensitive data.",
+        g2t: "TLS/SSL", g2d: "Encryption protocols that ensure data sent between a browser and a server is private.",
+        g3t: "Data Purge", g3d: "The permanent removal of data from a storage system so it cannot be recovered.",
+        g4t: "Digital Footprint", g4d: "The trail of data you leave behind while using the internet."
     },
     hi: {
         home: "मुख्य", about: "हमारे बारे में", contact: "संपर्क", privacy: "गोपनीयता",
@@ -149,7 +160,18 @@ const translations = {
         w3t: "संयुक्त उद्यम", w3d: "गोपनीयता टूल, ओपन सोर्स सुरक्षा मॉड्यूल और अगली पीढ़ी के संचार प्लेटफार्मों पर केंद्रित सहयोगी परियोजनाएं।",
         v_t: "हमारा विजन", v_d: "TempMail अमन मीणा द्वारा संकल्पित किया गया था और अमित मीणा द्वारा जीवन में लाया गया था। हम एक ऐसे वेब में विश्वास करते हैं जहाँ गोपनीयता एक अधिकार है, विलासिता नहीं। हमारा लक्ष्य ऐसे उपकरण प्रदान करना है जो उपयोगकर्ताओं को उनके डिजिटल पदचिह्न को नियंत्रित करने के लिए सशक्त बनाते हैं।",
         amit_bio: "इस उन्नत मंच की वास्तुकला और विकास के पीछे रचनात्मक दिमाग।",
-        s1: "वेब डेवलपर", s2: "UI/UX डिज़ाइनर", s3: "सॉफ्टवेयर इंजीनियर"
+        s1: "वेब डेवलपर", s2: "UI/UX डिज़ाइनर", s3: "सॉफ्टवेयर इंजीनियर",
+        tips_t: "पावर उपयोगकर्ताओं के लिए प्रो टिप्स",
+        t1t: "कस्टम यूजरनेम", t1d: "पेशेवर दिखने वाले ईमेल (जैसे yourname@domain.com) के लिए \"Create\" पर क्लिक करने से पहले यूजरनेम फ़ील्ड में एक कस्टम नाम दर्ज करें।",
+        t2t: "सत्र बैकअप", t2d: "अपने मेलबॉक्स को सुरक्षित करने के लिए गोपनीयता अनुभाग में \"बैकअप एक्सपोर्ट करें\" टूल का उपयोग करें। आप उन्हें बाद में \"इम्पोर्ट\" टूल का उपयोग करके पुनर्स्थापित कर सकते हैं।",
+        t3t: "डेस्कटॉप अलर्ट", t3d: "जब आप किसी अन्य टैब पर हों तब भी नए ईमेल के बारे में सतर्क रहने के लिए ब्राउज़र सूचनाएं सक्षम करें।",
+        comp_t: "TempMail Pro ही क्यों?", f_feat: "सुविधा", f_std: "मानक सेवा", f_pro: "TempMail Pro",
+        td1: "कस्टम यूजरनेम", td2: "मल्टी-मेलबॉक्स", td3: "बैकअप", td4: "3D इंटरफेस", td5: "द्विभाषी सहायता",
+        glos_t: "गोपनीयता शब्दावली",
+        g1t: "फ़िशिंग", g1d: "एक साइबर हमला जो संवेदनशील डेटा चुराने के लिए हथियार के रूप में भेस बदले हुए ईमेल का उपयोग करता है।",
+        g2t: "TLS/SSL", g2d: "एन्क्रिप्शन प्रोटोकॉल जो सुनिश्चित करते हैं कि ब्राउज़र और सर्वर के बीच भेजा गया डेटा निजी है।",
+        g3t: "डेटा पर्ज", g3d: "स्टोरेज सिस्टम से डेटा को स्थायी रूप से हटाना ताकि इसे रिकवर न किया जा सके।",
+        g4t: "डिजिटल फुटप्रिंट", g4d: "इंटरनेट का उपयोग करते समय आपके द्वारा छोड़े गए डेटा का निशान।"
     }
 };
 
@@ -416,6 +438,46 @@ function updateUIText() {
         skills[0].textContent = t.s1;
         skills[1].textContent = t.s2;
         skills[2].textContent = t.s3;
+    }
+
+    // Update Pro Tips
+    const ptTitle = document.getElementById('protips-title');
+    if (ptTitle) {
+        ptTitle.textContent = t.tips_t;
+        document.getElementById('tip-1-t').textContent = t.t1t;
+        document.getElementById('tip-1-d').textContent = t.t1d;
+        document.getElementById('tip-2-t').textContent = t.t2t;
+        document.getElementById('tip-2-d').textContent = t.t2d;
+        document.getElementById('tip-3-t').textContent = t.t3t;
+        document.getElementById('tip-3-d').textContent = t.t3d;
+    }
+
+    // Update Comp Table
+    const compTitle = document.getElementById('comp-title');
+    if (compTitle) {
+        compTitle.textContent = t.comp_t;
+        document.getElementById('th-feature').textContent = t.f_feat;
+        document.getElementById('th-standard').textContent = t.f_std;
+        document.getElementById('th-pro').textContent = t.f_pro;
+        document.getElementById('td-1-f').textContent = t.td1;
+        document.getElementById('td-2-f').textContent = t.td2;
+        document.getElementById('td-3-f').textContent = t.td3;
+        document.getElementById('td-4-f').textContent = t.td4;
+        document.getElementById('td-5-f').textContent = t.td5;
+    }
+
+    // Update Glossary
+    const glosTitle = document.getElementById('glos-title');
+    if (glosTitle) {
+        glosTitle.textContent = t.glos_t;
+        document.getElementById('glos-1-t').textContent = t.g1t;
+        document.getElementById('glos-1-d').textContent = t.g1d;
+        document.getElementById('glos-2-t').textContent = t.g2t;
+        document.getElementById('glos-2-d').textContent = t.g2d;
+        document.getElementById('glos-3-t').textContent = t.g3t;
+        document.getElementById('glos-3-d').textContent = t.g3d;
+        document.getElementById('glos-4-t').textContent = t.g4t;
+        document.getElementById('glos-4-d').textContent = t.g4d;
     }
 
     // Update Contact
@@ -1050,7 +1112,7 @@ init();
 
 // --- Interactive 3D Tilt Effect ---
 function applyTilt() {
-    const cards = document.querySelectorAll('.generator-card, .info-card-3d, .profile-card, .inbox-container');
+    const cards = document.querySelectorAll('.generator-card, .info-card-3d, .profile-card, .inbox-container, .tip-item, .stat-card');
 
     cards.forEach(card => {
         // Skip tilt for Home section elements
