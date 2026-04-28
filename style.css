@@ -457,6 +457,31 @@ button:hover { transform: translateY(-5px) scale(1.05); }
 .benefit-list li { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; font-weight: 600; }
 .benefit-list i { color: var(--success); font-size: 0.9rem; }
 
+/* Use Cases */
+.usecases-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; margin-top: 30px; }
+.usecase-item { background: rgba(0,0,0,0.02); padding: 25px; border-radius: 20px; text-align: center; transition: 0.3s; }
+.usecase-item:hover { background: var(--border); transform: translateY(-5px); }
+.usecase-item i { font-size: 2rem; color: var(--primary); margin-bottom: 15px; }
+.usecase-item h4 { margin-bottom: 10px; font-size: 1.1rem; }
+.usecase-item p { font-size: 0.85rem !important; color: var(--text-muted); line-height: 1.4; }
+
+/* Security Content */
+.security-content { margin-top: 20px; }
+.sec-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; margin-top: 30px; }
+.sec-box { padding: 25px; background: rgba(16, 185, 129, 0.05); border-radius: 20px; border-left: 5px solid var(--success); }
+.sec-box h4 { color: var(--success); margin-bottom: 10px; font-size: 1.2rem; }
+.sec-box p { font-size: 0.9rem !important; line-height: 1.6; }
+
+/* FAQ Styles */
+.faq-list { display: flex; flex-direction: column; gap: 15px; margin-top: 30px; text-align: left; }
+.faq-item { background: rgba(0,0,0,0.02); border-radius: 15px; overflow: hidden; border: 1px solid var(--border); }
+.faq-quest { width: 100%; padding: 20px; background: none; border: none; text-align: left; font-weight: 800; color: var(--text); cursor: pointer; display: flex; justify-content: space-between; align-items: center; }
+.faq-quest:hover { background: var(--border); }
+.faq-ans { padding: 0 20px; max-height: 0; overflow: hidden; transition: all 0.3s ease; color: var(--text-muted); font-size: 0.9rem; line-height: 1.6; }
+.faq-item.active .faq-ans { padding: 10px 20px 20px; max-height: 500px; }
+.faq-item.active .faq-quest i { transform: rotate(180deg); }
+.faq-quest i { transition: 0.3s; color: var(--primary); }
+
 /* Message View */
 .message-view { padding: 40px; border-radius: var(--radius); margin-top: 20px; }
 .btn-text { background: none; border: none; color: var(--primary); font-weight: 800; cursor: pointer; margin-bottom: 25px; }
@@ -517,6 +542,25 @@ iframe { width: 100%; height: 100%; border: none; }
 .work-item:hover { transform: translateY(-10px); }
 .work-item h4 { color: var(--primary); margin-bottom: 12px; font-size: 1.2rem; display: flex; align-items: center; gap: 10px; }
 .work-item p { font-size: 0.95rem; color: var(--text-muted); line-height: 1.6; }
+
+.vision-box {
+    margin-top: 30px;
+    padding: 30px;
+    border-radius: 20px;
+    background: linear-gradient(135deg, rgba(99, 102, 241, 0.05) 0%, rgba(168, 85, 247, 0.05) 100%);
+    border: 1px solid var(--border);
+}
+
+.vision-box h3 {
+    margin-bottom: 15px;
+    color: var(--primary);
+}
+
+.vision-box p {
+    font-size: 1rem;
+    color: var(--text);
+    line-height: 1.8;
+}
 
 /* Form Elements */
 .pro-form { display: flex; flex-direction: column; gap: 25px; margin-top: 30px; }

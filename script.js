@@ -55,7 +55,40 @@ const translations = {
         qr_t: "Scan QR Code", qr_p: "Scan this code to open this mailbox on your mobile device.",
         saved_label: "Saved Mailboxes:", note_ph: "Add a note for this email...",
         tools: "Advanced Tools", export: "Export Backup", import: "Import Backup",
-        hiw_t: "How It Works", s1: "Generate a unique address instantly.", s2: "Use it on any site or app.", s3: "Mails arrive in 1-2 seconds.", s4: "Close the tab to purge data."
+        hiw_t: "How It Works", s1: "Generate a unique address instantly.", s2: "Use it on any site or app.", s3: "Mails arrive in 1-2 seconds.", s4: "Close the tab to purge data.",
+        uc_t: "Where to Use TempMail?",
+        uc1t: "Gaming & Beta Tests", uc1d: "Register for game trials and beta tests without risking your main account to marketing spam.",
+        uc2t: "Online Shopping", uc2d: "Get one-time discount codes from stores without being added to their permanent mailing lists.",
+        uc3t: "Public Wi-Fi", uc3d: "Safely sign up for airport or cafe Wi-Fi that requires email verification.",
+        uc4t: "Free Downloads", uc4d: "Access eBooks, templates, or software that 'require email' before downloading.",
+        sec_t: "Ultimate Privacy & Security Guide", sec_i: "In today's digital world, your email is your digital identity. Exposing it to every website you visit is dangerous. Here is why online privacy matters:",
+        sec1t: "Phishing Protection", sec1d: "TempMail shields you from phishing links. If an attacker gets your temp address, your real mailbox remains hidden and safe.",
+        sec2t: "Spam Defense", sec2d: "90% of internet traffic is spam. By using disposable emails, you keep your primary inbox 100% clean and organized.",
+        sec3t: "Data Privacy", sec3d: "Websites sell your email to advertisers. With TempMail, they only get data that will eventually disappear.",
+        faq_t: "Frequently Asked Questions",
+        q1: "Is Temp Mail legal?", a1: "Yes, temporary email services are 100% legal for legitimate use like avoiding spam.",
+        q2: "How long do emails stay?", a2: "Emails are kept on the server for a few hours before being automatically purged.",
+        q3: "Can I send emails?", a3: "Most temp mail services, including this one, are for receiving emails only to maintain security.",
+        q4: "Is my real IP safe?", a4: "Yes, we don't store your personal IP or connect it to your temporary address.",
+        q5: "Can I recover a mailbox?", a5: "If you have your token or backup file, you can restore access to your mailbox.",
+        q6: "Do you sell my data?", a6: "Absolutely not. We generate revenue through premium features/ads (in future) but never by selling user identities.",
+        q7: "Why is it free?", a7: "We believe privacy is a fundamental human right. Our infrastructure is optimized for high efficiency and low cost.",
+        q8: "Can I use it for social media?", a8: "Yes, for registration and verification, though some sites may block known disposable domains.",
+        q9: "Is there a limit?", a9: "You can create unlimited accounts. Each lasts for 24 hours unless you export your backup.",
+        q10: "Who made this?", a10: "This professional tool was conceptualized by Aman Meena and developed by Amit Meena.",
+        del_confirm: "Delete this mailbox permanently?",
+        del_limit: "You must have at least one mailbox.",
+        note_saved: "Note saved!",
+        import_success: "Backup imported successfully!",
+        import_err: "Invalid backup file",
+        ticket_success: "Ticket submitted successfully! Amit Meena will review it soon.",
+        exp_title: "Professional Work & Expertise",
+        w1t: "Amit's Portfolio", w1d: "Full-stack developer specializing in React, Node.js, and Modern CSS. Built over 50+ high-performance web applications with a focus on UX and 3D interactivity.",
+        w2t: "Aman's Influence", w2d: "Digital content creator and influencer. Expert in social media strategy, brand building, and community engagement with a reach of 15K+ active followers.",
+        w3t: "Joint Ventures", w3d: "Collaborative projects focusing on Privacy Tools, Open Source security modules, and Next-Gen communication platforms.",
+        v_t: "Our Vision", v_d: "TempMail was conceptualized by Aman Meena and brought to life by Amit Meena. We believe in a web where privacy is a right, not a luxury. Our goal is to provide tools that empower users to control their digital footprint.",
+        amit_bio: "The creative mind behind the architecture and development of this advanced platform.",
+        s1: "Web Developer", s2: "UI/UX Designer", s3: "Software Engineer"
     },
     hi: {
         home: "मुख्य", about: "हमारे बारे में", contact: "संपर्क", privacy: "गोपनीयता",
@@ -83,7 +116,40 @@ const translations = {
         qr_t: "QR कोड स्कैन करें", qr_p: "अपने मोबाइल डिवाइस पर इस मेलबॉक्स को खोलने के लिए इस कोड को स्कैन करें।",
         saved_label: "सहेजे गए मेलबॉक्स:", note_ph: "इस ईमेल के लिए एक नोट जोड़ें...",
         tools: "उन्नत टूल", export: "बैकअप एक्सपोर्ट करें", import: "बैकअप इम्पोर्ट करें",
-        hiw_t: "यह कैसे काम करता है", s1: "तुरंत एक अद्वितीय पता जनरेट करें।", s2: "इसे किसी भी साइट या ऐप पर उपयोग करें।", s3: "मेल 1-2 सेकंड में आते हैं।", s4: "डेटा साफ़ करने के लिए टैब बंद करें।"
+        hiw_t: "यह कैसे काम करता है", s1: "तुरंत एक अद्वितीय पता जनरेट करें।", s2: "इसे किसी भी साइट या ऐप पर उपयोग करें।", s3: "मेल 1-2 सेकंड में आते हैं।", s4: "डेटा साफ़ करने के लिए टैब बंद करें।",
+        uc_t: "TempMail का उपयोग कहाँ करें?",
+        uc1t: "गेमिंग और बीटा टेस्ट", uc1d: "मार्केटिंग स्पैम के जोखिम के बिना गेम ट्रायल और बीटा टेस्ट के लिए पंजीकरण करें।",
+        uc2t: "ऑनलाइन शॉपिंग", uc2d: "स्थायी मेलिंग सूची में शामिल हुए बिना स्टोर से वन-टाइम डिस्काउंट कोड प्राप्त करें।",
+        uc3t: "पब्लिक वाई-फाई", uc3d: "हवाई अड्डे या कैफे वाई-फाई के लिए सुरक्षित रूप से साइन अप करें जिसके लिए ईमेल सत्यापन की आवश्यकता होती है।",
+        uc4t: "मुफ्त डाउनलोड", uc4d: "उन ई-बुक्स, टेम्प्लेट या सॉफ़्टवेयर तक पहुँचें जिन्हें डाउनलोड करने से पहले 'ईमेल की आवश्यकता' होती है।",
+        sec_t: "परम गोपनीयता और सुरक्षा मार्गदर्शिका", sec_i: "आज की डिजिटल दुनिया में, आपका ईमेल आपकी डिजिटल पहचान है। इसे आपके द्वारा देखी जाने वाली प्रत्येक वेबसाइट पर उजागर करना खतरनाक है। यहाँ बताया गया है कि ऑनलाइन गोपनीयता क्यों महत्वपूर्ण है:",
+        sec1t: "फ़िशिंग सुरक्षा", sec1d: "TempMail आपको फ़िशिंग लिंक से बचाता है। यदि किसी हमलावर को आपका टेम्प एड्रेस मिल जाता है, तो आपका वास्तविक मेलबॉक्स सुरक्षित रहता है।",
+        sec2t: "स्पैम रक्षा", sec2d: "90% इंटरनेट ट्रैफ़िक स्पैम है। डिस्पोजेबल ईमेल का उपयोग करके, आप अपने प्राथमिक इनबॉक्स को 100% साफ़ रखते हैं।",
+        sec3t: "डेटा गोपनीयता", sec3d: "Websites sell your email to advertisers. With TempMail, they only get data that will eventually disappear.",
+        faq_t: "अक्सर पूछे जाने वाले प्रश्न",
+        q1: "क्या टेम्प मेल कानूनी है?", a1: "हाँ, स्पैम से बचने जैसे वैध उपयोग के लिए अस्थायी ईमेल सेवाएँ 100% कानूनी हैं।",
+        q2: "ईमेल कितने समय तक रहते हैं?", a2: "ईमेल स्वचालित रूप से हटाए जाने से पहले कुछ घंटों के लिए सर्वर पर रखे जाते हैं।",
+        q3: "क्या मैं ईमेल भेज सकता हूँ?", a3: "सुरक्षा बनाए रखने के लिए, इस सहित अधिकांश टेम्प मेल सेवाएँ केवल ईमेल प्राप्त करने के लिए हैं।",
+        q4: "क्या मेरा वास्तविक IP सुरक्षित है?", a4: "हाँ, हम आपका व्यक्तिगत IP संग्रहीत नहीं करते हैं या इसे आपके अस्थायी पते से नहीं जोड़ते हैं।",
+        q5: "क्या मैं मेलबॉक्स रिकवर कर सकता हूँ?", a5: "यदि आपके पास अपना टोकन या बैकअप फ़ाइल है, तो आप अपने मेलबॉक्स तक पहुँच बहाल कर सकते हैं।",
+        q6: "क्या आप मेरा डेटा बेचते हैं?", a6: "बिल्कुल नहीं। हम गोपनीयता को सर्वोपरि मानते हैं और कभी भी उपयोगकर्ता की पहचान नहीं बेचते हैं।",
+        q7: "यह मुफ्त क्यों है?", a7: "हमारा मानना है कि गोपनीयता एक मौलिक अधिकार है। हमारी प्रणाली कम लागत पर उच्च दक्षता के लिए अनुकूलित है।",
+        q8: "क्या मैं सोशल मीडिया के लिए इसका उपयोग कर सकता हूँ?", a8: "हाँ, पंजीकरण और सत्यापन के लिए, हालाँकि कुछ साइटें डिस्पोजेबल डोमेन को ब्लॉक कर सकती हैं।",
+        q9: "क्या कोई सीमा है?", a9: "आप असीमित खाते बना सकते हैं। प्रत्येक खाता 24 घंटे तक रहता है जब तक कि आप अपना बैकअप एक्सपोर्ट नहीं करते।",
+        q10: "इसे किसने बनाया?", a10: "यह पेशेवर टूल अमन मीणा द्वारा संकल्पित और अमित मीणा द्वारा विकसित किया गया था।",
+        del_confirm: "क्या इस मेलबॉक्स को स्थायी रूप से हटाना चाहते हैं?",
+        del_limit: "आपके पास कम से कम एक मेलबॉक्स होना चाहिए।",
+        note_saved: "नोट सहेजा गया!",
+        import_success: "बैकअप सफलतापूर्वक इम्पोर्ट किया गया!",
+        import_err: "अमान्य बैकअप फ़ाइल",
+        ticket_success: "टिकट सफलतापूर्वक जमा किया गया! अमित मीणा जल्द ही इसकी समीक्षा करेंगे।",
+        exp_title: "पेशेवर कार्य और विशेषज्ञता",
+        w1t: "अमित का पोर्टफोलियो", w1d: "रिएक्ट, नोड.जेएस और मॉडर्न सीएसएस में विशेषज्ञता रखने वाले फुल-स्टैक डेवलपर। यूएक्स और 3डी इंटरएक्टिविटी पर ध्यान देने के साथ 50+ से अधिक उच्च-प्रदर्शन वेब एप्लिकेशन बनाए।",
+        w2t: "अमन का प्रभाव", w2d: "डिजिटल कंटेंट क्रिएटर और इन्फ्लुएंसर। 15K+ सक्रिय फॉलोअर्स की पहुंच के साथ सोशल मीडिया रणनीति, ब्रांड बिल्डिंग और सामुदायिक जुड़ाव में विशेषज्ञ।",
+        w3t: "संयुक्त उद्यम", w3d: "गोपनीयता टूल, ओपन सोर्स सुरक्षा मॉड्यूल और अगली पीढ़ी के संचार प्लेटफार्मों पर केंद्रित सहयोगी परियोजनाएं।",
+        v_t: "हमारा विजन", v_d: "TempMail अमन मीणा द्वारा संकल्पित किया गया था और अमित मीणा द्वारा जीवन में लाया गया था। हम एक ऐसे वेब में विश्वास करते हैं जहाँ गोपनीयता एक अधिकार है, विलासिता नहीं। हमारा लक्ष्य ऐसे उपकरण प्रदान करना है जो उपयोगकर्ताओं को उनके डिजिटल पदचिह्न को नियंत्रित करने के लिए सशक्त बनाते हैं।",
+        amit_bio: "इस उन्नत मंच की वास्तुकला और विकास के पीछे रचनात्मक दिमाग।",
+        s1: "वेब डेवलपर", s2: "UI/UX डिज़ाइनर", s3: "सॉफ्टवेयर इंजीनियर"
     }
 };
 
@@ -123,11 +189,12 @@ function setupMailboxEvents() {
 
     document.getElementById('save-note-btn').onclick = () => {
         const acc = accounts.find(a => a.address === currentAccount.address);
+        const t = translations[currentLang];
         if (acc) {
             acc.note = mailboxNote.value;
             localStorage.setItem('temp_mail_accounts', JSON.stringify(accounts));
             updateMailboxSwitcher();
-            alert('Note saved!');
+            alert(t.note_saved);
         }
     };
 }
@@ -317,7 +384,7 @@ function updateUIText() {
     }
 
     // Update About
-    const aboutTitle = document.querySelector('.section-title');
+    const aboutTitle = document.getElementById('team-title');
     if (aboutTitle) aboutTitle.textContent = t.team_title;
     const badges = document.querySelectorAll('.status-badge');
     if (badges[0]) badges[0].textContent = t.student;
@@ -327,6 +394,28 @@ function updateUIText() {
         statLabels[0].textContent = t.followers;
         statLabels[1].textContent = t.posts;
         statLabels[2].textContent = t.exp;
+    }
+
+    const expTitle = document.getElementById('expertise-title');
+    if (expTitle) {
+        expTitle.textContent = t.exp_title;
+        document.getElementById('work-1-t').innerHTML = `<i class="fas fa-code"></i> ${t.w1t}`;
+        document.getElementById('work-1-d').textContent = t.w1d;
+        document.getElementById('work-2-t').innerHTML = `<i class="fas fa-bullhorn"></i> ${t.w2t}`;
+        document.getElementById('work-2-d').textContent = t.w2d;
+        document.getElementById('work-3-t').innerHTML = `<i class="fas fa-project-diagram"></i> ${t.w3t}`;
+        document.getElementById('work-3-d').textContent = t.w3d;
+        document.getElementById('vision-title').textContent = t.v_t;
+        document.getElementById('vision-desc').textContent = t.v_d;
+    }
+
+    const amitBio = document.querySelector('.profile-card .bio');
+    if (amitBio) amitBio.textContent = t.amit_bio;
+    const skills = document.querySelectorAll('.skill-tags span');
+    if (skills.length >= 3) {
+        skills[0].textContent = t.s1;
+        skills[1].textContent = t.s2;
+        skills[2].textContent = t.s3;
     }
 
     // Update Contact
@@ -367,7 +456,77 @@ function updateUIText() {
     document.getElementById('step-2').textContent = t.s2;
     document.getElementById('step-3').textContent = t.s3;
     document.getElementById('step-4').textContent = t.s4;
+
+    // Update Use Cases
+    const ucTitle = document.getElementById('usecases-title');
+    if (ucTitle) {
+        ucTitle.textContent = t.uc_t;
+        document.getElementById('uc-1-t').textContent = t.uc1t;
+        document.getElementById('uc-1-d').textContent = t.uc1d;
+        document.getElementById('uc-2-t').textContent = t.uc2t;
+        document.getElementById('uc-2-d').textContent = t.uc2d;
+        document.getElementById('uc-3-t').textContent = t.uc3t;
+        document.getElementById('uc-3-d').textContent = t.uc3d;
+        document.getElementById('uc-4-t').textContent = t.uc4t;
+        document.getElementById('uc-4-d').textContent = t.uc4d;
+    }
+
+    // Update Security Guide
+    const secTitle = document.getElementById('sec-title');
+    if (secTitle) {
+        secTitle.textContent = t.sec_t;
+        document.getElementById('sec-intro').textContent = t.sec_i;
+        document.getElementById('sec-1-t').textContent = t.sec1t;
+        document.getElementById('sec-1-d').textContent = t.sec1d;
+        document.getElementById('sec-2-t').textContent = t.sec2t;
+        document.getElementById('sec-2-d').textContent = t.sec2d;
+        document.getElementById('sec-3-t').textContent = t.sec3t;
+        document.getElementById('sec-3-d').textContent = t.sec3d;
+    }
+
+    // Update FAQ
+    const faqTitle = document.getElementById('faq-main-title');
+    if (faqTitle) {
+        faqTitle.textContent = t.faq_t;
+        renderFAQ();
+    }
+
     if (searchInput) searchInput.placeholder = currentLang === 'en' ? 'Search emails...' : 'ईमेल खोजें...';
+}
+
+function renderFAQ() {
+    const cont = document.getElementById('faq-container');
+    const t = translations[currentLang];
+    const faqs = [
+        { q: t.q1, a: t.a1 },
+        { q: t.q2, a: t.a2 },
+        { q: t.q3, a: t.a3 },
+        { q: t.q4, a: t.a4 },
+        { q: t.q5, a: t.a5 },
+        { q: t.q6, a: t.a6 },
+        { q: t.q7, a: t.a7 },
+        { q: t.q8, a: t.a8 },
+        { q: t.q9, a: t.a9 },
+        { q: t.q10, a: t.a10 }
+    ];
+
+    cont.innerHTML = faqs.map((f, i) => `
+        <div class="faq-item" data-index="${i}">
+            <button class="faq-quest">${f.q} <i class="fas fa-chevron-down"></i></button>
+            <div class="faq-ans">${f.a}</div>
+        </div>
+    `).join('');
+
+    setupFAQEvents();
+}
+
+function setupFAQEvents() {
+    document.querySelectorAll('.faq-quest').forEach(btn => {
+        btn.onclick = () => {
+            const item = btn.parentElement;
+            item.classList.toggle('active');
+        };
+    });
 }
 
 // Routing logic
@@ -572,6 +731,9 @@ async function viewMessage(id) {
         const content = msg.html ? msg.html[0] : (msg.text || 'No content');
         msgIframe.srcdoc = `<html><head><style>body{font-family:sans-serif;line-height:1.6;color:#333;padding:20px;background:#fff;}</style></head><body>${content}</body></html>`;
 
+        // Store text version for download
+        messageView.dataset.text = msg.text || content.replace(/<[^>]*>?/gm, '');
+
         // Handle Attachments
         const attachList = document.getElementById('attachment-list');
         const attachCont = document.getElementById('attachments-container');
@@ -581,9 +743,12 @@ async function viewMessage(id) {
             msg.attachments.forEach(file => {
                 const link = document.createElement('a');
                 link.className = 'attach-item';
-                link.href = `${API_URL}/messages/${id}/attachments/${file.id}`; // This might require auth in real use
-                link.target = '_blank';
+                link.href = '#';
                 link.innerHTML = `<i class="fas fa-file"></i> ${file.filename} (${(file.size/1024).toFixed(1)} KB)`;
+                link.onclick = (e) => {
+                    e.preventDefault();
+                    downloadAttachment(id, file.id, file.filename);
+                };
                 attachCont.appendChild(link);
             });
         } else {
@@ -704,13 +869,36 @@ document.getElementById('back-btn').onclick = () => {
     updateStatus('Active', 'var(--success)');
 };
 
+async function downloadAttachment(msgId, fileId, filename) {
+    try {
+        const response = await fetch(`${API_URL}/messages/${msgId}/attachments/${fileId}`, {
+            headers: { 'Authorization': `Bearer ${token}` }
+        });
+        const blob = await response.json(); // API returns downloadUrl in some versions, but mail.tm returns binary
+        // Correct way for mail.tm:
+        const fileRes = await fetch(`${API_URL}/messages/${msgId}/attachments/${fileId}`, {
+            headers: { 'Authorization': `Bearer ${token}` }
+        });
+        const fileBlob = await fileRes.blob();
+        const url = URL.createObjectURL(fileBlob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = filename;
+        a.click();
+        URL.revokeObjectURL(url);
+    } catch (err) {
+        console.error('Download failed', err);
+        alert('Attachment download failed.');
+    }
+}
+
 document.getElementById('download-btn').onclick = () => {
     const subject = document.getElementById('msg-subject').textContent;
     const from = document.getElementById('msg-from').textContent;
     const date = document.getElementById('msg-date').textContent;
-    const content = msgIframe.srcdoc;
+    const textContent = messageView.dataset.text;
 
-    const text = `Subject: ${subject}\nFrom: ${from}\nDate: ${date}\n\n${content}`;
+    const text = `Subject: ${subject}\nFrom: ${from}\nDate: ${date}\n\n${textContent}`;
     const blob = new Blob([text], { type: 'text/plain' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
@@ -766,7 +954,8 @@ const contactForm = document.getElementById('contact-form');
 if (contactForm) {
     contactForm.onsubmit = (e) => {
         e.preventDefault();
-        alert('Ticket submitted successfully! Amit Meena will review it soon.');
+        const t = translations[currentLang];
+        alert(t.ticket_success);
         contactForm.reset();
     };
 }
@@ -787,6 +976,7 @@ document.getElementById('import-btn').onclick = () => document.getElementById('i
 
 document.getElementById('import-file').onchange = (e) => {
     const file = e.target.files[0];
+    const t = translations[currentLang];
     if (!file) return;
     const reader = new FileReader();
     reader.onload = (event) => {
@@ -798,10 +988,10 @@ document.getElementById('import-file').onchange = (e) => {
                 accounts = accounts.filter((v,i,a)=>a.findIndex(t=>(t.address === v.address))===i);
                 localStorage.setItem('temp_mail_accounts', JSON.stringify(accounts));
                 updateMailboxSwitcher();
-                alert('Backup imported successfully!');
+                alert(t.import_success);
             }
         } catch (err) {
-            alert('Invalid backup file');
+            alert(t.import_err);
         }
     };
     reader.readAsText(file);
@@ -822,13 +1012,6 @@ function updateAnalyticsUI() {
     document.getElementById('stat-time').textContent = time >= 60 ? `${(time/60).toFixed(1)}h` : `${time}m`;
 }
 
-// Register Service Worker for PWA
-if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-        navigator.serviceWorker.register('./sw.js').catch(err => console.log('SW registration failed:', err));
-    });
-}
-
 // Speed Up / Manual Refresh
 document.getElementById('refresh-now-btn').onclick = () => {
     fetchMessages();
@@ -840,11 +1023,12 @@ document.getElementById('refresh-now-btn').onclick = () => {
 
 // Delete Mailbox
 document.getElementById('delete-mailbox-btn').onclick = () => {
+    const t = translations[currentLang];
     if (accounts.length <= 1) {
-        alert('You must have at least one mailbox.');
+        alert(t.del_limit);
         return;
     }
-    if (confirm('Delete this mailbox permanently?')) {
+    if (confirm(t.del_confirm)) {
         const index = accounts.findIndex(a => a.address === currentAccount.address);
         if (index > -1) {
             accounts.splice(index, 1);
@@ -853,6 +1037,13 @@ document.getElementById('delete-mailbox-btn').onclick = () => {
         }
     }
 };
+
+// Register Service Worker for PWA
+if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./sw.js').catch(err => console.log('SW registration failed:', err));
+    });
+}
 
 // Start
 init();
