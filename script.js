@@ -9,6 +9,42 @@ let lastMsgCount = 0;
 let allMessages = [];
 let readMessages = JSON.parse(localStorage.getItem('read_messages')) || [];
 
+// Error Reporting System
+function reportError(msg, type = 'error') {
+    console.error(`[App Error]: ${msg}`);
+    showToast(msg, type);
+}
+
+// Toast System
+function showToast(message, type = 'info') {
+    const container = document.getElementById('toast-container');
+    if (!container) {
+        const c = document.createElement('div');
+        c.id = 'toast-container';
+        c.className = 'toast-container';
+        document.body.appendChild(c);
+    }
+
+    const toast = document.createElement('div');
+    toast.className = `toast ${type}`;
+    const icon = type === 'error' ? 'exclamation-circle' : (type === 'success' ? 'check-circle' : 'info-circle');
+    toast.innerHTML = `<i class="fas fa-${icon}"></i> <span>${message}</span>`;
+
+    document.getElementById('toast-container').appendChild(toast);
+
+    setTimeout(() => {
+        toast.style.opacity = '0';
+        toast.style.transform = 'translateX(100%)';
+        setTimeout(() => toast.remove(), 300);
+    }, 4000);
+}
+
+// Global Error Handler
+window.onerror = function(message, source, lineno, colno, error) {
+    reportError("A runtime error occurred. Please refresh the page.", 'error');
+    return true;
+};
+
 // DOM Elements
 const emailInput = document.getElementById('email-address');
 const domainSelect = document.getElementById('domain-select');
@@ -79,6 +115,12 @@ const translations = {
         del_confirm: "Delete this mailbox permanently?",
         del_limit: "You must have at least one mailbox.",
         note_saved: "Note saved!",
+        creating: "Creating...",
+        failed: "Failed",
+        error: "Error",
+        loading: "Loading...",
+        viewing: "Viewing",
+        offline: "Offline",
         import_success: "Backup imported successfully!",
         import_err: "Invalid backup file",
         ticket_success: "Ticket submitted successfully! Amit Meena will review it soon.",
@@ -151,6 +193,12 @@ const translations = {
         del_confirm: "क्या इस मेलबॉक्स को स्थायी रूप से हटाना चाहते हैं?",
         del_limit: "आपके पास कम से कम एक मेलबॉक्स होना चाहिए।",
         note_saved: "नोट सहेजा गया!",
+        creating: "बनाया जा रहा है...",
+        failed: "विफल",
+        error: "त्रुटि",
+        loading: "लोड हो रहा है...",
+        viewing: "देख रहे हैं",
+        offline: "ऑफलाइन",
         import_success: "बैकअप सफलतापूर्वक इम्पोर्ट किया गया!",
         import_err: "अमान्य बैकअप फ़ाइल",
         ticket_success: "टिकट सफलतापूर्वक जमा किया गया! अमित मीणा जल्द ही इसकी समीक्षा करेंगे।",
@@ -205,20 +253,25 @@ async function init() {
 }
 
 function setupMailboxEvents() {
-    mailboxSelect.onchange = () => {
-        switchAccount(mailboxSelect.value);
-    };
+    if (mailboxSelect) {
+        mailboxSelect.onchange = () => {
+            switchAccount(mailboxSelect.value);
+        };
+    }
 
-    document.getElementById('save-note-btn').onclick = () => {
-        const acc = accounts.find(a => a.address === currentAccount.address);
-        const t = translations[currentLang];
-        if (acc) {
-            acc.note = mailboxNote.value;
-            localStorage.setItem('temp_mail_accounts', JSON.stringify(accounts));
-            updateMailboxSwitcher();
-            alert(t.note_saved);
-        }
-    };
+    const saveNoteBtn = document.getElementById('save-note-btn');
+    if (saveNoteBtn) {
+        saveNoteBtn.onclick = () => {
+            const acc = accounts.find(a => a.address === currentAccount.address);
+            const t = translations[currentLang];
+            if (acc) {
+                acc.note = mailboxNote.value;
+                localStorage.setItem('temp_mail_accounts', JSON.stringify(accounts));
+                updateMailboxSwitcher();
+                showToast(t.note_saved, 'success');
+            }
+        };
+    }
 }
 
 function updateMailboxSwitcher() {
@@ -230,7 +283,7 @@ function updateMailboxSwitcher() {
         opt.textContent = acc.note ? `${acc.address} (${acc.note})` : acc.address;
         if (currentAccount && acc.address === currentAccount.address) {
             opt.selected = true;
-            mailboxNote.value = acc.note || '';
+            if (mailboxNote) mailboxNote.value = acc.note || '';
         }
         mailboxSelect.appendChild(opt);
     });
@@ -249,6 +302,7 @@ function switchAccount(address) {
     updateMailboxSwitcher();
     startAutoRefresh();
     fetchMessages();
+    showToast(`Switched to ${address}`, 'info');
 }
 
 function updateUserAvatar(email) {
@@ -282,13 +336,15 @@ function setupTheme() {
     document.documentElement.setAttribute('data-theme', savedTheme);
     updateThemeIcon(savedTheme);
 
-    themeToggle.onclick = () => {
-        const currentTheme = document.documentElement.getAttribute('data-theme');
-        const newTheme = currentTheme === 'light' ? 'dark' : 'light';
-        document.documentElement.setAttribute('data-theme', newTheme);
-        localStorage.setItem('theme', newTheme);
-        updateThemeIcon(newTheme);
-    };
+    if (themeToggle) {
+        themeToggle.onclick = () => {
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+            document.documentElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            updateThemeIcon(newTheme);
+        };
+    }
 
     // Auto sync with system
     window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
@@ -301,6 +357,7 @@ function setupTheme() {
 }
 
 function updateThemeIcon(theme) {
+    if (!themeToggle) return;
     const icon = themeToggle.querySelector('i');
     icon.className = theme === 'light' ? 'fas fa-moon' : 'fas fa-sun';
 }
@@ -328,11 +385,13 @@ function setupHelp() {
     const helpBtn = document.getElementById('help-btn');
     const closeHelp = document.getElementById('close-help');
 
-    helpBtn.onclick = () => helpModal.classList.remove('hidden');
-    closeHelp.onclick = () => helpModal.classList.add('hidden');
+    if (helpBtn) helpBtn.onclick = () => helpModal.classList.remove('hidden');
+    if (closeHelp) closeHelp.onclick = () => helpModal.classList.add('hidden');
 
     if (!localStorage.getItem('help_shown')) {
-        setTimeout(() => helpModal.classList.remove('hidden'), 2000);
+        setTimeout(() => {
+            if (helpModal) helpModal.classList.remove('hidden');
+        }, 2000);
         localStorage.setItem('help_shown', 'true');
     }
 }
@@ -352,23 +411,28 @@ function setupSearch() {
 
 function setupLang() {
     updateUIText();
-    langToggle.onclick = () => {
-        currentLang = currentLang === 'en' ? 'hi' : 'en';
-        localStorage.setItem('mail_lang', currentLang);
-        updateUIText();
-    };
+    if (langToggle) {
+        langToggle.onclick = () => {
+            currentLang = currentLang === 'en' ? 'hi' : 'en';
+            localStorage.setItem('mail_lang', currentLang);
+            updateUIText();
+        };
+    }
 }
 
 function updateUIText() {
     const t = translations[currentLang];
-    document.getElementById('lang-text').textContent = currentLang === 'en' ? 'HI' : 'EN';
+    const langTextEl = document.getElementById('lang-text');
+    if (langTextEl) langTextEl.textContent = currentLang === 'en' ? 'HI' : 'EN';
 
     // Update Nav
     const navLinks = document.querySelectorAll('.nav-link');
-    navLinks[0].textContent = t.home;
-    navLinks[1].textContent = t.about;
-    navLinks[2].textContent = t.contact;
-    navLinks[3].textContent = t.privacy;
+    if (navLinks.length >= 4) {
+        navLinks[0].textContent = t.home;
+        navLinks[1].textContent = t.about;
+        navLinks[2].textContent = t.contact;
+        navLinks[3].textContent = t.privacy;
+    }
 
     // Update Hero
     const heroH1 = document.querySelector('header h1');
@@ -379,16 +443,22 @@ function updateUIText() {
     // Update Generator
     const badge = document.querySelector('.badge');
     if (badge) badge.textContent = t.badge;
-    document.getElementById('copy-btn').innerHTML = `<i class="fas fa-copy"></i>`;
-    document.getElementById('qr-btn').innerHTML = `<i class="fas fa-qrcode"></i> ${t.qr}`;
-    document.getElementById('share-btn').innerHTML = `<i class="fas fa-share-alt"></i>`;
-    document.getElementById('new-btn').innerHTML = `<i class="fas fa-plus"></i> ${t.new}`;
+    const copyBtn = document.getElementById('copy-btn');
+    if (copyBtn) copyBtn.innerHTML = `<i class="fas fa-copy"></i>`;
+    const qrBtn = document.getElementById('qr-btn');
+    if (qrBtn) qrBtn.innerHTML = `<i class="fas fa-qrcode"></i> ${t.qr}`;
+    const shareBtn = document.getElementById('share-btn');
+    if (shareBtn) shareBtn.innerHTML = `<i class="fas fa-share-alt"></i>`;
+    const newBtn = document.getElementById('new-btn');
+    if (newBtn) newBtn.innerHTML = `<i class="fas fa-plus"></i> ${t.new}`;
 
     // Update Inbox
-    document.querySelector('.inbox-header h2').innerHTML = `<i class="fas fa-inbox"></i> ${t.inbox_title}`;
+    const inboxH2 = document.querySelector('.inbox-header h2');
+    if (inboxH2) inboxH2.innerHTML = `<i class="fas fa-inbox"></i> ${t.inbox_title}`;
     const emptyP = document.querySelector('.empty-state p');
     if (emptyP) emptyP.textContent = t.waiting;
-    document.getElementById('back-btn').innerHTML = `<i class="fas fa-arrow-left"></i> ${t.back}`;
+    const backBtn = document.getElementById('back-btn');
+    if (backBtn) backBtn.innerHTML = `<i class="fas fa-arrow-left"></i> ${t.back}`;
 
     // Update Info Sections
     const infoCards = document.querySelectorAll('.info-card-3d');
@@ -399,18 +469,20 @@ function updateUIText() {
         infoCards[1].querySelector('p').textContent = t.how_it_p;
         infoCards[2].querySelector('h3').textContent = t.benefits;
         const benefits = infoCards[2].querySelectorAll('.benefit-list li');
-        benefits[0].innerHTML = `<i class="fas fa-check"></i> ${t.benefit1}`;
-        benefits[1].innerHTML = `<i class="fas fa-check"></i> ${t.benefit2}`;
-        benefits[2].innerHTML = `<i class="fas fa-check"></i> ${t.benefit3}`;
-        benefits[3].innerHTML = `<i class="fas fa-check"></i> ${t.benefit4}`;
+        if (benefits.length >= 4) {
+            benefits[0].innerHTML = `<i class="fas fa-check"></i> ${t.benefit1}`;
+            benefits[1].innerHTML = `<i class="fas fa-check"></i> ${t.benefit2}`;
+            benefits[2].innerHTML = `<i class="fas fa-check"></i> ${t.benefit3}`;
+            benefits[3].innerHTML = `<i class="fas fa-check"></i> ${t.benefit4}`;
+        }
     }
 
     // Update About
     const aboutTitle = document.getElementById('team-title');
     if (aboutTitle) aboutTitle.textContent = t.team_title;
-    const badges = document.querySelectorAll('.status-badge');
-    if (badges[0]) badges[0].textContent = t.student;
-    if (badges[1]) badges[1].textContent = t.developer;
+    const statusBadges = document.querySelectorAll('.status-badge');
+    if (statusBadges[0]) statusBadges[0].textContent = t.student;
+    if (statusBadges[1]) statusBadges[1].textContent = t.developer;
     const statLabels = document.querySelectorAll('.stat-label');
     if (statLabels.length >= 3) {
         statLabels[0].textContent = t.followers;
@@ -492,32 +564,52 @@ function updateUIText() {
     // Update Tools
     const toolsTitle = document.getElementById('tools-title');
     if (toolsTitle) toolsTitle.textContent = t.tools;
-    document.getElementById('export-btn').innerHTML = `<i class="fas fa-file-export"></i> ${t.export}`;
-    document.getElementById('import-btn').innerHTML = `<i class="fas fa-file-import"></i> ${t.import}`;
+    const exportBtn = document.getElementById('export-btn');
+    if (exportBtn) exportBtn.innerHTML = `<i class="fas fa-file-export"></i> ${t.export}`;
+    const importBtn = document.getElementById('import-btn');
+    if (importBtn) importBtn.innerHTML = `<i class="fas fa-file-import"></i> ${t.import}`;
 
     // Update Analytics Labels
-    document.getElementById('stat-label-1').textContent = t.stat1;
-    document.getElementById('stat-label-2').textContent = t.stat2;
-    document.getElementById('pref-title').textContent = t.pref_t;
-    document.getElementById('pref-sound').textContent = t.pref_s;
-    document.getElementById('pref-confetti').textContent = t.pref_c;
+    const statLbl1 = document.getElementById('stat-label-1');
+    if (statLbl1) statLbl1.textContent = t.stat1;
+    const statLbl2 = document.getElementById('stat-label-2');
+    if (statLbl2) statLbl2.textContent = t.stat2;
+    const prefT = document.getElementById('pref-title');
+    if (prefT) prefT.textContent = t.pref_t;
+    const prefS = document.getElementById('pref-sound');
+    if (prefS) prefS.textContent = t.pref_s;
+    const prefC = document.getElementById('pref-confetti');
+    if (prefC) prefC.textContent = t.pref_c;
 
     // Update Help & QR
-    document.getElementById('help-title').textContent = t.help_title;
-    document.getElementById('close-help').textContent = t.help_got;
-    document.getElementById('help-1').textContent = t.h1;
-    document.getElementById('help-2').textContent = t.h2;
-    document.getElementById('help-3').textContent = t.h3;
-    document.getElementById('help-4').textContent = t.h4;
-    document.getElementById('qr-title').textContent = t.qr_t;
-    document.getElementById('qr-desc').textContent = t.qr_p;
+    const helpT = document.getElementById('help-title');
+    if (helpT) helpT.textContent = t.help_title;
+    const closeHelp = document.getElementById('close-help');
+    if (closeHelp) closeHelp.textContent = t.help_got;
+    const h1 = document.getElementById('help-1');
+    if (h1) h1.textContent = t.h1;
+    const h2 = document.getElementById('help-2');
+    if (h2) h2.textContent = t.h2;
+    const h3 = document.getElementById('help-3');
+    if (h3) h3.textContent = t.h3;
+    const h4 = document.getElementById('help-4');
+    if (h4) h4.textContent = t.h4;
+    const qrT = document.getElementById('qr-title');
+    if (qrT) qrT.textContent = t.qr_t;
+    const qrD = document.getElementById('qr-desc');
+    if (qrD) qrD.textContent = t.qr_p;
 
     // Update HIW
-    document.getElementById('hiw-title').textContent = t.hiw_t;
-    document.getElementById('step-1').textContent = t.s1;
-    document.getElementById('step-2').textContent = t.s2;
-    document.getElementById('step-3').textContent = t.s3;
-    document.getElementById('step-4').textContent = t.s4;
+    const hiwT = document.getElementById('hiw-title');
+    if (hiwT) hiwT.textContent = t.hiw_t;
+    const s1 = document.getElementById('step-1');
+    if (s1) s1.textContent = t.s1;
+    const s2 = document.getElementById('step-2');
+    if (s2) s2.textContent = t.s2;
+    const s3 = document.getElementById('step-3');
+    if (s3) s3.textContent = t.s3;
+    const s4 = document.getElementById('step-4');
+    if (s4) s4.textContent = t.s4;
 
     // Update Use Cases
     const ucTitle = document.getElementById('usecases-title');
@@ -558,6 +650,7 @@ function updateUIText() {
 
 function renderFAQ() {
     const cont = document.getElementById('faq-container');
+    if (!cont) return;
     const t = translations[currentLang];
     const faqs = [
         { q: t.q1, a: t.a1 },
@@ -613,7 +706,7 @@ function setupRouting() {
             if (link.classList.contains('nav-link')) link.classList.add('active');
 
             // Special handling for message view
-            if (section === 'home') messageView.classList.add('hidden');
+            if (section === 'home' && messageView) messageView.classList.add('hidden');
         };
     });
 }
@@ -622,6 +715,7 @@ function setupRouting() {
 async function fetchDomains() {
     try {
         const response = await fetch(`${API_URL}/domains`);
+        if (!response.ok) throw new Error("Could not fetch domains.");
         const data = await response.json();
         domains = data['hydra:member'].map(d => d.domain);
 
@@ -635,7 +729,8 @@ async function fetchDomains() {
             });
         }
     } catch (error) {
-        console.error('Error fetching domains', error);
+        reportError('Domain fetch failed. Using fallback.', 'info');
+        domains = ['mail.tm'];
     }
 }
 
@@ -643,8 +738,8 @@ async function fetchDomains() {
 async function createAccount() {
     try {
         updateStatus('Creating...', 'orange');
-        const domain = domainSelect.value || domains[0];
-        const user = customUsername.value.trim() || Math.random().toString(36).substring(2, 10);
+        const domain = (domainSelect && domainSelect.value) || domains[0];
+        const user = (customUsername && customUsername.value.trim()) || Math.random().toString(36).substring(2, 10);
         const address = `${user}@${domain}`;
         const password = Math.random().toString(36).substring(2, 15);
 
@@ -656,7 +751,7 @@ async function createAccount() {
 
         if (!response.ok) {
             const err = await response.json();
-            alert('Error: ' + (err.message || 'Account creation failed. Try another username.'));
+            reportError(err.message || 'Account creation failed. Try another username.');
             updateStatus('Failed', 'var(--danger)');
             return;
         }
@@ -673,29 +768,36 @@ async function createAccount() {
         if (emailInput) {
             emailInput.value = address;
             updateUserAvatar(address);
-            await navigator.clipboard.writeText(address);
+            try { await navigator.clipboard.writeText(address); } catch(e) {}
         }
-        customUsername.value = '';
+        if (customUsername) customUsername.value = '';
 
         updateExpiryTimer();
         updateMailboxSwitcher();
         startAutoRefresh();
         updateStatus('Active', 'var(--success)');
+        showToast('New mailbox created and copied!', 'success');
     } catch (error) {
         updateStatus('Error', 'var(--danger)');
-        console.error(error);
+        reportError('Failed to create account. Check connection.');
     }
 }
 
 async function getToken() {
-    const response = await fetch(`${API_URL}/token`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ address: currentAccount.address, password: currentAccount.password })
-    });
-    const data = await response.json();
-    token = data.token;
-    localStorage.setItem('temp_mail_token', token);
+    try {
+        const response = await fetch(`${API_URL}/token`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ address: currentAccount.address, password: currentAccount.password })
+        });
+        if (!response.ok) throw new Error("Auth failed");
+        const data = await response.json();
+        token = data.token;
+        localStorage.setItem('temp_mail_token', token);
+    } catch (e) {
+        reportError("Session expired. Creating new account.");
+        createAccount();
+    }
 }
 
 // Mail Logic
@@ -712,11 +814,12 @@ async function fetchMessages() {
             return fetchMessages();
         }
 
+        if (!response.ok) throw new Error("Message sync failed");
         const data = await response.json();
         allMessages = data['hydra:member'];
         renderInbox(allMessages);
     } catch (error) {
-        console.error('Fetch error', error);
+        updateStatus('Offline', 'var(--danger)');
     }
 }
 
@@ -738,7 +841,7 @@ function renderInbox(messages, isSearch = false) {
         inboxList.innerHTML = `
             <div class="empty-state">
                 <i class="fas fa-envelope-open"></i>
-                <p>Waiting for incoming emails...</p>
+                <p>${translations[currentLang].waiting}</p>
             </div>`;
         return;
     }
@@ -784,6 +887,7 @@ async function viewMessage(id) {
         const response = await fetch(`${API_URL}/messages/${id}`, {
             headers: { 'Authorization': `Bearer ${token}` }
         });
+        if (!response.ok) throw new Error("Could not load message");
         const msg = await response.json();
 
         document.getElementById('msg-subject').textContent = msg.subject || '(No Subject)';
@@ -791,7 +895,7 @@ async function viewMessage(id) {
         document.getElementById('msg-date').textContent = new Date(msg.createdAt).toLocaleString();
 
         const content = msg.html ? msg.html[0] : (msg.text || 'No content');
-        msgIframe.srcdoc = `<html><head><style>body{font-family:sans-serif;line-height:1.6;color:#333;padding:20px;background:#fff;}</style></head><body>${content}</body></html>`;
+        msgIframe.srcdoc = `<html><head><style>body{font-family:sans-serif;line-height:1.6;color:#333;padding:20px;background:#fff;word-break:break-word;}</style></head><body>${content}</body></html>`;
 
         // Store text version for download
         messageView.dataset.text = msg.text || content.replace(/<[^>]*>?/gm, '');
@@ -821,13 +925,13 @@ async function viewMessage(id) {
         updateStatus('Viewing', 'var(--primary)');
         window.scrollTo(0, 0);
     } catch (error) {
-        console.error(error);
+        reportError('Failed to load message content.');
     }
 }
 
 // UI Helpers
 function updateStatus(text, color) {
-    if (statusText) statusText.textContent = text;
+    if (statusText) statusText.textContent = translations[currentLang][text.toLowerCase()] || text;
     if (statusDot) statusDot.style.backgroundColor = color;
 }
 
@@ -847,12 +951,14 @@ function notifyNewMail(subject) {
         });
     }
 
-    if (document.getElementById('toggle-sound').checked) {
+    const soundToggle = document.getElementById('toggle-sound');
+    if (soundToggle && soundToggle.checked) {
         const audio = new Audio('https://assets.mixkit.co/active_storage/sfx/2358/2358-preview.mp3');
-        audio.play().catch(e => console.log('Audio blocked'));
+        audio.play().catch(e => {});
     }
 
-    if (document.getElementById('toggle-confetti').checked && typeof confetti === 'function') {
+    const confettiToggle = document.getElementById('toggle-confetti');
+    if (confettiToggle && confettiToggle.checked && typeof confetti === 'function') {
         confetti({
             particleCount: 100,
             spread: 70,
@@ -871,7 +977,8 @@ function updateExpiryTimer() {
 
     const h = Math.floor(remaining / 3600000);
     const m = Math.floor((remaining % 3600000) / 60000);
-    document.getElementById('expiry-timer').textContent = `${h}h ${m}m`;
+    const el = document.getElementById('expiry-timer');
+    if (el) el.textContent = `${h}h ${m}m`;
 }
 
 function startAutoRefresh() {
@@ -897,50 +1004,55 @@ function startAutoRefresh() {
 }
 
 // Event Handlers
-document.getElementById('copy-btn').onclick = async () => {
-    await navigator.clipboard.writeText(emailInput.value);
-    const btn = document.getElementById('copy-btn');
-    const old = btn.innerHTML;
-    btn.innerHTML = '<i class="fas fa-check"></i>';
-    setTimeout(() => btn.innerHTML = old, 2000);
-};
+const copyBtn = document.getElementById('copy-btn');
+if (copyBtn) {
+    copyBtn.onclick = async () => {
+        await navigator.clipboard.writeText(emailInput.value);
+        const old = copyBtn.innerHTML;
+        copyBtn.innerHTML = '<i class="fas fa-check"></i>';
+        showToast('Address copied!', 'success');
+        setTimeout(() => copyBtn.innerHTML = old, 2000);
+    };
+}
 
-document.getElementById('new-btn').onclick = () => {
-    createAccount();
-};
+const newBtn = document.getElementById('new-btn');
+if (newBtn) {
+    newBtn.onclick = () => createAccount();
+}
 
-document.getElementById('share-btn').onclick = async () => {
-    const address = emailInput.value;
-    if (navigator.share) {
-        try {
-            await navigator.share({
-                title: 'My Temp Email',
-                text: `Here is my temporary email address: ${address}`,
-                url: window.location.href
-            });
-        } catch (err) {
-            console.log('Share failed:', err);
+const shareBtn = document.getElementById('share-btn');
+if (shareBtn) {
+    shareBtn.onclick = async () => {
+        const address = emailInput.value;
+        if (navigator.share) {
+            try {
+                await navigator.share({
+                    title: 'My Temp Email',
+                    text: `Here is my temporary email address: ${address}`,
+                    url: window.location.href
+                });
+            } catch (err) {}
+        } else {
+            showToast(`Manual Copy: ${address}`, 'info');
         }
-    } else {
-        alert(`Your temp email: ${address}\n\n(Share API not supported in this browser)`);
-    }
-};
+    };
+}
 
-document.getElementById('back-btn').onclick = () => {
-    messageView.classList.add('hidden');
-    updateStatus('Active', 'var(--success)');
-};
+const backBtn = document.getElementById('back-btn');
+if (backBtn) {
+    backBtn.onclick = () => {
+        messageView.classList.add('hidden');
+        updateStatus('Active', 'var(--success)');
+    };
+}
 
 async function downloadAttachment(msgId, fileId, filename) {
     try {
-        const response = await fetch(`${API_URL}/messages/${msgId}/attachments/${fileId}`, {
-            headers: { 'Authorization': `Bearer ${token}` }
-        });
-        const blob = await response.json(); // API returns downloadUrl in some versions, but mail.tm returns binary
-        // Correct way for mail.tm:
+        showToast('Starting download...', 'info');
         const fileRes = await fetch(`${API_URL}/messages/${msgId}/attachments/${fileId}`, {
             headers: { 'Authorization': `Bearer ${token}` }
         });
+        if (!fileRes.ok) throw new Error("Download failed");
         const fileBlob = await fileRes.blob();
         const url = URL.createObjectURL(fileBlob);
         const a = document.createElement('a');
@@ -949,50 +1061,55 @@ async function downloadAttachment(msgId, fileId, filename) {
         a.click();
         URL.revokeObjectURL(url);
     } catch (err) {
-        console.error('Download failed', err);
-        alert('Attachment download failed.');
+        reportError('Attachment download failed.');
     }
 }
 
-document.getElementById('download-btn').onclick = () => {
-    const subject = document.getElementById('msg-subject').textContent;
-    const from = document.getElementById('msg-from').textContent;
-    const date = document.getElementById('msg-date').textContent;
-    const textContent = messageView.dataset.text;
+const downloadBtn = document.getElementById('download-btn');
+if (downloadBtn) {
+    downloadBtn.onclick = () => {
+        const subject = document.getElementById('msg-subject').textContent;
+        const from = document.getElementById('msg-from').textContent;
+        const date = document.getElementById('msg-date').textContent;
+        const textContent = messageView.dataset.text;
 
-    const text = `Subject: ${subject}\nFrom: ${from}\nDate: ${date}\n\n${textContent}`;
-    const blob = new Blob([text], { type: 'text/plain' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = `email-${Date.now()}.txt`;
-    a.click();
-    URL.revokeObjectURL(url);
-};
+        const text = `Subject: ${subject}\nFrom: ${from}\nDate: ${date}\n\n${textContent}`;
+        const blob = new Blob([text], { type: 'text/plain' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `email-${Date.now()}.txt`;
+        a.click();
+        URL.revokeObjectURL(url);
+    };
+}
 
-document.getElementById('print-btn').onclick = () => {
-    const win = window.open('', '_blank');
-    const subject = document.getElementById('msg-subject').textContent;
-    const from = document.getElementById('msg-from').textContent;
-    const date = document.getElementById('msg-date').textContent;
-    const content = msgIframe.srcdoc;
+const printBtn = document.getElementById('print-btn');
+if (printBtn) {
+    printBtn.onclick = () => {
+        const win = window.open('', '_blank');
+        const subject = document.getElementById('msg-subject').textContent;
+        const from = document.getElementById('msg-from').textContent;
+        const date = document.getElementById('msg-date').textContent;
+        const content = msgIframe.srcdoc;
 
-    win.document.write(`
-        <html>
-            <head><title>Print Email</title><style>body{font-family:sans-serif;padding:40px;} .meta{border-bottom:2px solid #eee;padding-bottom:20px;margin-bottom:20px;}</style></head>
-            <body>
-                <div class="meta">
-                    <h1>${subject}</h1>
-                    <p><strong>From:</strong> ${from}</p>
-                    <p><strong>Date:</strong> ${date}</p>
-                </div>
-                <div>${content}</div>
-            </body>
-        </html>
-    `);
-    win.document.close();
-    win.print();
-};
+        win.document.write(`
+            <html>
+                <head><title>Print Email</title><style>body{font-family:sans-serif;padding:40px;} .meta{border-bottom:2px solid #eee;padding-bottom:20px;margin-bottom:20px;}</style></head>
+                <body>
+                    <div class="meta">
+                        <h1>${subject}</h1>
+                        <p><strong>From:</strong> ${from}</p>
+                        <p><strong>Date:</strong> ${date}</p>
+                    </div>
+                    <div>${content}</div>
+                </body>
+            </html>
+        `);
+        win.document.close();
+        win.print();
+    };
+}
 
 // QR Code
 const qrModal = document.getElementById('qr-modal');
@@ -1017,47 +1134,55 @@ if (contactForm) {
     contactForm.onsubmit = (e) => {
         e.preventDefault();
         const t = translations[currentLang];
-        alert(t.ticket_success);
+        showToast(t.ticket_success, 'success');
         contactForm.reset();
     };
 }
 
 // Backup & Restore
-document.getElementById('export-btn').onclick = () => {
-    const data = JSON.stringify(accounts);
-    const blob = new Blob([data], { type: 'application/json' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = `tempmail-backup-${Date.now()}.json`;
-    a.click();
-    URL.revokeObjectURL(url);
-};
-
-document.getElementById('import-btn').onclick = () => document.getElementById('import-file').click();
-
-document.getElementById('import-file').onchange = (e) => {
-    const file = e.target.files[0];
-    const t = translations[currentLang];
-    if (!file) return;
-    const reader = new FileReader();
-    reader.onload = (event) => {
-        try {
-            const imported = JSON.parse(event.target.result);
-            if (Array.isArray(imported)) {
-                accounts = [...accounts, ...imported];
-                // Remove duplicates
-                accounts = accounts.filter((v,i,a)=>a.findIndex(t=>(t.address === v.address))===i);
-                localStorage.setItem('temp_mail_accounts', JSON.stringify(accounts));
-                updateMailboxSwitcher();
-                alert(t.import_success);
-            }
-        } catch (err) {
-            alert(t.import_err);
-        }
+const exportBtn = document.getElementById('export-btn');
+if (exportBtn) {
+    exportBtn.onclick = () => {
+        const data = JSON.stringify(accounts);
+        const blob = new Blob([data], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `tempmail-backup-${Date.now()}.json`;
+        a.click();
+        URL.revokeObjectURL(url);
+        showToast('Backup file generated.', 'success');
     };
-    reader.readAsText(file);
-};
+}
+
+const importBtn = document.getElementById('import-btn');
+const importFile = document.getElementById('import-file');
+if (importBtn && importFile) {
+    importBtn.onclick = () => importFile.click();
+
+    importFile.onchange = (e) => {
+        const file = e.target.files[0];
+        const t = translations[currentLang];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = (event) => {
+            try {
+                const imported = JSON.parse(event.target.result);
+                if (Array.isArray(imported)) {
+                    accounts = [...accounts, ...imported];
+                    // Remove duplicates
+                    accounts = accounts.filter((v,i,a)=>a.findIndex(t=>(t.address === v.address))===i);
+                    localStorage.setItem('temp_mail_accounts', JSON.stringify(accounts));
+                    updateMailboxSwitcher();
+                    showToast(t.import_success, 'success');
+                }
+            } catch (err) {
+                reportError(t.import_err);
+            }
+        };
+        reader.readAsText(file);
+    };
+}
 
 // Analytics
 function incrementAnalytics(count) {
@@ -1070,40 +1195,49 @@ function incrementAnalytics(count) {
 function updateAnalyticsUI() {
     const total = parseInt(localStorage.getItem('total_emails')) || 0;
     const time = total * 2; // 2 minutes per email
-    document.getElementById('stat-emails').textContent = total;
-    document.getElementById('stat-time').textContent = time >= 60 ? `${(time/60).toFixed(1)}h` : `${time}m`;
+    const elEmails = document.getElementById('stat-emails');
+    const elTime = document.getElementById('stat-time');
+    if (elEmails) elEmails.textContent = total;
+    if (elTime) elTime.textContent = time >= 60 ? `${(time/60).toFixed(1)}h` : `${time}m`;
 }
 
 // Speed Up / Manual Refresh
-document.getElementById('refresh-now-btn').onclick = () => {
-    fetchMessages();
-    timeLeft = 7;
-    const btn = document.getElementById('refresh-now-btn');
-    btn.style.transform = 'rotate(360deg)';
-    setTimeout(() => btn.style.transform = 'rotate(0deg)', 500);
-};
+const refreshNowBtn = document.getElementById('refresh-now-btn');
+if (refreshNowBtn) {
+    refreshNowBtn.onclick = () => {
+        fetchMessages();
+        timeLeft = 7;
+        refreshNowBtn.style.transform = 'rotate(360deg)';
+        setTimeout(() => refreshNowBtn.style.transform = 'rotate(0deg)', 500);
+        showToast('Synchronizing...', 'info');
+    };
+}
 
 // Delete Mailbox
-document.getElementById('delete-mailbox-btn').onclick = () => {
-    const t = translations[currentLang];
-    if (accounts.length <= 1) {
-        alert(t.del_limit);
-        return;
-    }
-    if (confirm(t.del_confirm)) {
-        const index = accounts.findIndex(a => a.address === currentAccount.address);
-        if (index > -1) {
-            accounts.splice(index, 1);
-            localStorage.setItem('temp_mail_accounts', JSON.stringify(accounts));
-            switchAccount(accounts[0].address);
+const delMailboxBtn = document.getElementById('delete-mailbox-btn');
+if (delMailboxBtn) {
+    delMailboxBtn.onclick = () => {
+        const t = translations[currentLang];
+        if (accounts.length <= 1) {
+            showToast(t.del_limit, 'error');
+            return;
         }
-    }
-};
+        if (confirm(t.del_confirm)) {
+            const index = accounts.findIndex(a => a.address === currentAccount.address);
+            if (index > -1) {
+                accounts.splice(index, 1);
+                localStorage.setItem('temp_mail_accounts', JSON.stringify(accounts));
+                switchAccount(accounts[0].address);
+                showToast('Mailbox deleted.', 'info');
+            }
+        }
+    };
+}
 
 // Register Service Worker for PWA
 if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
-        navigator.serviceWorker.register('./sw.js').catch(err => console.log('SW registration failed:', err));
+        navigator.serviceWorker.register('./sw.js').catch(e => {});
     });
 }
 
@@ -1140,5 +1274,4 @@ function applyTilt() {
     });
 }
 
-// Small delay to ensure elements are rendered
 setTimeout(applyTilt, 200);
