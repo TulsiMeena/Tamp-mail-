@@ -78,7 +78,7 @@ const translations = {
         how_it_p: "We automatically generate a unique mailbox for you. Emails appear instantly.",
         benefits: "Key Benefits",
         benefit1: "100% Anonymous", benefit2: "Zero Spam", benefit3: "Instant", benefit4: "No Registration",
-        team_title: "Meet the Team", student: "Student", developer: "Developer",
+        team_title: "Meet the Team", student: "Pro", developer: "Developer",
         exp: "Experience", followers: "Followers", posts: "Posts",
         contact_title: "Contact Technical Support", submit: "Submit Ticket",
         stat1: "Total Emails Received", stat2: "Time Saved (Est.)",
@@ -130,7 +130,7 @@ const translations = {
         w3t: "Joint Ventures", w3d: "Collaborative projects focusing on Privacy Tools, Open Source security modules, and Next-Gen communication platforms.",
         v_t: "Our Vision", v_d: "TempMail was conceptualized by Aman Meena and brought to life by Amit Meena. We believe in a web where privacy is a right, not a luxury. Our goal is to provide tools that empower users to control their digital footprint.",
         amit_bio: "The creative mind behind the architecture and development of this advanced platform.",
-        s1: "Web Developer", s2: "UI/UX Designer", s3: "Software Engineer",
+        skill1: "Web Developer", skill2: "UI/UX Designer", skill3: "Software Engineer",
         tips_t: "Pro Tips for Power Users",
         t1t: "Custom Usernames", t1d: "Enter a custom name in the username field before clicking \"Create\" to have a professional-looking email like yourname@domain.com.",
         t2t: "Session Backup", t2d: "Use the \"Export Backup\" tool in the Privacy section to save your mailboxes. You can restore them later using the \"Import\" tool.",
@@ -156,7 +156,7 @@ const translations = {
         how_it_p: "हम स्वचालित रूप से आपके लिए एक अद्वितीय मेलबॉक्स बनाते हैं। ईमेल तुरंत दिखाई देते हैं।",
         benefits: "प्रमुख लाभ",
         benefit1: "100% अनाम", benefit2: "शून्य स्पैम", benefit3: "तत्काल सक्रिय", benefit4: "कोई पंजीकरण नहीं",
-        team_title: "टीम से मिलें", student: "छात्र", developer: "डेवलपर",
+        team_title: "टीम से मिलें", student: "Pro", developer: "डेवलपर",
         exp: "अनुभव", followers: "फॉलोअर्स", posts: "पोस्ट",
         contact_title: "तकनीकी सहायता से संपर्क करें", submit: "टिकट जमा करें",
         stat1: "कुल प्राप्त ईमेल", stat2: "बचाया गया समय (अनुमानित)",
@@ -208,7 +208,7 @@ const translations = {
         w3t: "संयुक्त उद्यम", w3d: "गोपनीयता टूल, ओपन सोर्स सुरक्षा मॉड्यूल और अगली पीढ़ी के संचार प्लेटफार्मों पर केंद्रित सहयोगी परियोजनाएं।",
         v_t: "हमारा विजन", v_d: "TempMail अमन मीणा द्वारा संकल्पित किया गया था और अमित मीणा द्वारा जीवन में लाया गया था। हम एक ऐसे वेब में विश्वास करते हैं जहाँ गोपनीयता एक अधिकार है, विलासिता नहीं। हमारा लक्ष्य ऐसे उपकरण प्रदान करना है जो उपयोगकर्ताओं को उनके डिजिटल पदचिह्न को नियंत्रित करने के लिए सशक्त बनाते हैं।",
         amit_bio: "इस उन्नत मंच की वास्तुकला और विकास के पीछे रचनात्मक दिमाग।",
-        s1: "वेब डेवलपर", s2: "UI/UX डिज़ाइनर", s3: "सॉफ्टवेयर इंजीनियर",
+        skill1: "वेब डेवलपर", skill2: "UI/UX डिज़ाइनर", skill3: "सॉफ्टवेयर इंजीनियर",
         tips_t: "पावर उपयोगकर्ताओं के लिए प्रो टिप्स",
         t1t: "कस्टम यूजरनेम", t1d: "पेशेवर दिखने वाले ईमेल (जैसे yourname@domain.com) के लिए \"Create\" पर क्लिक करने से पहले यूजरनेम फ़ील्ड में एक कस्टम नाम दर्ज करें।",
         t2t: "सत्र बैकअप", t2d: "अपने मेलबॉक्स को सुरक्षित करने के लिए गोपनीयता अनुभाग में \"बैकअप एक्सपोर्ट करें\" टूल का उपयोग करें। आप उन्हें बाद में \"इम्पोर्ट\" टूल का उपयोग करके पुनर्स्थापित कर सकते हैं।",
@@ -507,9 +507,9 @@ function updateUIText() {
     if (amitBio) amitBio.textContent = t.amit_bio;
     const skills = document.querySelectorAll('.skill-tags span');
     if (skills.length >= 3) {
-        skills[0].textContent = t.s1;
-        skills[1].textContent = t.s2;
-        skills[2].textContent = t.s3;
+        skills[0].textContent = t.skill1;
+        skills[1].textContent = t.skill2;
+        skills[2].textContent = t.skill3;
     }
 
     // Update Pro Tips
@@ -1027,13 +1027,12 @@ if (shareBtn) {
         if (navigator.share) {
             try {
                 await navigator.share({
-                    title: 'My Temp Email',
-                    text: `Here is my temporary email address: ${address}`,
-                    url: window.location.href
+                title: 'Temp Email',
+                text: address
                 });
             } catch (err) {}
         } else {
-            showToast(`Manual Copy: ${address}`, 'info');
+        showToast(`Email: ${address}`, 'info');
         }
     };
 }
