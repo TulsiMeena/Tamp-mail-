@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TempMail Pro - Disposable Temporary Email</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="manifest" href="manifest.json">
+</head>
+<body class="dark-theme">
+    <nav>
+        <div class="nav-container">
+            <div class="logo">TempMail Pro</div>
+            <button id="menu-toggle" aria-label="Toggle Menu">☰</button>
+            <ul id="nav-links">
+                <li><a href="#" data-section="home" class="active" data-i18n="nav_home">Home</a></li>
+                <li><a href="#" data-section="about" data-i18n="nav_about">About Us</a></li>
+                <li><a href="#" data-section="contact" data-i18n="nav_contact">Contact Us</a></li>
+                <li><a href="#" data-section="privacy" data-i18n="nav_privacy">Privacy Policy</a></li>
+            </ul>
+            <div class="nav-actions">
+                <button id="lang-toggle">EN / HI</button>
+                <div id="accent-picker">
+                    <span class="accent-btn" data-color="blue" style="background: #3b82f6;"></span>
+                    <span class="accent-btn" data-color="green" style="background: #10b981;"></span>
+                    <span class="accent-btn" data-color="red" style="background: #ef4444;"></span>
+                    <span class="accent-btn" data-color="pink" style="background: #ec4899;"></span>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <section id="home-section" class="active">
+            <div class="hero">
+                <h1 data-i18n="hero_title">Your Disposable Email Address</h1>
+                <p data-i18n="hero_subtitle">Forget about spam, advertising mailings, hacking and attacking robots. Keep your real mailbox clean and secure.</p>
+
+                <div class="email-container">
+                    <div class="email-box">
+                        <input type="text" id="temp-email" readonly placeholder="Generating...">
+                        <button id="copy-btn" data-i18n="copy">Copy</button>
+                        <button id="refresh-now-btn" data-i18n="refresh">Refresh</button>
+                    </div>
+                    <div class="refresh-timer">
+                        <div id="progress-bar"></div>
+                        <span id="timer-text">Refreshing in 7s</span>
+                    </div>
+                    <div class="mailbox-actions">
+                        <button id="new-mail-btn" data-i18n="new_mail">New Email</button>
+                        <button id="delete-mailbox-btn" data-i18n="delete_mail">Delete</button>
+                        <button id="qr-btn" data-i18n="qr_code">QR Code</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="inbox-container">
+                <h2 data-i18n="inbox_title">Your Inbox</h2>
+                <div id="inbox-list">
+                    <p class="empty-inbox" data-i18n="empty_inbox">Waiting for incoming emails...</p>
+                </div>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <h3 id="stat-emails">0</h3>
+                    <p data-i18n="stat_received">Emails Received</p>
+                </div>
+                <div class="stat-card">
+                    <h3 id="stat-time">0m</h3>
+                    <p data-i18n="stat_saved">Time Saved</p>
+                </div>
+            </div>
+
+            <!-- Content sections mentioned in memory -->
+            <div class="info-sections">
+                <div id="how-it-works">
+                    <h2 data-i18n="how_it_works">How It Works</h2>
+                    <div class="steps">
+                        <div class="step"><span data-i18n="s1">Step 1</span></div>
+                        <div class="step"><span data-i18n="s2">Step 2</span></div>
+                        <div class="step"><span data-i18n="s3">Step 3</span></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="about-section">
+            <h1 data-i18n="about_title">About Us</h1>
+            <div class="profiles">
+                <div class="profile">
+                    <img src="https://github.com/amanmeena.png" alt="Aman Meena">
+                    <h3>Aman Meena <span class="badge">Pro</span></h3>
+                    <p data-i18n="skill1">Full Stack Developer</p>
+                </div>
+                <div class="profile">
+                    <img src="https://github.com/amitmeena.png" alt="Amit Meena">
+                    <h3>Amit Meena</h3>
+                    <p data-i18n="skill2">UI/UX Designer</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact-section">
+            <h1 data-i18n="contact_title">Contact Us</h1>
+        </section>
+
+        <section id="privacy-section">
+            <h1 data-i18n="privacy_title">Privacy Policy</h1>
+            <h2 id="glos-title" data-i18n="glos_title">Privacy Glossary</h2>
+        </section>
+    </main>
+
+    <div id="toast-container"></div>
+
+    <div id="qr-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <div id="qr-code-display"></div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
