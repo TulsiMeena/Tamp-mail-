@@ -1,0 +1,278 @@
+:root {
+    --primary: #3b82f6;
+    --primary-hover: #2563eb;
+    --bg: #0f172a;
+    --card-bg: rgba(30, 41, 59, 0.7);
+    --text: #f8fafc;
+    --text-muted: #94a3b8;
+    --border: rgba(255, 255, 255, 0.1);
+    --glass: blur(12px);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+body {
+    background-color: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    line-height: 1.5;
+}
+
+nav {
+    background: var(--card-bg);
+    backdrop-filter: var(--glass);
+    border-bottom: 1px solid var(--border);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.nav-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#nav-links {
+    display: flex;
+    list-style: none;
+    gap: 1.5rem;
+}
+
+#nav-links a {
+    color: var(--text-muted);
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+#nav-links a.active, #nav-links a:hover {
+    color: var(--primary);
+}
+
+main {
+    max-width: 1000px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+}
+
+section {
+    display: none;
+}
+
+section.active {
+    display: block;
+}
+
+.hero {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.email-container {
+    background: var(--card-bg);
+    backdrop-filter: var(--glass);
+    padding: 2rem;
+    border-radius: 1rem;
+    border: 1px solid var(--border);
+    margin-top: 2rem;
+}
+
+.email-box {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+#temp-email {
+    flex: 1;
+    background: rgba(0, 0, 0, 0.2);
+    border: 1px solid var(--border);
+    padding: 0.75rem 1rem;
+    border-radius: 0.5rem;
+    color: var(--text);
+    font-size: 1.1rem;
+}
+
+button {
+    background: var(--primary);
+    color: white;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    font-weight: 600;
+    transition: opacity 0.2s;
+}
+
+button:hover {
+    opacity: 0.9;
+}
+
+button:active {
+    transform: scale(0.98);
+}
+
+.refresh-timer {
+    height: 4px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 2px;
+    margin: 1rem 0;
+    position: relative;
+    overflow: hidden;
+}
+
+#progress-bar {
+    height: 100%;
+    background: var(--primary);
+    width: 0%;
+    transition: width 1s linear;
+}
+
+.mailbox-actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+}
+
+.inbox-container {
+    margin-top: 3rem;
+}
+
+#inbox-list {
+    margin-top: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.empty-inbox {
+    text-align: center;
+    color: var(--text-muted);
+    padding: 3rem;
+    background: var(--card-bg);
+    border-radius: 1rem;
+    border: 1px dashed var(--border);
+}
+
+#toast-container {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    z-index: 1000;
+}
+
+.toast {
+    background: var(--card-bg);
+    backdrop-filter: var(--glass);
+    padding: 1rem 1.5rem;
+    border-radius: 0.5rem;
+    border-left: 4px solid var(--primary);
+    animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+    from { transform: translateX(100%); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+}
+
+#accent-picker {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.accent-btn {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    cursor: pointer;
+    border: 2px solid transparent;
+}
+
+.accent-btn:hover {
+    transform: scale(1.2);
+}
+
+/* Modal styles */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1001;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.8);
+}
+
+.modal-content {
+    background: var(--bg);
+    margin: 15% auto;
+    padding: 2rem;
+    width: fit-content;
+    border-radius: 1rem;
+    position: relative;
+}
+
+.close-modal {
+    position: absolute;
+    right: 1rem;
+    top: 0.5rem;
+    font-size: 2rem;
+    cursor: pointer;
+}
+
+/* Profiles, Stats, and Steps */
+.profiles, .stats-grid, .steps {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin-top: 2rem;
+}
+
+.profile, .stat-card, .step {
+    background: var(--card-bg);
+    padding: 2rem;
+    border-radius: 1rem;
+    border: 1px solid var(--border);
+    text-align: center;
+}
+
+.profile img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    margin-bottom: 1rem;
+}
+
+.badge {
+    background: var(--primary);
+    font-size: 0.8rem;
+    padding: 2px 8px;
+    border-radius: 4px;
+}
+
+.mail-view {
+    max-width: 600px;
+    width: 90vw;
+}
+
+.mail-body {
+    background: #fff;
+    color: #333;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    margin: 1rem 0;
+    max-height: 400px;
+    overflow-y: auto;
+}

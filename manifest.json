@@ -1,0 +1,16 @@
+{
+    "name": "TempMail Pro",
+    "short_name": "TempMail",
+    "description": "Disposable Temporary Email Service",
+    "start_url": ".",
+    "display": "standalone",
+    "background_color": "#0f172a",
+    "theme_color": "#3b82f6",
+    "icons": [
+        {
+            "src": "https://cdn-icons-png.flaticon.com/512/561/561127.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        }
+    ]
+}
