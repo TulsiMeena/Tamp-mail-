@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TempMail Pro - Professional Disposable Temporary Email</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#2563eb">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="light-theme">
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo" id="logo-btn">
+                <i class="fas fa-envelope-open-text"></i>
+                <span>TempMail <span class="pro-badge">PRO</span></span>
+            </div>
+            <div class="nav-links">
+                <button class="nav-btn active" data-section="home">Home</button>
+                <button class="nav-btn" data-section="inbox">Inbox</button>
+                <button class="nav-btn" data-section="about">About Us</button>
+                <button class="nav-btn" data-section="contact">Contact</button>
+                <button class="nav-btn" data-section="privacy">Privacy</button>
+            </div>
+            <div class="nav-actions">
+                <button id="lang-toggle" class="icon-btn" title="Switch Language">EN</button>
+                <button id="theme-toggle" class="icon-btn" title="Toggle Theme"><i class="fas fa-moon"></i></button>
+                <button id="menu-toggle" class="icon-btn mobile-only"><i class="fas fa-bars"></i></button>
+            </div>
+        </div>
+    </nav>
+
+    <main id="main-content">
+        <!-- Home Section -->
+        <section id="home-section" class="content-section">
+            <div class="hero">
+                <h1 data-key="hero-title">Your Secure Temporary Email Solution</h1>
+                <p data-key="hero-subtitle">Protect your privacy and stay spam-free with our professional disposable email service.</p>
+                <div class="main-email-generator">
+                    <div class="email-input-group">
+                        <input type="text" id="temp-email-display" readonly value="Loading...">
+                        <button id="copy-email-btn" class="action-btn"><i class="fas fa-copy"></i> <span data-key="copy">Copy</span></button>
+                        <button id="refresh-email-btn" class="action-btn"><i class="fas fa-sync-alt"></i> <span data-key="refresh">Refresh</span></button>
+                    </div>
+                    <div class="generator-controls">
+                        <button id="new-email-btn" class="btn secondary-btn"><i class="fas fa-plus"></i> <span data-key="new-mail">New Email</span></button>
+                        <button id="qr-email-btn" class="btn secondary-btn"><i class="fas fa-qrcode"></i> QR Code</button>
+                        <button id="share-email-btn" class="btn secondary-btn"><i class="fas fa-share-alt"></i> Share</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="features-grid">
+                <div class="feature-card">
+                    <i class="fas fa-shield-alt"></i>
+                    <h3 data-key="f1-title">Privacy Protection</h3>
+                    <p data-key="f1-desc">Keep your real email address private and avoid being tracked across the web.</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-user-secret"></i>
+                    <h3 data-key="f2-title">Anonymity</h3>
+                    <p data-key="f2-desc">No registration required. Use it instantly and stay completely anonymous.</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-trash-alt"></i>
+                    <h3 data-key="f3-title">Auto Purge</h3>
+                    <p data-key="f3-desc">Emails are automatically deleted after a period of time for your security.</p>
+                </div>
+            </div>
+
+            <div class="how-it-works">
+                <h2 data-key="hiw-title">How It Works</h2>
+                <div class="steps">
+                    <div class="step">
+                        <div class="step-num">1</div>
+                        <p data-key="s1">Copy your temporary email address generated above.</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-num">2</div>
+                        <p data-key="s2">Use it to sign up for any service or website.</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-num">3</div>
+                        <p data-key="s3">Read the verification or incoming emails right here in your inbox.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pro Tips & Stats -->
+            <div class="extra-content">
+                <div class="stats-grid">
+                    <div class="stat-card tilt-element">
+                        <i class="fas fa-envelope"></i>
+                        <h4 id="total-emails-count">0+</h4>
+                        <p data-key="total-received">Emails Received</p>
+                    </div>
+                    <div class="stat-card tilt-element">
+                        <i class="fas fa-clock"></i>
+                        <h4 id="time-saved-count">0h</h4>
+                        <p data-key="time-saved">Time Saved</p>
+                    </div>
+                </div>
+
+                <div class="pro-tips">
+                    <h2 data-key="pro-tips-title">Pro Tips</h2>
+                    <div class="tips-grid">
+                        <div class="tip-card tilt-element">
+                            <h4 data-key="tip1-title">Use for Trials</h4>
+                            <p data-key="tip1-desc">Perfect for signing up for software trials without cluttering your main inbox.</p>
+                        </div>
+                        <div class="tip-card tilt-element">
+                            <h4 data-key="tip2-title">Stay Anonymous</h4>
+                            <p data-key="tip2-desc">Avoid tracking and profiling by using unique temp addresses for each service.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Reviews Section -->
+            <div class="reviews-section">
+                <h2 data-key="reviews-title">User Reviews & Feedback</h2>
+                <div class="reviews-container">
+                    <div class="review-card">
+                        <div class="review-header">
+                            <img src="https://i.pravatar.cc/150?u=1" alt="User">
+                            <div class="user-info">
+                                <h4>Sarah J.</h4>
+                                <div class="stars">★★★★★</div>
+                            </div>
+                        </div>
+                        <p>"Best temp mail service I've used. Fast and reliable!"</p>
+                    </div>
+                    <div class="review-card">
+                        <div class="review-header">
+                            <img src="https://i.pravatar.cc/150?u=2" alt="User">
+                            <div class="user-info">
+                                <h4>Mark R.</h4>
+                                <div class="stars">★★★★★</div>
+                            </div>
+                        </div>
+                        <p>"Love the multi-mailbox feature. Really helps with my testing workflow."</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- FAQ Section -->
+            <div class="faq-section">
+                <h2 data-key="faq-title">Frequently Asked Questions</h2>
+                <div class="faq-grid" id="faq-container">
+                    <!-- FAQ items will be injected or listed here -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Inbox Section -->
+        <section id="inbox-section" class="content-section hidden">
+            <div class="inbox-container">
+                <div class="inbox-sidebar">
+                    <div class="mailbox-info">
+                        <h2 data-key="my-mailbox">My Mailbox</h2>
+                        <div class="active-email" id="sidebar-email">...</div>
+                        <div class="sync-status">
+                            <span data-key="syncing">Syncing...</span>
+                            <div class="progress-bar-container"><div id="sync-progress" class="progress-bar"></div></div>
+                        </div>
+                    </div>
+                    <div class="mailbox-list-container">
+                        <h3>Saved Mailboxes</h3>
+                        <ul id="mailbox-list">
+                            <!-- Multi-mailbox entries -->
+                        </ul>
+                        <button id="add-mailbox-btn" class="btn primary-btn small-btn">Add Account</button>
+                    </div>
+                </div>
+                <div class="inbox-main">
+                    <div class="inbox-header">
+                        <div class="inbox-controls">
+                            <button id="refresh-now-btn" class="icon-btn"><i class="fas fa-redo"></i></button>
+                            <input type="text" id="email-search" placeholder="Search emails...">
+                        </div>
+                    </div>
+                    <div id="email-list" class="email-list">
+                        <div class="empty-inbox">
+                            <i class="fas fa-inbox"></i>
+                            <p data-key="empty-msg">Your inbox is empty. Waiting for incoming messages...</p>
+                        </div>
+                    </div>
+                </div>
+                <div id="email-viewer" class="email-viewer hidden">
+                    <div class="viewer-header">
+                        <button id="back-to-list" class="icon-btn"><i class="fas fa-arrow-left"></i></button>
+                        <div class="message-meta">
+                            <h2 id="view-subject">Subject</h2>
+                            <p id="view-sender">From: sender@example.com</p>
+                        </div>
+                        <div class="viewer-actions">
+                            <button id="print-email" class="icon-btn"><i class="fas fa-print"></i></button>
+                            <button id="download-email" class="icon-btn"><i class="fas fa-download"></i></button>
+                            <button id="delete-email" class="icon-btn danger-btn"><i class="fas fa-trash"></i></button>
+                        </div>
+                    </div>
+                    <div class="message-body">
+                        <iframe id="email-frame" sandbox="allow-popups allow-popups-to-escape-sandbox" frameborder="0"></iframe>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section id="about-section" class="content-section hidden">
+            <div class="about-container">
+                <h1 data-key="about-title">About TempMail Pro</h1>
+                <div class="about-content">
+                    <p data-key="about-desc">TempMail Pro is a professional-grade disposable email service designed for developers, testers, and privacy-conscious users. We provide a clean, ad-free experience with advanced features like multi-mailbox management and PWA support.</p>
+                </div>
+                <div class="dev-profiles">
+                    <div class="profile-card">
+                        <img src="https://github.com/amanmeena.png" alt="Aman Meena">
+                        <h3>Aman Meena <span class="badge">PRO</span></h3>
+                        <p data-key="dev1-role">Full Stack Developer & Founder</p>
+                        <div class="social-links">
+                            <a href="https://github.com/amanmeena" target="_blank"><i class="fab fa-github"></i></a>
+                            <a href="#"><i class="fab fa-linkedin"></i></a>
+                        </div>
+                    </div>
+                    <div class="profile-card">
+                        <img src="https://github.com/amitmeena.png" alt="Amit Meena">
+                        <h3>Amit Meena</h3>
+                        <p data-key="dev2-role">UI/UX Specialist</p>
+                        <div class="social-links">
+                            <a href="https://github.com/amitmeena" target="_blank"><i class="fab fa-github"></i></a>
+                            <a href="#"><i class="fab fa-twitter"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="developer-skills">
+                    <h2 data-key="skills-title">Technical Expertise</h2>
+                    <div class="skills-grid">
+                        <div class="skill-item"><i class="fab fa-js"></i> <span data-key="skill1">Advanced JS Architecture</span></div>
+                        <div class="skill-item"><i class="fab fa-css3-alt"></i> <span data-key="skill2">Modern CSS & Glassmorphism</span></div>
+                        <div class="skill-item"><i class="fas fa-server"></i> <span data-key="skill3">API Integration & Security</span></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact-section" class="content-section hidden">
+            <div class="contact-container">
+                <h1 data-key="contact-title">Contact Us</h1>
+                <p data-key="contact-desc">Have questions or feedback? Reach out to us.</p>
+                <form id="contact-form" class="contact-form">
+                    <div class="form-group">
+                        <label for="contact-name">Name</label>
+                        <input type="text" id="contact-name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="contact-email">Email</label>
+                        <input type="email" id="contact-email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="contact-message">Message</label>
+                        <textarea id="contact-message" rows="5" required></textarea>
+                    </div>
+                    <button type="submit" class="btn primary-btn">Send Message</button>
+                </form>
+            </div>
+        </section>
+
+        <!-- Privacy Section -->
+        <section id="privacy-section" class="content-section hidden">
+            <div class="privacy-container">
+                <h1>Privacy Policy & Glossary</h1>
+                <div class="glossary">
+                    <h2 id="glos-title">Security Glossary</h2>
+                    <dl>
+                        <dt>Disposable Email</dt>
+                        <dd>A temporary, short-lived email address used to protect your primary inbox from spam.</dd>
+                        <dt>Mail.tm API</dt>
+                        <dd>The robust infrastructure that powers our email generation and management.</dd>
+                    </dl>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-container">
+            <p>&copy; 2023 TempMail Pro. All rights reserved.</p>
+            <div class="footer-links">
+                <a href="#about">About</a>
+                <a href="#contact">Contact</a>
+                <a href="#privacy">Privacy</a>
+            </div>
+        </div>
+    </footer>
+
+    <div id="toast-container"></div>
+    <div id="modal-container" class="hidden"></div>
+
+    <!-- Multi-mailbox switcher Modal -->
+    <div id="mailbox-modal" class="modal hidden">
+        <div class="modal-content">
+            <h3 data-key="manage-accounts">Manage Accounts</h3>
+            <div class="mailbox-controls">
+                <input type="text" id="custom-username" placeholder="Custom username (optional)">
+                <select id="domain-select"><option>Loading domains...</option></select>
+                <button id="create-custom-btn" class="btn primary-btn">Create</button>
+            </div>
+            <div class="backup-restore">
+                <button id="export-data" class="btn secondary-btn">Export Data</button>
+                <button id="import-data" class="btn secondary-btn">Import Data</button>
+                <input type="file" id="import-file" style="display:none">
+            </div>
+            <button class="close-modal">Close</button>
+        </div>
+    </div>
+    <script src="script.js"></script>
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js');
+            });
+        }
+    </script>
+</body>
+</html>
