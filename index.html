@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TempMail Pro - Disposable Temporary Email</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#1f1c2c">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="dark-theme">
+    <div id="toast-container"></div>
+
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <i class="fas fa-envelope-open-text"></i>
+                <span>TempMail Pro</span>
+            </div>
+            <button id="menu-toggle" class="menu-toggle">
+                <i class="fas fa-bars"></i>
+            </button>
+            <ul id="nav-links" class="nav-links">
+                <li><a href="#" data-section="home" class="active"><i class="fas fa-home"></i> <span class="nav-text">Home</span></a></li>
+                <li><a href="#" data-section="about"><i class="fas fa-info-circle"></i> <span class="nav-text">About Us</span></a></li>
+                <li><a href="#" data-section="contact"><i class="fas fa-envelope"></i> <span class="nav-text">Contact</span></a></li>
+                <li><a href="#" data-section="privacy"><i class="fas fa-shield-alt"></i> <span class="nav-text">Privacy</span></a></li>
+            </ul>
+            <div class="nav-actions">
+                <button id="lang-toggle" class="btn-icon">
+                    <i class="fas fa-language"></i>
+                </button>
+                <button id="theme-toggle" class="btn-icon">
+                    <i class="fas fa-moon"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <section id="home-section" class="app-section active">
+            <div class="hero-container">
+                <h1>Disposable Temporary Email</h1>
+                <p>Protect your privacy and keep your inbox clean.</p>
+
+                <div class="email-generator-card">
+                    <div class="email-display">
+                        <input type="text" id="email-address" readonly placeholder="Generating email...">
+                        <div class="email-actions">
+                            <button id="copy-email-btn" title="Copy Email">
+                                <i class="fas fa-copy"></i>
+                            </button>
+                            <button id="refresh-now-btn" title="Refresh Inbox">
+                                <i class="fas fa-sync-alt"></i>
+                            </button>
+                            <button id="new-email-btn" title="New Email">
+                                <i class="fas fa-plus"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="refresh-status-container">
+                        <div id="refresh-progress" class="progress-bar"></div>
+                        <span id="refresh-status-text">Refreshing in 7s</span>
+                    </div>
+                </div>
+
+                <div class="inbox-container">
+                    <div class="inbox-header">
+                        <h2 id="inbox-title">Your Inbox</h2>
+                        <span id="inbox-count" class="badge">0</span>
+                    </div>
+                    <div id="email-list" class="email-list">
+                        <div class="empty-inbox">
+                            <i class="fas fa-inbox"></i>
+                            <p id="empty-inbox-text">Your inbox is empty</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="home-info-sections">
+                    <section class="info-card">
+                        <h3><i class="fas fa-magic"></i> How It Works</h3>
+                        <div class="steps">
+                            <div class="step">
+                                <span class="step-num">1</span>
+                                <p>Get a randomly generated email address instantly.</p>
+                            </div>
+                            <div class="step">
+                                <span class="step-num">2</span>
+                                <p>Use it for registrations, downloads, or untrusted sites.</p>
+                            </div>
+                            <div class="step">
+                                <span class="step-num">3</span>
+                                <p>Receive emails in real-time. Content is deleted after some time.</p>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section class="info-card">
+                        <h3><i class="fas fa-question-circle"></i> FAQ</h3>
+                        <div class="faq-item">
+                            <h4>Is this service free?</h4>
+                            <p>Yes, TempMail Pro is completely free to use.</p>
+                        </div>
+                        <div class="faq-item">
+                            <h4>How long do emails last?</h4>
+                            <p>Emails are typically available for 24 hours unless manually deleted.</p>
+                        </div>
+                    </section>
+
+                    <section class="info-card">
+                        <h3><i class="fas fa-star"></i> User Reviews</h3>
+                        <div class="reviews-slider">
+                            <div class="review">
+                                <p>"Best temp mail service I've used. Clean UI!"</p>
+                                <span>- Alex J.</span>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </section>
+
+        <section id="about-section" class="app-section">
+            <div class="container">
+                <h1 id="about-title">About Us</h1>
+                <div class="about-grid">
+                    <div class="about-card">
+                        <img src="https://github.com/amanmeena.png" alt="Aman Meena" class="profile-img">
+                        <h3>Aman Meena <span class="badge">Pro</span></h3>
+                        <p>Lead Developer & Founder</p>
+                        <div class="social-links">
+                            <a href="#"><i class="fab fa-github"></i></a>
+                            <a href="#"><i class="fab fa-twitter"></i></a>
+                        </div>
+                    </div>
+                    <div class="about-card">
+                        <img src="https://github.com/amitmeena.png" alt="Amit Meena" class="profile-img">
+                        <h3>Amit Meena</h3>
+                        <p>UI/UX Designer</p>
+                        <div class="social-links">
+                            <a href="#"><i class="fab fa-github"></i></a>
+                            <a href="#"><i class="fab fa-linkedin"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact-section" class="app-section">
+            <div class="container">
+                <h1 id="contact-title">Contact Us</h1>
+                <div class="contact-form-container">
+                    <p>Have questions or feedback? We'd love to hear from you.</p>
+                    <form id="contact-form">
+                        <div class="form-group">
+                            <input type="text" placeholder="Your Name" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="email" placeholder="Your Email" required>
+                        </div>
+                        <div class="form-group">
+                            <textarea placeholder="Your Message" rows="5" required></textarea>
+                        </div>
+                        <button type="submit" class="btn">Send Message</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <section id="privacy-section" class="app-section">
+            <div class="container">
+                <h1 id="privacy-title">Privacy Policy</h1>
+                <div class="privacy-content">
+                    <h3>Your Privacy Matters</h3>
+                    <p>TempMail Pro is committed to protecting your privacy. We do not store your personal data or permanent emails.</p>
+                    <div id="glos-title"><h4>Privacy Glossary</h4></div>
+                    <ul>
+                        <li><strong>Disposable Email:</strong> A temporary, self-destructing email address.</li>
+                        <li><strong>Mail.tm:</strong> The secure API provider for our email services.</li>
+                        <li><strong>Encryption:</strong> All data is transmitted over secure HTTPS connections.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Email Detail Modal -->
+    <div id="email-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button class="close-modal">&times;</button>
+                <h2 id="modal-subject">Subject</h2>
+            </div>
+            <div class="modal-meta">
+                <div class="sender-info">
+                    <span id="modal-sender-avatar" class="avatar"></span>
+                    <div>
+                        <div id="modal-sender-name">Sender Name</div>
+                        <div id="modal-sender-email">sender@example.com</div>
+                    </div>
+                </div>
+                <div id="modal-date">Date</div>
+            </div>
+            <div class="modal-body">
+                <iframe id="email-body-frame" sandbox="allow-popups allow-popups-to-escape-sandbox"></iframe>
+            </div>
+            <div class="modal-footer">
+                <button id="print-email-btn" class="btn"><i class="fas fa-print"></i> Print</button>
+                <button id="download-email-btn" class="btn"><i class="fas fa-download"></i> Download</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
