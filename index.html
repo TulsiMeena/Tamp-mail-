@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TempMail Pro - Free Temporary Email Service</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#6c5ce7">
+</head>
+<body class="dark-theme">
+    <div id="app">
+        <nav class="navbar">
+            <div class="container">
+                <div class="logo" id="logo-home">
+                    <i class="fas fa-envelope-open-text"></i>
+                    <span>TempMail <span class="pro-badge">PRO</span></span>
+                </div>
+
+                <div class="nav-links">
+                    <a href="#" class="nav-item active" data-section="home" id="nav-home">Home</a>
+                    <a href="#" class="nav-item" data-section="about" id="nav-about">About Us</a>
+                    <a href="#" class="nav-item" data-section="contact" id="nav-contact">Contact Us</a>
+                    <a href="#" class="nav-item" data-section="privacy" id="nav-privacy">Privacy</a>
+                </div>
+
+                <div class="nav-actions">
+                    <button id="lang-toggle" class="icon-btn" title="Switch Language">
+                        <i class="fas fa-language"></i>
+                        <span class="btn-text">HI</span>
+                    </button>
+                    <button id="theme-toggle" class="icon-btn" title="Toggle Theme">
+                        <i class="fas fa-moon"></i>
+                    </button>
+                    <button id="menu-toggle" class="icon-btn mobile-only">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                </div>
+            </div>
+        </nav>
+
+        <div id="mobile-drawer" class="mobile-drawer">
+            <div class="drawer-header">
+                <span>Menu</span>
+                <button id="close-drawer" class="icon-btn"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="drawer-links">
+                <a href="#" class="drawer-item active" data-section="home">Home</a>
+                <a href="#" class="drawer-item" data-section="about">About Us</a>
+                <a href="#" class="drawer-item" data-section="contact">Contact Us</a>
+                <a href="#" class="drawer-item" data-section="privacy">Privacy</a>
+            </div>
+        </div>
+
+        <main class="content">
+            <!-- Home Section -->
+            <section id="home-section" class="spa-section active">
+                <div class="container main-container">
+                    <!-- Email Display Card -->
+                    <div class="glass-card email-card">
+                        <div class="email-header">
+                            <span id="label-your-email">Your Temporary Email Address</span>
+                            <div class="accent-picker">
+                                <div class="accent-dot blue" data-color="#3498db"></div>
+                                <div class="accent-dot green" data-color="#2ecc71"></div>
+                                <div class="accent-dot red" data-color="#e74c3c"></div>
+                                <div class="accent-dot pink" data-color="#e91e63"></div>
+                            </div>
+                        </div>
+                        <div class="email-box">
+                            <input type="text" id="email-address" readonly value="Loading...">
+                            <div class="email-actions">
+                                <button id="copy-btn" class="action-btn" title="Copy Email">
+                                    <i class="fas fa-copy"></i>
+                                </button>
+                                <button id="qr-btn" class="action-btn" title="Show QR Code">
+                                    <i class="fas fa-qrcode"></i>
+                                </button>
+                                <button id="new-mail-btn" class="action-btn" title="New Email">
+                                    <i class="fas fa-sync-alt"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="refresh-status">
+                            <div class="progress-container">
+                                <div id="refresh-progress" class="progress-bar"></div>
+                            </div>
+                            <span id="refresh-text">Autorefresh in 7s</span>
+                            <button id="refresh-now-btn" class="text-link">Refresh now</button>
+                        </div>
+                    </div>
+
+                    <!-- Action Bar -->
+                    <div class="mailbox-controls">
+                        <button id="multi-mailbox-btn" class="btn secondary">
+                            <i class="fas fa-th-large"></i>
+                            <span id="label-multi-mailbox">My Mailboxes</span>
+                        </button>
+                        <button id="delete-mailbox-btn" class="btn danger">
+                            <i class="fas fa-trash-alt"></i>
+                            <span id="label-delete-mailbox">Delete</span>
+                        </button>
+                    </div>
+
+                    <!-- Inbox Card -->
+                    <div class="glass-card inbox-card">
+                        <div class="card-header">
+                            <div class="header-left">
+                                <i class="fas fa-inbox"></i>
+                                <h2 id="label-inbox">Inbox</h2>
+                            </div>
+                            <div id="inbox-count" class="badge">0</div>
+                        </div>
+                        <div id="email-list" class="email-list">
+                            <div class="empty-inbox">
+                                <i class="fas fa-envelope-open"></i>
+                                <p id="label-empty-inbox">Waiting for incoming emails...</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Modals -->
+                <div id="qr-modal" class="modal">
+                    <div class="modal-content glass-card">
+                        <span class="close-modal">&times;</span>
+                        <h3 id="label-qr-title">Scan QR Code</h3>
+                        <div id="qr-code-img"></div>
+                        <p id="qr-email-display"></p>
+                    </div>
+                </div>
+
+                <div id="mailbox-modal" class="modal">
+                    <div class="modal-content glass-card wide">
+                        <span class="close-modal">&times;</span>
+                        <h3 id="label-manage-mailboxes">Manage Mailboxes</h3>
+                        <div id="mailbox-list-container"></div>
+                        <button id="add-mailbox-btn" class="btn primary full-width">
+                            <i class="fas fa-plus"></i> <span id="label-add-new">Add New Mailbox</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div id="email-view-modal" class="modal">
+                    <div class="modal-content glass-card full-screen">
+                        <div class="modal-header">
+                            <button class="back-btn close-modal"><i class="fas fa-arrow-left"></i></button>
+                            <div class="header-info">
+                                <h3 id="view-subject">Subject</h3>
+                                <p id="view-from">From: sender@example.com</p>
+                            </div>
+                            <div class="view-actions">
+                                <button id="print-email-btn" class="icon-btn"><i class="fas fa-print"></i></button>
+                                <button id="download-email-btn" class="icon-btn"><i class="fas fa-download"></i></button>
+                            </div>
+                        </div>
+                        <div class="email-body-container">
+                            <iframe id="email-body-frame" sandbox="allow-popups allow-popups-to-escape-sandbox"></iframe>
+                        </div>
+                        <div id="attachments-container"></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- About Us Section -->
+            <section id="about-section" class="spa-section">
+                <div class="container glass-card">
+                    <h1 id="about-title">About Us</h1>
+                    <div id="about-content">
+                        <!-- Content injected by script.js -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- Contact Us Section -->
+            <section id="contact-section" class="spa-section">
+                <div class="container glass-card">
+                    <h1 id="contact-title">Contact Us</h1>
+                    <div id="contact-content">
+                        <!-- Content injected by script.js -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- Privacy Policy Section -->
+            <section id="privacy-section" class="spa-section">
+                <div class="container glass-card">
+                    <h1 id="privacy-title">Privacy Policy</h1>
+                    <div id="privacy-content">
+                        <!-- Content injected by script.js -->
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+    <div id="toast-container"></div>
+    <script src="script.js"></script>
+</body>
+</html>
