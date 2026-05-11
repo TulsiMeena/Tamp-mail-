@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TempMail Pro - Fast & Secure Temporary Email</title>
+    <meta name="description" content="Generate disposable temporary email addresses to keep your inbox clean and secure.">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#6366f1">
+</head>
+<body class="light-theme">
+    <div id="toast-container"></div>
+
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="#" class="logo" id="logo-link">
+                <i class="fas fa-envelope-open-text"></i>
+                <span>TempMail <span class="accent">Pro</span></span>
+            </a>
+            <div class="nav-menu" id="nav-menu">
+                <a href="#home" class="nav-link active" data-section="home" id="nav-home">Home</a>
+                <a href="#about" class="nav-link" data-section="about" id="nav-about">About Us</a>
+                <a href="#contact" class="nav-link" data-section="contact" id="nav-contact">Contact Us</a>
+                <a href="#privacy" class="nav-link" data-section="privacy" id="nav-privacy">Privacy Policy</a>
+                <button id="theme-toggle" class="icon-btn"><i class="fas fa-moon"></i></button>
+                <button id="lang-toggle" class="icon-btn"><span>EN</span></button>
+            </div>
+            <button id="menu-toggle" class="icon-btn mobile-only"><i class="fas fa-bars"></i></button>
+        </div>
+    </nav>
+
+    <main class="container">
+        <!-- Home Section -->
+        <section id="home-section" class="app-section active">
+            <div class="hero-card">
+                <h1 id="hero-title">Your Disposable Email Address</h1>
+                <p id="hero-subtitle">Don't give your real email to everyone. Use TempMail Pro to stay anonymous and avoid spam.</p>
+
+                <div class="email-box-container">
+                    <div class="email-input-wrapper">
+                        <input type="text" id="email-address" readonly placeholder="Generating address...">
+                        <div class="email-actions">
+                            <button id="copy-btn" class="action-btn" title="Copy Email"><i class="fas fa-copy"></i></button>
+                            <button id="qr-btn" class="action-btn" title="QR Code"><i class="fas fa-qrcode"></i></button>
+                            <button id="share-btn" class="action-btn" title="Share"><i class="fas fa-share-alt"></i></button>
+                        </div>
+                    </div>
+                    <div class="main-buttons">
+                        <button id="refresh-now-btn" class="btn btn-primary">
+                            <i class="fas fa-sync-alt"></i> <span id="btn-refresh">Refresh Inbox</span>
+                        </button>
+                        <button id="new-email-btn" class="btn btn-secondary">
+                            <i class="fas fa-plus"></i> <span id="btn-new">New Address</span>
+                        </button>
+                    </div>
+                    <div class="refresh-status">
+                        <div class="progress-container">
+                            <div class="progress-bar" id="refresh-progress"></div>
+                        </div>
+                        <span id="refresh-text">Autorefresh in 7s</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="inbox-section">
+                <div class="inbox-header">
+                    <h2 id="inbox-title">Your Inbox</h2>
+                    <div class="inbox-controls">
+                        <input type="text" id="inbox-search" placeholder="Search emails...">
+                        <button id="mailbox-mgr-btn" class="btn btn-outline">
+                            <i class="fas fa-users-cog"></i> <span id="btn-manage">Manage Mailboxes</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div id="email-list" class="email-list">
+                    <!-- Emails will be injected here -->
+                    <div class="empty-inbox">
+                        <i class="fas fa-inbox"></i>
+                        <p id="empty-msg">Your inbox is empty. Waiting for incoming emails...</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Features Grid -->
+            <div class="features-grid">
+                <div class="feature-card">
+                    <i class="fas fa-shield-alt"></i>
+                    <h3 id="f1-title">Privacy Protection</h3>
+                    <p id="f1-desc">Hide your real identity and protect your personal inbox from trackers and hackers.</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-bolt"></i>
+                    <h3 id="f2-title">Instant Setup</h3>
+                    <p id="f2-desc">No registration required. Get a temporary address instantly with one click.</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-trash-alt"></i>
+                    <h3 id="f3-title">Auto Disposal</h3>
+                    <p id="f3-desc">Emails are automatically deleted after 24 hours. Your data stays clean.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section id="about-section" class="app-section">
+            <div class="content-card">
+                <h2 id="about-title">About TempMail Pro</h2>
+                <div class="about-grid">
+                    <div class="about-text">
+                        <p id="about-p1">TempMail Pro provides a free, disposable email service to protect your privacy. We believe that everyone deserves to navigate the internet without being constantly tracked or spammed.</p>
+                        <p id="about-p2">Our service is built using the Mail.tm API, ensuring reliable delivery and secure handling of your temporary messages.</p>
+                    </div>
+                    <div class="team-grid">
+                        <div class="team-card">
+                            <img src="https://github.com/amanmeena.png" alt="Aman Meena">
+                            <h3>Aman Meena</h3>
+                            <p>Lead Developer</p>
+                        </div>
+                        <div class="team-card">
+                            <img src="https://github.com/amitmeena.png" alt="Amit Meena">
+                            <h3>Amit Meena</h3>
+                            <p>UI/UX Designer</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact-section" class="app-section">
+            <div class="content-card">
+                <h2 id="contact-title">Contact Us</h2>
+                <p id="contact-subtitle">Have questions or feedback? We'd love to hear from you.</p>
+                <form id="contact-form" class="contact-form">
+                    <div class="form-group">
+                        <label for="contact-name" id="label-name">Name</label>
+                        <input type="text" id="contact-name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="contact-email" id="label-email">Your Email</label>
+                        <input type="email" id="contact-email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="contact-message" id="label-msg">Message</label>
+                        <textarea id="contact-message" rows="5" required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary" id="btn-submit">Send Message</button>
+                </form>
+            </div>
+        </section>
+
+        <!-- Privacy Section -->
+        <section id="privacy-section" class="app-section">
+            <div class="content-card">
+                <h2 id="privacy-title">Privacy Policy</h2>
+                <div class="policy-content">
+                    <h3 id="pp-h1">Data Collection</h3>
+                    <p id="pp-p1">We do not store any personal data. Temporary emails and messages are managed by Mail.tm and are automatically deleted.</p>
+                    <h3 id="pp-h2">Cookies</h3>
+                    <p id="pp-p2">We use local storage only to remember your current temporary email address and preferences for a better user experience.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Modals -->
+    <div id="email-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modal-subject">Email Subject</h2>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-meta">
+                <p><strong id="label-from">From:</strong> <span id="modal-from"></span></p>
+                <p><strong id="label-date">Date:</strong> <span id="modal-date"></span></p>
+            </div>
+            <div id="modal-body-container">
+                <iframe id="email-frame" sandbox="allow-popups"></iframe>
+            </div>
+            <div class="modal-footer">
+                <button id="download-mail-btn" class="btn btn-outline"><i class="fas fa-download"></i> <span id="btn-download">Download</span></button>
+                <button id="print-mail-btn" class="btn btn-outline"><i class="fas fa-print"></i> <span id="btn-print">Print</span></button>
+            </div>
+        </div>
+    </div>
+
+    <div id="mailbox-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="mailbox-title-modal">Manage Mailboxes</h2>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="mailbox-list" id="saved-mailboxes">
+                <!-- Saved mailboxes will be listed here -->
+            </div>
+            <div class="mailbox-actions">
+                <button id="add-custom-mailbox" class="btn btn-primary"><i class="fas fa-plus"></i> <span id="btn-add-custom">Add Custom Address</span></button>
+            </div>
+        </div>
+    </div>
+
+    <div id="qr-modal" class="modal">
+        <div class="modal-content qr-content">
+            <div class="modal-header">
+                <h2 id="qr-title-modal">Email QR Code</h2>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div id="qr-container"></div>
+            <p id="qr-email-text"></p>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-container">
+            <p>&copy; 2023 TempMail Pro. All rights reserved.</p>
+            <div class="social-links">
+                <a href="#"><i class="fab fa-github"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-linkedin"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
