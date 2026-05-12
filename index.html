@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TempMail Pro - Free Temporary Email Service</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#1f1c2c">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <nav class="glass-nav">
+        <div class="nav-content">
+            <div class="logo">
+                <i class="fas fa-envelope-open-text"></i>
+                <span>TempMail Pro</span>
+            </div>
+            <div class="nav-actions">
+                <button id="lang-toggle" class="btn-icon"><i class="fas fa-language"></i></button>
+                <button id="theme-toggle" class="btn-icon"><i class="fas fa-moon"></i></button>
+                <button id="menu-toggle" class="btn-icon mobile-only"><i class="fas fa-bars"></i></button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <h3 id="sidebar-title">Menu</h3>
+            <button id="close-sidebar" class="btn-icon"><i class="fas fa-times"></i></button>
+        </div>
+        <ul class="nav-links">
+            <li><a href="#home" class="active" data-section="home"><i class="fas fa-home"></i> <span id="nav-home">Home</span></a></li>
+            <li><a href="#about" data-section="about"><i class="fas fa-info-circle"></i> <span id="nav-about">About Us</span></a></li>
+            <li><a href="#contact" data-section="contact"><i class="fas fa-envelope"></i> <span id="nav-contact">Contact Us</span></a></li>
+            <li><a href="#privacy" data-section="privacy"><i class="fas fa-shield-alt"></i> <span id="nav-privacy">Privacy Policy</span></a></li>
+        </ul>
+    </div>
+
+    <main id="app-container">
+        <!-- Home Section -->
+        <section id="home-section" class="spa-section active">
+            <div class="hero">
+                <h1 id="hero-title">Your Disposable Email Address</h1>
+                <p id="hero-subtitle">Protect your privacy and keep your inbox clean.</p>
+
+                <div class="mail-box-container glass-card">
+                    <div class="mail-display">
+                        <span id="temp-email">Loading...</span>
+                        <div class="mail-actions">
+                            <button id="copy-btn" class="btn-primary"><i class="fas fa-copy"></i></button>
+                            <button id="qr-btn" class="btn-primary" style="display:none"><i class="fas fa-qrcode"></i></button>
+                            <button id="refresh-now-btn" class="btn-primary"><i class="fas fa-sync-alt"></i></button>
+                        </div>
+                    </div>
+                    <div class="refresh-status">
+                        <div class="progress-bar-container">
+                            <div class="progress-bar" id="refresh-progress"></div>
+                        </div>
+                        <span id="refresh-timer-text">Refreshing in 7s</span>
+                    </div>
+                    <div class="action-buttons">
+                        <button id="new-mail-btn" class="btn-outline"><i class="fas fa-plus"></i> <span id="btn-new-mail">New Email</span></button>
+                        <button id="manage-accounts-btn" class="btn-outline"><i class="fas fa-users"></i> <span id="btn-manage">Manage</span></button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="inbox-container">
+                <div class="inbox-header">
+                    <h2 id="inbox-title">Inbox</h2>
+                    <div class="inbox-stats">
+                        <span id="msg-count">0 messages</span>
+                    </div>
+                </div>
+                <div id="messages-list" class="messages-list">
+                    <div class="empty-inbox">
+                        <i class="fas fa-inbox"></i>
+                        <p id="empty-msg">Your inbox is empty. Waiting for incoming emails...</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="home-content">
+                <div class="content-grid">
+                    <div class="glass-card">
+                        <h3 id="h-how-it-works">How It Works</h3>
+                        <ol class="step-list">
+                            <li><span id="s1">Generate a random email address.</span></li>
+                            <li><span id="s2">Use it for websites that require registration.</span></li>
+                            <li><span id="s3">Read incoming emails directly in this inbox.</span></li>
+                        </ol>
+                    </div>
+                    <div class="glass-card">
+                        <h3 id="h-faq">FAQ</h3>
+                        <div class="faq-item">
+                            <h4 id="q1">Is it free?</h4>
+                            <p id="a1">Yes, TempMail Pro is completely free to use.</p>
+                        </div>
+                        <div class="faq-item">
+                            <h4 id="q2">How long do emails last?</h4>
+                            <p id="a2">Emails are kept for as long as you keep the browser session active.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Us Section -->
+        <section id="about-section" class="spa-section">
+            <h2 id="about-title">About Us</h2>
+            <div id="about-content" class="glass-card">
+                <p id="about-text">TempMail Pro was created by Aman Meena and Amit Meena to provide a secure and private way to handle temporary email needs. Our mission is to help users avoid spam and protect their digital identity.</p>
+            </div>
+        </section>
+
+        <!-- Contact Us Section -->
+        <section id="contact-section" class="spa-section">
+            <h2 id="contact-title">Contact Us</h2>
+            <div id="contact-content" class="glass-card">
+                <p id="contact-text">Have questions or feedback? Reach out to us at:</p>
+                <p>Email: support@tempmailpro.example</p>
+            </div>
+        </section>
+
+        <!-- Privacy Policy Section -->
+        <section id="privacy-section" class="spa-section">
+            <h2 id="privacy-title">Privacy Policy</h2>
+            <div id="privacy-content" class="glass-card">
+                <p id="privacy-text">We do not store your personal data. All temporary email addresses and messages are transient and are purged periodically.</p>
+            </div>
+        </section>
+    </main>
+
+    <!-- Modals -->
+    <div id="mail-detail-modal" class="modal">
+        <div class="modal-content glass-card">
+            <div class="modal-header">
+                <h3 id="mail-subject">Subject</h3>
+                <button class="close-modal btn-icon"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="mail-info">
+                <p><strong>From:</strong> <span id="mail-sender"></span></p>
+                <p><strong>Date:</strong> <span id="mail-date"></span></p>
+            </div>
+            <div class="mail-body-container">
+                <iframe id="mail-body-frame" sandbox="allow-popups"></iframe>
+            </div>
+            <div class="modal-footer">
+                <button id="download-mail-btn" class="btn-outline"><i class="fas fa-download"></i> Download</button>
+                <button id="print-mail-btn" class="btn-outline" onclick="window.frames['mail-body-frame'].contentWindow.print()"><i class="fas fa-print"></i> Print</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="toast-container"></div>
+
+    <script src="script.js"></script>
+</body>
+</html>
