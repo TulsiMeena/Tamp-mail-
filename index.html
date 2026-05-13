@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TempMail Pro - Free Temporary Email</title>
+    <meta name="description" content="Get a free temporary email address for your privacy. Protect your personal inbox from spam.">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="manifest" href="manifest.json">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <meta name="theme-color" content="#1f1c2c">
+</head>
+<body class="dark-theme">
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <i class="fas fa-envelope-open-text"></i>
+                <span>TempMail <span class="pro-badge">Pro</span></span>
+            </div>
+
+            <div class="nav-links" id="nav-links">
+                <a href="#home" class="nav-link active" data-nav="home" id="nav-home">Home</a>
+                <a href="#inbox" class="nav-link" data-nav="inbox" id="nav-inbox">Inbox</a>
+                <a href="#privacy" class="nav-link" data-nav="privacy" id="nav-privacy">Privacy</a>
+                <a href="#about" class="nav-link" data-nav="about" id="nav-about">About Us</a>
+            </div>
+
+            <div class="nav-actions">
+                <button id="lang-toggle" class="btn-icon" title="Switch Language">
+                    <i class="fas fa-language"></i>
+                    <span class="btn-text">HI</span>
+                </button>
+                <button id="theme-toggle" class="btn-icon" title="Toggle Theme">
+                    <i class="fas fa-moon"></i>
+                </button>
+                <button id="menu-toggle" class="btn-icon mobile-only">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Mobile Drawer -->
+    <div class="mobile-drawer" id="mobile-drawer">
+        <div class="drawer-header">
+            <span>Menu</span>
+            <button id="close-drawer" class="btn-icon"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="drawer-links">
+            <a href="#home" class="drawer-link active" data-nav="home" id="m-nav-home">Home</a>
+            <a href="#inbox" class="drawer-link" data-nav="inbox" id="m-nav-inbox">Inbox</a>
+            <a href="#privacy" class="drawer-link" data-nav="privacy" id="m-nav-privacy">Privacy</a>
+            <a href="#about" class="drawer-link" data-nav="about" id="m-nav-about">About Us</a>
+        </div>
+    </div>
+    <div class="drawer-overlay" id="drawer-overlay"></div>
+
+    <main class="content-wrapper">
+        <!-- Home Section -->
+        <section id="home-section" class="spa-section active">
+            <div class="hero">
+                <h1 id="hero-title">Protect Your Privacy with TempMail</h1>
+                <p id="hero-subtitle">Generate instant temporary email addresses to keep your real inbox clean and safe from spam.</p>
+                <button class="btn-primary" id="start-btn">Get Started</button>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <i class="fas fa-paper-plane"></i>
+                    <div class="stat-info">
+                        <span class="stat-value" id="stat-emails">0</span>
+                        <span class="stat-label" id="label-emails">Emails Received</span>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-clock"></i>
+                    <div class="stat-info">
+                        <span class="stat-value" id="stat-time">0m</span>
+                        <span class="stat-label" id="label-time">Time Saved</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="info-grid">
+                <div class="info-card">
+                    <h3 id="h-what-is">What is Temp Mail?</h3>
+                    <p id="p-what-is">Temporary email is a service that provides you with a disposable email address. It helps you register on websites without revealing your personal email.</p>
+                </div>
+                <div class="info-card">
+                    <h3 id="h-how-it-works">How It Works</h3>
+                    <ol>
+                        <li id="s1">Generate a random email address.</li>
+                        <li id="s2">Use it for any registration or service.</li>
+                        <li id="s3">Receive and read emails instantly in your inbox.</li>
+                    </ol>
+                </div>
+            </div>
+
+            <div class="faq-section">
+                <h2 id="faq-title">Frequently Asked Questions</h2>
+                <div class="faq-list" id="faq-list">
+                    <!-- FAQs will be injected here if needed, or hardcoded -->
+                </div>
+            </div>
+
+            <div class="feedback-section">
+                <h2 id="feedback-title">User Reviews & Feedback</h2>
+                <div class="feedback-container" id="feedback-container">
+                    <!-- Professional testimonials will go here -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Inbox Section -->
+        <section id="inbox-section" class="spa-section">
+            <div class="mailbox-controls">
+                <div class="email-display-card">
+                    <div class="email-box">
+                        <input type="text" id="current-email" readonly value="Loading...">
+                        <div class="email-actions">
+                            <button id="copy-email-btn" class="btn-icon-small" title="Copy"><i class="fas fa-copy"></i></button>
+                            <button id="share-email-btn" class="btn-icon-small" title="Share"><i class="fas fa-share-alt"></i></button>
+                        </div>
+                    </div>
+                    <div class="refresh-container">
+                        <div class="progress-bar-bg">
+                            <div class="progress-bar" id="refresh-progress"></div>
+                        </div>
+                        <span id="refresh-status">Auto-refreshing in 7s</span>
+                        <button id="refresh-now-btn" class="btn-refresh"><i class="fas fa-sync-alt"></i></button>
+                    </div>
+                </div>
+
+                <div class="mailbox-management">
+                    <button id="new-mail-btn" class="btn-secondary"><i class="fas fa-plus"></i> <span id="btn-new-email">New Email</span></button>
+                    <button id="manage-mailboxes-btn" class="btn-secondary"><i class="fas fa-list"></i> <span id="btn-my-emails">My Emails</span></button>
+                </div>
+            </div>
+
+            <div class="inbox-container">
+                <div class="inbox-header">
+                    <h2 id="inbox-title">Your Inbox</h2>
+                    <div class="inbox-search">
+                        <i class="fas fa-search"></i>
+                        <input type="text" id="inbox-search-input" placeholder="Search emails...">
+                    </div>
+                </div>
+                <div id="email-list" class="email-list">
+                    <!-- Emails will appear here -->
+                    <div class="empty-inbox" id="empty-inbox-msg">
+                        <i class="fas fa-inbox"></i>
+                        <p id="p-empty-inbox">Waiting for incoming emails...</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Privacy Section -->
+        <section id="privacy-section" class="spa-section">
+            <h2 id="privacy-title">Privacy & Security</h2>
+            <div class="privacy-content">
+                <div class="privacy-card">
+                    <h3 id="glos-title">Privacy Glossary</h3>
+                    <div id="privacy-glossary">
+                        <!-- Glossary items -->
+                    </div>
+                </div>
+                <div class="privacy-card">
+                    <h3 id="h-security">Your Data is Secure</h3>
+                    <p id="p-security">All emails are automatically purged after 24 hours. We do not store any personal information or track your activity.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Us Section -->
+        <section id="about-section" class="spa-section">
+            <h2 id="about-title">About Us</h2>
+            <div class="about-grid">
+                <div class="dev-card" id="dev-aman">
+                    <img src="https://github.com/aman-meena.png" alt="Aman Meena" class="dev-avatar">
+                    <h3>Aman Meena <span class="pro-badge">PRO</span></h3>
+                    <p id="dev-aman-desc">Lead Developer & Designer</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-github"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                    </div>
+                </div>
+                <div class="dev-card" id="dev-amit">
+                    <img src="https://github.com/amit-meena.png" alt="Amit Meena" class="dev-avatar">
+                    <h3>Amit Meena</h3>
+                    <p id="dev-amit-desc">Backend Engineer</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-github"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="skills-section">
+                <h3 id="h-skills">Our Skills</h3>
+                <div class="skills-tags">
+                    <span class="skill-tag" id="skill1">Web Development</span>
+                    <span class="skill-tag" id="skill2">UI/UX Design</span>
+                    <span class="skill-tag" id="skill3">Cloud Architecture</span>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Email Detail Modal -->
+    <div id="email-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modal-subject">Email Subject</h3>
+                <button class="close-btn" id="close-modal">&times;</button>
+            </div>
+            <div class="modal-meta">
+                <div><strong id="label-from">From:</strong> <span id="modal-from"></span></div>
+                <div><strong id="label-date">Date:</strong> <span id="modal-date"></span></div>
+            </div>
+            <div class="modal-body">
+                <iframe id="email-body-frame" sandbox="allow-popups"></iframe>
+            </div>
+            <div class="modal-footer">
+                <button id="download-email-btn" class="btn-outline"><i class="fas fa-download"></i> <span id="btn-download">Download</span></button>
+                <button id="print-email-btn" class="btn-outline"><i class="fas fa-print"></i> <span id="btn-print">Print</span></button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mailbox Management Modal -->
+    <div id="mailbox-manager-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="manager-title">Manage Mailboxes</h3>
+                <button class="close-btn" id="close-manager-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div id="mailbox-list" class="mailbox-list">
+                    <!-- List of saved mailboxes -->
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="backup-mailboxes-btn" class="btn-outline"><i class="fas fa-file-export"></i> <span id="btn-backup">Backup</span></button>
+                <button id="restore-mailboxes-btn" class="btn-outline"><i class="fas fa-file-import"></i> <span id="btn-restore">Restore</span></button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Accent Color Picker -->
+    <div class="accent-picker" id="accent-picker">
+        <div class="accent-color color-blue" data-color="#3498db"></div>
+        <div class="accent-color color-green" data-color="#2ecc71"></div>
+        <div class="accent-color color-red" data-color="#e74c3c"></div>
+        <div class="accent-color color-pink" data-color="#e91e63"></div>
+    </div>
+
+    <!-- Toast Notifications -->
+    <div id="toast-container"></div>
+
+    <!-- Audio for notifications -->
+    <audio id="notif-sound" src="https://assets.mixkit.co/active_storage/sfx/2869/2869-preview.mp3" preload="auto"></audio>
+
+    <script src="script.js"></script>
+</body>
+</html>

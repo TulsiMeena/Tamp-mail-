@@ -1,0 +1,16 @@
+{
+  "name": "TempMail Pro",
+  "short_name": "TempMail",
+  "description": "Free Temporary Email for Privacy",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#1f1c2c",
+  "theme_color": "#1f1c2c",
+  "icons": [
+    {
+      "src": "https://cdn-icons-png.flaticon.com/512/281/281769.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
