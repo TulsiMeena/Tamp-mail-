@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TempMail Pro - Free Temporary Email Service</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#1f1c2c">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="dark-theme">
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <i class="fas fa-envelope-open-text"></i>
+                <span>TempMail <span class="accent-text">Pro</span></span>
+            </div>
+            <div class="nav-links" id="nav-links">
+                <a href="#home" class="nav-item active" data-section="home"><i class="fas fa-home"></i> <span id="nav-home">Home</span></a>
+                <a href="#inbox" class="nav-item" data-section="inbox"><i class="fas fa-inbox"></i> <span id="nav-inbox">Inbox</span></a>
+                <a href="#about" class="nav-item" data-section="about"><i class="fas fa-user"></i> <span id="nav-about">About</span></a>
+                <a href="#privacy" class="nav-item" data-section="privacy"><i class="fas fa-shield-alt"></i> <span id="nav-privacy">Privacy</span></a>
+            </div>
+            <div class="nav-actions">
+                <button id="lang-toggle" class="btn-icon"><i class="fas fa-language"></i></button>
+                <button id="theme-toggle" class="btn-icon"><i class="fas fa-moon"></i></button>
+                <button id="menu-toggle" class="btn-icon mobile-only"><i class="fas fa-bars"></i></button>
+            </div>
+        </div>
+    </nav>
+
+    <main class="content">
+        <!-- Home Section -->
+        <section id="home-section" class="spa-section active">
+            <div class="hero">
+                <h1 id="hero-title">Your Secure Temporary Email</h1>
+                <p id="hero-subtitle">Protect your privacy and keep your real inbox clean from spam.</p>
+                <div class="cta-container">
+                    <button id="get-started-btn" class="btn-primary"><i class="fas fa-rocket"></i> <span id="btn-get-started">Get Started</span></button>
+                </div>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <i class="fas fa-paper-plane"></i>
+                    <h3 id="stat-emails-count">0+</h3>
+                    <p id="stat-emails-text">Emails Received</p>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-clock"></i>
+                    <h3 id="stat-time-saved">0h</h3>
+                    <p id="stat-time-text">Time Saved</p>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-user-shield"></i>
+                    <h3>100%</h3>
+                    <p id="stat-privacy-text">Privacy Focused</p>
+                </div>
+            </div>
+
+            <div class="features-section">
+                <h2 id="key-benefits-title">Key Benefits</h2>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <i class="fas fa-bolt"></i>
+                        <h4 id="feat-fast-title">Instant Setup</h4>
+                        <p id="feat-fast-desc">No registration required. Get your email address in one click.</p>
+                    </div>
+                    <div class="feature-card">
+                        <i class="fas fa-shield-alt"></i>
+                        <h4 id="feat-secure-title">Private & Secure</h4>
+                        <p id="feat-secure-desc">We never store your personal data. All emails are encrypted.</p>
+                    </div>
+                    <div class="feature-card">
+                        <i class="fas fa-trash"></i>
+                        <h4 id="feat-auto-title">Auto Deletion</h4>
+                        <p id="feat-auto-desc">Emails are automatically purged after 24 hours for your safety.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="info-section">
+                <h2 id="how-it-works-title">How It Works</h2>
+                <div class="steps-grid">
+                    <div class="step-card">
+                        <div class="step-num">1</div>
+                        <h4 id="s1-title">Generate</h4>
+                        <p id="s1-desc">Pick or generate a random email address instantly.</p>
+                    </div>
+                    <div class="step-card">
+                        <div class="step-num">2</div>
+                        <h4 id="s2-title">Receive</h4>
+                        <p id="s2-desc">Use it to sign up for services or receive files.</p>
+                    </div>
+                    <div class="step-card">
+                        <div class="step-num">3</div>
+                        <h4 id="s3-title">Read/Delete</h4>
+                        <p id="s3-desc">Read emails in real-time and delete them when done.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Inbox Section -->
+        <section id="inbox-section" class="spa-section">
+            <div class="mailbox-container">
+                <div class="mailbox-header">
+                    <div class="current-address-box">
+                        <span id="current-email">loading...</span>
+                        <div class="address-actions">
+                            <button id="copy-btn" class="btn-sm"><i class="fas fa-copy"></i></button>
+                            <button id="share-btn" class="btn-sm"><i class="fas fa-share-alt"></i></button>
+                            <button id="qr-btn" class="btn-sm"><i class="fas fa-qrcode"></i></button>
+                        </div>
+                    </div>
+                    <div class="mailbox-controls">
+                        <button id="new-mailbox-btn" class="btn-secondary"><i class="fas fa-plus"></i> <span id="btn-new">New</span></button>
+                        <button id="refresh-now-btn" class="btn-secondary"><i class="fas fa-sync-alt"></i> <span id="btn-refresh">Refresh</span></button>
+                        <button id="delete-mailbox-btn" class="btn-danger"><i class="fas fa-trash-alt"></i></button>
+                    </div>
+                </div>
+
+                <div class="refresh-bar-container">
+                    <div class="progress-bar" id="refresh-progress"></div>
+                    <small id="refresh-status">Checking for new mail in 7s...</small>
+                </div>
+
+                <div class="inbox-layout">
+                    <div class="mail-list" id="mail-list">
+                        <div class="empty-inbox">
+                            <i class="fas fa-envelope-open"></i>
+                            <p id="empty-inbox-text">Your inbox is empty</p>
+                        </div>
+                    </div>
+                    <div class="mail-view" id="mail-view">
+                        <div class="view-placeholder">
+                            <i class="fas fa-mouse-pointer"></i>
+                            <p id="select-mail-text">Select an email to read</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="manage-accounts">
+                <h3 id="accounts-title">My Mailboxes</h3>
+                <div class="accounts-grid" id="accounts-grid">
+                    <!-- Accounts will be listed here -->
+                </div>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section id="about-section" class="spa-section">
+            <div class="about-container">
+                <h2 id="about-title">About Us</h2>
+                <div class="team-grid">
+                    <div class="team-card">
+                        <div class="avatar-box">
+                            <img src="https://github.com/amanmeena.png" alt="Aman Meena" class="avatar">
+                            <span class="badge">Pro</span>
+                        </div>
+                        <h3>Aman Meena</h3>
+                        <p id="aman-desc">Full Stack Developer & UI/UX Enthusiast.</p>
+                        <div class="social-links">
+                            <a href="#"><i class="fab fa-github"></i></a>
+                            <a href="#"><i class="fab fa-twitter"></i></a>
+                        </div>
+                    </div>
+                    <div class="team-card">
+                        <img src="https://github.com/amitmeena.png" alt="Amit Meena" class="avatar">
+                        <h3>Amit Meena</h3>
+                        <p id="amit-desc">Backend Engineer & Security Specialist.</p>
+                        <div class="social-links">
+                            <a href="#"><i class="fab fa-github"></i></a>
+                            <a href="#"><i class="fab fa-linkedin"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Privacy Section -->
+        <section id="privacy-section" class="spa-section">
+            <div class="privacy-container">
+                <h2 id="privacy-title">Privacy Policy</h2>
+                <p id="privacy-intro">We value your privacy. This service is designed to keep your personal data safe.</p>
+
+                <div class="faq-section">
+                    <h3 id="faq-title">Frequently Asked Questions</h3>
+                    <div class="faq-item">
+                        <h4 id="faq-q1">Is this service free?</h4>
+                        <p id="faq-a1">Yes, TempMail Pro is 100% free to use for everyone.</p>
+                    </div>
+                    <div class="faq-item">
+                        <h4 id="faq-q2">How long do emails stay?</h4>
+                        <p id="faq-a2">Emails are stored for 24 hours before being permanently deleted.</p>
+                    </div>
+                </div>
+
+                <div class="glossary-section">
+                    <h3 id="glos-title">Privacy Glossary</h3>
+                    <ul id="glos-list">
+                        <li><strong>No Logs:</strong> We don't store your personal IP or browsing history.</li>
+                        <li><strong>Encryption:</strong> All data is transmitted over secure HTTPS.</li>
+                        <li><strong>Auto-Purge:</strong> Emails are automatically deleted after 24 hours.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <div id="toast-container"></div>
+
+    <footer class="footer">
+        <p>&copy; 2023 TempMail Pro. <span id="footer-text">Built with love for privacy.</span></p>
+    </footer>
+
+    <!-- Modals -->
+    <div id="qr-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <h3 id="qr-title">Scan QR Code</h3>
+            <div id="qr-code"></div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
