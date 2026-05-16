@@ -1,0 +1,8 @@
+{
+  "name": "Temp Mail Pro",
+  "short_name": "TempMail",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#1f1c2c",
+  "theme_color": "#3498db"
+}
