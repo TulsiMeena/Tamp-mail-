@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Temp Mail Pro - Secure Disposable Email</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="manifest" href="manifest.json">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <meta name="theme-color" content="#4a90e2">
+</head>
+<body class="dark-theme">
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <i class="fas fa-envelope-open-text"></i>
+                <span>Temp Mail Pro</span>
+            </div>
+            <div class="nav-actions">
+                <button id="lang-toggle" class="btn-icon" title="Change Language">
+                    <i class="fas fa-language"></i>
+                </button>
+                <button id="theme-toggle" class="btn-icon" title="Toggle Theme">
+                    <i class="fas fa-moon"></i>
+                </button>
+                <button id="menu-toggle" class="btn-icon">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+        <div id="nav-links" class="nav-links">
+            <a href="#home" class="nav-link active" data-section="home" id="nav-home">Home</a>
+            <a href="#inbox" class="nav-link" data-section="inbox" id="nav-inbox">Inbox</a>
+            <a href="#about" class="nav-link" data-section="about" id="nav-about">About Us</a>
+            <a href="#privacy" class="nav-link" data-section="privacy" id="nav-privacy">Privacy</a>
+        </div>
+    </nav>
+
+    <main id="app">
+        <!-- Home Section -->
+        <section id="home-section" class="section active">
+            <div class="hero">
+                <h1 id="hero-title">Secure Your Inbox</h1>
+                <p id="hero-desc">Generate temporary disposable email addresses to keep your real inbox clean and safe from spam.</p>
+                <button id="get-started-btn" class="btn-primary">
+                    <span id="btn-get-started">Get Started</span>
+                </button>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-card tilt-effect">
+                    <i class="fas fa-bolt"></i>
+                    <h3 id="stat-emails-val">0</h3>
+                    <p id="stat-emails-label">Emails Received</p>
+                </div>
+                <div class="stat-card tilt-effect">
+                    <i class="fas fa-clock"></i>
+                    <h3 id="stat-time-val">0h</h3>
+                    <p id="stat-time-label">Time Saved</p>
+                </div>
+            </div>
+
+            <div class="how-it-works">
+                <h2 id="how-title">How It Works</h2>
+                <div class="steps-grid">
+                    <div class="step-card">
+                        <span class="step-num">1</span>
+                        <h3 id="s1-title">Generate</h3>
+                        <p id="s1-desc">Create a new temporary email address with one click.</p>
+                    </div>
+                    <div class="step-card">
+                        <span class="step-num">2</span>
+                        <h3 id="s2-title">Receive</h3>
+                        <p id="s2-desc">Use it to sign up or receive confirmation codes.</p>
+                    </div>
+                    <div class="step-card">
+                        <span class="step-num">3</span>
+                        <h3 id="s3-title">Auto-Purge</h3>
+                        <p id="s3-desc">Emails are automatically deleted after 24 hours.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="testimonials">
+                <h2 id="feedback-title">User Reviews & Feedback</h2>
+                <div class="reviews-container">
+                    <div class="review-card">
+                        <div class="user-info">
+                            <div class="avatar" style="background: #ff6b6b">JS</div>
+                            <div>
+                                <h4>John Smith</h4>
+                                <div class="rating">★★★★★</div>
+                            </div>
+                        </div>
+                        <p>"Best temp mail service I've ever used. Fast and reliable."</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="faq-section">
+                <h2 id="faq-title">Frequently Asked Questions</h2>
+                <div class="faq-accordion">
+                    <!-- FAQ items will be dynamically populated or hardcoded -->
+                    <div class="faq-item">
+                        <h3 id="faq-q1">What is Temp Mail?</h3>
+                        <p id="faq-a1">Temporary mail is a disposable email address used to protect your privacy.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Inbox Section -->
+        <section id="inbox-section" class="section">
+            <div class="inbox-header">
+                <h2 id="inbox-title">Your Mailbox</h2>
+                <div class="mailbox-controls">
+                    <button id="add-mailbox-btn" class="btn-secondary">
+                        <i class="fas fa-plus"></i> <span id="btn-add-mail">New Mailbox</span>
+                    </button>
+                    <button id="refresh-now-btn" class="btn-icon">
+                        <i class="fas fa-sync-alt"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="active-email-card">
+                <div class="email-display">
+                    <span id="current-email">loading...</span>
+                    <button id="copy-email-btn" class="btn-icon"><i class="fas fa-copy"></i></button>
+                    <button id="qr-btn" class="btn-icon"><i class="fas fa-qrcode"></i></button>
+                </div>
+                <div class="refresh-status-bar">
+                    <div class="progress-container">
+                        <div class="progress-bar" style="--progress-width: 0%;"></div>
+                    </div>
+                    <span id="refresh-status">Checking in 7s...</span>
+                </div>
+            </div>
+
+            <div id="mailbox-list" class="mailbox-list"></div>
+
+            <div id="email-list" class="email-list">
+                <!-- Emails will appear here -->
+                <div class="empty-state">
+                    <i class="fas fa-inbox"></i>
+                    <p id="empty-inbox">Your inbox is empty</p>
+                </div>
+            </div>
+
+            <div id="email-detail" class="email-detail hidden">
+                <button id="back-to-list" class="btn-text"><i class="fas fa-arrow-left"></i> <span id="back-text">Back</span></button>
+                <div class="detail-header">
+                    <h3 id="detail-subject"></h3>
+                    <div class="detail-meta">
+                        <span id="detail-from"></span>
+                        <span id="detail-date"></span>
+                    </div>
+                </div>
+                <div class="detail-body">
+                    <iframe id="email-frame" sandbox="allow-popups"></iframe>
+                </div>
+                <div id="attachments-area"></div>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section id="about-section" class="section">
+            <h2 id="about-title">About the Developers</h2>
+            <div class="dev-grid">
+                <div class="dev-card tilt-effect">
+                    <div class="dev-img">
+                        <img src="https://github.com/amanmeena.png" alt="Aman Meena">
+                        <span class="badge">Pro</span>
+                    </div>
+                    <h3>Aman Meena</h3>
+                    <p id="skill1">Full Stack Developer</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-github"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                </div>
+                <div class="dev-card tilt-effect">
+                    <div class="dev-img">
+                        <img src="https://github.com/amitmeena.png" alt="Amit Meena">
+                    </div>
+                    <h3>Amit Meena</h3>
+                    <p id="skill2">UI/UX Designer</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-github"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Privacy Section -->
+        <section id="privacy-section" class="section">
+            <h2 id="privacy-title">Privacy Policy</h2>
+            <div class="privacy-content glass-card">
+                <p id="privacy-desc">We value your privacy. We do not store any personal data or logs of your emails.</p>
+                <h3 id="glos-title">Privacy Glossary</h3>
+                <ul id="glossary-list">
+                    <li><strong>Disposable:</strong> Temporary and intended to be thrown away.</li>
+                </ul>
+            </div>
+        </section>
+    </main>
+
+    <!-- Modals -->
+    <div id="qr-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <h3>Scan QR Code</h3>
+            <div id="qr-code-img"></div>
+        </div>
+    </div>
+
+    <div id="toast-container"></div>
+
+    <div class="accent-picker">
+        <button class="accent-btn blue" data-color="#4a90e2"></button>
+        <button class="accent-btn green" data-color="#2ecc71"></button>
+        <button class="accent-btn red" data-color="#e74c3c"></button>
+        <button class="accent-btn pink" data-color="#f06292"></button>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
