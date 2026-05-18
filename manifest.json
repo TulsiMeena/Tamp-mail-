@@ -1,0 +1,21 @@
+{
+  "name": "Temp Mail Pro",
+  "short_name": "TempMail",
+  "description": "Secure and private disposable email service.",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#1f1c2c",
+  "theme_color": "#4a90e2",
+  "icons": [
+    {
+      "src": "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/svgs/solid/envelope-open-text.svg",
+      "sizes": "192x192",
+      "type": "image/svg+xml"
+    },
+    {
+      "src": "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/svgs/solid/envelope-open-text.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml"
+    }
+  ]
+}
