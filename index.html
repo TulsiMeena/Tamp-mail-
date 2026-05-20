@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Temp Mail</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Temporary Email Service</h1>
+        <div class="email-section">
+            <p>Your Temporary Email Address:</p>
+            <div class="email-box">
+                <span id="email-address">Loading...</span>
+                <button id="copy-btn">Copy</button>
+            </div>
+            <button id="refresh-btn">Refresh Inbox</button>
+            <button id="new-mail-btn">Get New Email</button>
+        </div>
+        <div class="inbox-section">
+            <h2>Inbox</h2>
+            <ul id="message-list">
+                <li class="empty-msg">Your inbox is empty.</li>
+            </ul>
+        </div>
+    </div>
+    <div id="message-modal" class="modal" style="display:none;">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <div id="message-detail"></div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
