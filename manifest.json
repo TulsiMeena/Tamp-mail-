@@ -1,0 +1,16 @@
+{
+    "name": "TempMail - Disposable Temporary Email",
+    "short_name": "TempMail",
+    "description": "Keep your real mailbox clean and secure with disposable temporary emails.",
+    "start_url": ".",
+    "display": "standalone",
+    "background_color": "#1f1c2c",
+    "theme_color": "#3498db",
+    "icons": [
+        {
+            "src": "https://cdn-icons-png.flaticon.com/512/2099/2099199.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        }
+    ]
+}
