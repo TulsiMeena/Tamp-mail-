@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TempMail - Disposable Temporary Email</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#3498db">
+</head>
+<body>
+    <div id="toast-container"></div>
+
+    <nav>
+        <div class="nav-container">
+            <div class="logo">Temp<span>Mail</span></div>
+            <button id="menu-toggle"><i class="fas fa-bars"></i></button>
+            <ul id="nav-links">
+                <li><a href="#" class="nav-link active" data-section="home" id="nav-home">Home</a></li>
+                <li><a href="#" class="nav-link" data-section="inbox" id="nav-inbox">Inbox</a></li>
+                <li><a href="#" class="nav-link" data-section="about" id="nav-about">About</a></li>
+                <li><a href="#" class="nav-link" data-section="privacy" id="nav-privacy">Privacy</a></li>
+                <li><button id="lang-toggle">Hindi</button></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main>
+        <!-- Home Section -->
+        <section id="home" class="spa-section">
+            <div class="hero">
+                <h1 id="hero-title">Temporary Email, Real Privacy</h1>
+                <p id="hero-subtitle">Forget about spam, advertising mailings, hacking and attacking robots. Keep your real mailbox clean and secure.</p>
+                <div class="hero-btns">
+                    <button id="get-started-btn" class="btn-primary">Get Started</button>
+                </div>
+            </div>
+
+            <div class="stats-container">
+                <div class="stat-card">
+                    <h3 id="stat-emails">0</h3>
+                    <p id="stat-emails-text">Emails Received</p>
+                </div>
+                <div class="stat-card">
+                    <h3 id="stat-time">0h</h3>
+                    <p id="stat-time-text">Time Saved</p>
+                </div>
+            </div>
+
+            <section class="how-it-works">
+                <h2 id="how-it-works-title">How It Works</h2>
+                <div class="steps-grid">
+                    <div class="step-card">
+                        <i class="fas fa-random"></i>
+                        <h4 id="s1-title">Generate</h4>
+                        <p id="s1-desc">Instant temporary email address generation.</p>
+                    </div>
+                    <div class="step-card">
+                        <i class="fas fa-inbox"></i>
+                        <h4 id="s2-title">Receive</h4>
+                        <p id="s2-desc">Receive emails instantly with auto-refresh.</p>
+                    </div>
+                    <div class="step-card">
+                        <i class="fas fa-trash-alt"></i>
+                        <h4 id="s3-title">Destroy</h4>
+                        <p id="s3-desc">Data is automatically purged after 24 hours.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="reviews">
+                <h2 id="reviews-title">User Reviews & Feedback</h2>
+                <div class="reviews-grid">
+                    <div class="review-card">
+                        <div class="stars">★★★★★</div>
+                        <p>"Best temporary mail service I've ever used. Simple and fast!"</p>
+                        <span>- Rahul Sharma</span>
+                    </div>
+                    <div class="review-card">
+                        <div class="stars">★★★★★</div>
+                        <p>"Privacy is important to me, and this tool delivers exactly that."</p>
+                        <span>- Priya Patel</span>
+                    </div>
+                </div>
+            </section>
+        </section>
+
+        <!-- Inbox Section -->
+        <section id="inbox" class="spa-section hidden">
+            <div class="inbox-header">
+                <h2 id="inbox-title">Your Temporary Inbox</h2>
+                <div class="mailbox-controls">
+                    <button id="add-mailbox-btn" class="btn-secondary"><i class="fas fa-plus"></i> <span id="btn-add-mail">New Mailbox</span></button>
+                    <button id="refresh-now-btn" class="btn-secondary"><i class="fas fa-sync-alt"></i></button>
+                <button id="backup-btn" class="btn-secondary" title="Backup"><i class="fas fa-download"></i></button>
+                <button id="restore-btn" class="btn-secondary" title="Restore"><i class="fas fa-upload"></i></button>
+                <input type="file" id="restore-input" style="display: none;" accept=".json">
+                </div>
+            </div>
+
+            <div id="mailbox-list">
+                <!-- Mailboxes will be injected here -->
+            </div>
+
+            <div class="refresh-status-container">
+                <p id="refresh-status">Auto-refreshing in 10s</p>
+                <div class="progress-container">
+                    <div class="progress-bar" style="--progress-width: 100%;"></div>
+                </div>
+            </div>
+
+            <div id="email-list-container">
+                <div id="email-list">
+                    <!-- Emails will be injected here -->
+                    <div class="empty-inbox">
+                        <i class="fas fa-envelope-open-text"></i>
+                        <p id="no-emails-msg">No emails yet. Waiting for incoming messages...</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section id="about" class="spa-section hidden">
+            <h2 id="about-title">About Us</h2>
+            <div class="about-content">
+                <div class="dev-card">
+                    <img src="https://github.com/amanmeena.png" alt="Aman Meena">
+                    <h3>Aman Meena <span class="badge">Pro</span></h3>
+                    <p id="dev-aman-bio">Passionate developer focused on privacy tools.</p>
+                </div>
+                <div class="dev-card">
+                    <img src="https://github.com/amitmeena.png" alt="Amit Meena">
+                    <h3>Amit Meena</h3>
+                    <p id="dev-amit-bio">Building secure and user-friendly web apps.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Privacy Section -->
+        <section id="privacy" class="spa-section hidden">
+            <h2 id="privacy-title">Privacy & Security</h2>
+            <div class="privacy-content">
+                <h3 id="glos-title">Privacy Glossary</h3>
+                <div id="glossary-container" class="glossary-grid">
+                    <div class="glos-item">
+                        <strong id="glos-temp-title">Disposable Email</strong>
+                        <p id="glos-temp-desc">Temporary address that expires after use or a set period.</p>
+                    </div>
+                    <div class="glos-item">
+                        <strong id="glos-enc-title">Encryption</strong>
+                        <p id="glos-enc-desc">Securing data so only authorized parties can read it.</p>
+                    </div>
+                    <div class="glos-item">
+                        <strong id="glos-spam-title">Anti-Spam</strong>
+                        <p id="glos-spam-desc">Tools designed to prevent unsolicited bulk messages.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Email Modal -->
+    <div id="email-modal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modal-subject">Subject</h3>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-info">
+                <p><strong>From:</strong> <span id="modal-from"></span></p>
+                <p><strong>Date:</strong> <span id="modal-date"></span></p>
+            </div>
+            <div class="modal-body">
+                <iframe id="email-frame" sandbox="allow-popups"></iframe>
+            </div>
+            <div class="modal-footer">
+                <div id="attachments-container"></div>
+                <button id="print-email-btn" class="btn-secondary"><i class="fas fa-print"></i> Print</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Theme Picker -->
+    <div class="theme-picker">
+        <button class="theme-btn blue active" data-color="#3498db"></button>
+        <button class="theme-btn green" data-color="#2ecc71"></button>
+        <button class="theme-btn red" data-color="#e74c3c"></button>
+        <button class="theme-btn pink" data-color="#e91e63"></button>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
