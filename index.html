@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tamp Mail - Fast & Secure Temporary Email</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#3498db">
+</head>
+<body>
+    <div id="toast-container"></div>
+
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <i class="fas fa-envelope-open-text"></i>
+                <span>Tamp Mail</span>
+            </div>
+            <div class="nav-actions">
+                <button id="theme-toggle" class="nav-btn"><i class="fas fa-palette"></i></button>
+                <button id="lang-toggle" class="nav-btn">HI</button>
+                <button id="menu-toggle" class="nav-btn"><i class="fas fa-bars"></i></button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="app-layout">
+        <aside id="sidebar" class="sidebar">
+            <ul id="nav-links">
+                <li><a href="#" class="nav-link active" data-section="home"><i class="fas fa-home"></i> <span id="nav-home">Home</span></a></li>
+                <li><a href="#" class="nav-link" data-section="inbox"><i class="fas fa-inbox"></i> <span id="nav-inbox">Inbox</span></a></li>
+                <li><a href="#" class="nav-link" data-section="about"><i class="fas fa-user-friends"></i> <span id="nav-about">About Us</span></a></li>
+                <li><a href="#" class="nav-link" data-section="privacy"><i class="fas fa-shield-alt"></i> <span id="nav-privacy">Privacy</span></a></li>
+                <li><a href="#" class="nav-link" data-section="help"><i class="fas fa-question-circle"></i> <span id="nav-help">Help</span></a></li>
+            </ul>
+        </aside>
+
+        <main class="content-area">
+            <!-- Home Section -->
+            <section id="home-section" class="spa-section">
+                <div class="hero">
+                    <h1 id="hero-title">Secure Your Privacy with Tamp Mail</h1>
+                    <p id="hero-subtitle">Get a disposable temporary email address instantly. No registration, no spam, no worries.</p>
+                    <button class="btn-primary" onclick="App.navigateTo('inbox')">
+                        <span id="btn-get-started">Get Started</span> <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <i class="fas fa-bolt"></i>
+                        <h3 id="stat-speed">Instant</h3>
+                        <p id="stat-speed-desc">Generated in milliseconds</p>
+                    </div>
+                    <div class="stat-card">
+                        <i class="fas fa-user-secret"></i>
+                        <h3 id="stat-anon">Anonymous</h3>
+                        <p id="stat-anon-desc">No personal data required</p>
+                    </div>
+                    <div class="stat-card">
+                        <i class="fas fa-trash-alt"></i>
+                        <h3 id="stat-auto">Auto-Delete</h3>
+                        <p id="stat-auto-desc">Messages purge automatically</p>
+                    </div>
+                </div>
+
+                <div class="info-content">
+                    <h2 id="how-it-works-title">How It Works</h2>
+                    <div class="steps-container">
+                        <div class="step">
+                            <span class="step-num">1</span>
+                            <h4 id="s1-title">Generate</h4>
+                            <p id="s1-desc">Click 'Add New' to get a unique temp email address.</p>
+                        </div>
+                        <div class="step">
+                            <span class="step-num">2</span>
+                            <h4 id="s2-title">Receive</h4>
+                            <p id="s2-desc">Use the email to sign up or verify services.</p>
+                        </div>
+                        <div class="step">
+                            <span class="step-num">3</span>
+                            <h4 id="s3-title">Read</h4>
+                            <p id="s3-desc">Check your inbox for incoming verification emails.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Inbox Section -->
+            <section id="inbox-section" class="spa-section hidden">
+                <div class="mailbox-header">
+                    <h2 id="inbox-title">Your Mailboxes</h2>
+                    <div class="mailbox-controls">
+                        <button id="refresh-now-btn" class="btn-secondary"><i class="fas fa-sync-alt"></i></button>
+                        <button id="add-mailbox-btn" class="btn-primary"><i class="fas fa-plus"></i> <span id="btn-add-mail">Add New</span></button>
+                    </div>
+                </div>
+
+                <div id="active-mailboxes" class="mailboxes-list">
+                    <!-- Dynamic Content -->
+                </div>
+
+                <div class="inbox-container">
+                    <div class="refresh-status">
+                        <span id="refresh-status">Auto-refreshing in 10s</span>
+                        <div class="progress-container">
+                            <div id="refresh-progress" class="progress-bar"></div>
+                        </div>
+                    </div>
+                    <div id="messages-list" class="messages-list">
+                        <!-- Messages go here -->
+                        <div class="empty-inbox">
+                            <i class="fas fa-envelope-open"></i>
+                            <p id="empty-msg">Your inbox is empty. Waiting for incoming emails...</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- About Section -->
+            <section id="about-section" class="spa-section hidden">
+                <h2 id="about-title">About the Developers</h2>
+                <div class="about-grid">
+                    <div class="dev-card">
+                        <img src="https://github.com/amanmeena.png" alt="Aman Meena" class="dev-img">
+                        <h3>Aman Meena <span class="badge">PRO</span></h3>
+                        <p id="skill1">Full Stack Developer</p>
+                        <div class="social-links">
+                            <a href="#"><i class="fab fa-github"></i></a>
+                            <a href="#"><i class="fab fa-linkedin"></i></a>
+                        </div>
+                    </div>
+                    <div class="dev-card">
+                        <img src="https://github.com/amitmeena.png" alt="Amit Meena" class="dev-img">
+                        <h3>Amit Meena</h3>
+                        <p id="skill2">UI/UX Designer</p>
+                        <div class="social-links">
+                            <a href="#"><i class="fab fa-github"></i></a>
+                            <a href="#"><i class="fab fa-twitter"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Privacy Section -->
+            <section id="privacy-section" class="spa-section hidden">
+                <h2 id="glos-title">Privacy Glossary</h2>
+                <div class="glossary-grid">
+                    <div class="glossary-item">
+                        <h4 id="term-disposable">Disposable Email</h4>
+                        <p id="def-disposable">A temporary email address that expires after a certain period.</p>
+                    </div>
+                    <div class="glossary-item">
+                        <h4 id="term-encryption">Encryption</h4>
+                        <p id="def-encryption">The process of encoding information to protect it from unauthorized access.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Help Section -->
+            <section id="help-section" class="spa-section hidden">
+                <h2 id="help-title">Help Center</h2>
+                <div id="help-content" class="help-content">
+                    <!-- Dynamic tutorial content -->
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Modals -->
+    <div id="email-modal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modal-subject">Subject</h3>
+                <button class="close-btn">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="email-meta">
+                    <p><strong>From:</strong> <span id="modal-from"></span></p>
+                    <p><strong>Date:</strong> <span id="modal-date"></span></p>
+                </div>
+                <div class="email-body">
+                    <iframe id="email-frame" sandbox="allow-popups"></iframe>
+                </div>
+                <div id="attachments" class="attachments"></div>
+            </div>
+            <div class="modal-footer">
+                <button id="print-btn" class="btn-secondary"><i class="fas fa-print"></i> Print</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="qr-modal" class="modal hidden">
+        <div class="modal-content qr-content">
+            <div class="modal-header">
+                <h3>QR Code</h3>
+                <button class="close-btn">&times;</button>
+            </div>
+            <div id="qr-container"></div>
+        </div>
+    </div>
+
+    <div id="theme-modal" class="modal hidden">
+        <div class="modal-content theme-picker">
+            <div class="modal-header">
+                <h3 id="theme-title">Choose Accent Color</h3>
+                <button class="close-btn">&times;</button>
+            </div>
+            <div class="color-options">
+                <div class="color-btn blue" data-color="#3498db"></div>
+                <div class="color-btn green" data-color="#2ecc71"></div>
+                <div class="color-btn red" data-color="#e74c3c"></div>
+                <div class="color-btn pink" data-color="#e91e63"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
