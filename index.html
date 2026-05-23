@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TempMail - Free Disposable Temporary Email</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#1f1c2c">
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="nav-container">
+                <a href="#" class="logo" id="logo-link">
+                    <i class="fas fa-envelope-open-text"></i> <span>TempMail</span>
+                </a>
+                <div class="nav-actions">
+                    <button id="lang-toggle" class="btn-icon" title="Switch Language">
+                        <i class="fas fa-language"></i>
+                    </button>
+                    <button id="theme-toggle" class="btn-icon" title="Toggle Theme">
+                        <i class="fas fa-moon"></i>
+                    </button>
+                    <button id="menu-toggle" class="btn-icon mobile-only">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                </div>
+                <ul class="nav-links" id="nav-links">
+                    <li><a href="#home" class="nav-link active" data-section="home" id="nav-home">Home</a></li>
+                    <li><a href="#inbox" class="nav-link" data-section="inbox" id="nav-inbox">Inbox</a></li>
+                    <li><a href="#about" class="nav-link" data-section="about" id="nav-about">About Us</a></li>
+                    <li><a href="#faq" class="nav-link" data-section="faq" id="nav-faq">FAQ</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Home Section -->
+        <section id="home-section" class="spa-section">
+            <div class="hero">
+                <h1 id="hero-title">Your Temporary Email Address</h1>
+                <p id="hero-subtitle">Forget about spam, advertising mailings, hacking and attacking robots. Keep your real mailbox clean and secure.</p>
+
+                <div class="email-generator">
+                    <div class="email-box">
+                        <input type="text" id="temp-email" readonly placeholder="Loading...">
+                        <div class="email-actions">
+                            <button id="copy-email-btn" class="btn-icon" title="Copy Email">
+                                <i class="fas fa-copy"></i>
+                            </button>
+                            <button id="refresh-email-btn" class="btn-icon" title="New Address">
+                                <i class="fas fa-sync-alt"></i>
+                            </button>
+                            <button id="qr-email-btn" class="btn-icon" title="Show QR Code">
+                                <i class="fas fa-qrcode"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="quick-stats">
+                    <div class="stat-card">
+                        <i class="fas fa-shield-alt"></i>
+                        <h3 id="stat-privacy-title">Privacy</h3>
+                        <p id="stat-privacy-desc">No registration required.</p>
+                    </div>
+                    <div class="stat-card">
+                        <i class="fas fa-bolt"></i>
+                        <h3 id="stat-speed-title">Speed</h3>
+                        <p id="stat-speed-desc">Instant address generation.</p>
+                    </div>
+                    <div class="stat-card">
+                        <i class="fas fa-trash-alt"></i>
+                        <h3 id="stat-disposable-title">Disposable</h3>
+                        <p id="stat-disposable-desc">Auto-delete messages.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="educational-content">
+                <!-- Content will be added later -->
+            </div>
+        </section>
+
+        <!-- Inbox Section -->
+        <section id="inbox-section" class="spa-section hidden">
+            <div class="inbox-container">
+                <div class="inbox-header">
+                    <h2 id="inbox-title">Your Inbox</h2>
+                    <div class="mailbox-controls">
+                        <div class="refresh-status">
+                            <span id="refresh-text">Refreshing in</span> <span id="timer">10s</span>
+                            <div class="progress-bar-container">
+                                <div class="progress-bar" id="poll-progress"></div>
+                            </div>
+                        </div>
+                        <button id="refresh-now-btn" class="btn-secondary">
+                            <i class="fas fa-sync"></i> <span id="btn-refresh-text">Refresh Now</span>
+                        </button>
+                        <button id="add-mailbox-btn" class="btn-primary">
+                            <i class="fas fa-plus"></i> <span id="btn-add-mail">Add Mailbox</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="mailbox-tabs" id="mailbox-tabs">
+                    <!-- Tabs for multi-mailbox will appear here -->
+                </div>
+
+                <div class="message-list-container">
+                    <div id="message-list" class="message-list">
+                        <!-- Messages will appear here -->
+                        <div class="empty-inbox">
+                            <i class="fas fa-inbox"></i>
+                            <p id="empty-msg">Your inbox is empty</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section id="about-section" class="spa-section hidden">
+            <div class="container">
+                <h2 id="about-title">About Us</h2>
+                <div class="about-grid" id="about-content">
+                    <!-- About content will be populated via script -->
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ Section -->
+        <section id="faq-section" class="spa-section hidden">
+            <div class="container">
+                <h2 id="faq-title">Frequently Asked Questions</h2>
+                <div class="faq-accordion" id="faq-list">
+                    <!-- FAQ items will be populated via script -->
+                </div>
+
+                <div class="privacy-glossary">
+                    <h3 id="glos-title">Privacy Glossary</h3>
+                    <div class="glossary-grid" id="glossary-content">
+                        <!-- Glossary items -->
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2024 TempMail. All rights reserved.</p>
+            <div class="footer-links">
+                <a href="#" id="help-link">Help</a>
+                <a href="https://github.com/aman-meena" target="_blank">Developer</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Modals -->
+    <div id="email-modal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="email-detail-subject">Email Detail</h3>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="email-meta">
+                    <p><strong>From:</strong> <span id="email-detail-from"></span></p>
+                    <p><strong>Date:</strong> <span id="email-detail-date"></span></p>
+                </div>
+                <div class="email-body-container">
+                    <iframe id="email-body-frame" sandbox="allow-popups"></iframe>
+                </div>
+                <div id="attachments-container" class="attachments"></div>
+            </div>
+            <div class="modal-footer">
+                <button id="print-email-btn" class="btn-secondary"><i class="fas fa-print"></i> Print</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="qr-modal" class="modal hidden">
+        <div class="modal-content qr-modal-content">
+            <div class="modal-header">
+                <h3>QR Code</h3>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <img id="qr-code-img" src="" alt="QR Code">
+                <p id="qr-email-text"></p>
+            </div>
+        </div>
+    </div>
+
+    <div id="help-modal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="help-title">User Guide</h3>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body" id="help-content">
+                <!-- Help tutorial will be populated here -->
+            </div>
+        </div>
+    </div>
+
+    <div id="toast-container"></div>
+
+    <script src="script.js"></script>
+</body>
+</html>
