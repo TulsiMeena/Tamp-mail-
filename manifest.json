@@ -1,0 +1,16 @@
+{
+  "name": "TempMail - Disposable Email",
+  "short_name": "TempMail",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#1f1c2c",
+  "theme_color": "#4a90e2",
+  "description": "Secure and anonymous temporary email service.",
+  "icons": [
+    {
+      "src": "https://cdn-icons-png.flaticon.com/512/281/281769.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
