@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tamp Mail - Fast & Secure Disposable Email</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-brand">
+            <i class="fas fa-envelope-open-text"></i>
+            <span id="nav-brand-text">Tamp Mail</span>
+        </div>
+        <div class="nav-links" id="nav-links">
+            <a href="#" class="nav-link active" data-section="home"><i class="fas fa-home"></i> <span id="nav-home">Home</span></a>
+            <a href="#" class="nav-link" data-section="inbox"><i class="fas fa-inbox"></i> <span id="nav-inbox">Inbox</span></a>
+            <a href="#" class="nav-link" data-section="about"><i class="fas fa-info-circle"></i> <span id="nav-about">About</span></a>
+            <a href="#" class="nav-link" data-section="help"><i class="fas fa-question-circle"></i> <span id="nav-help">Help</span></a>
+        </div>
+        <div class="nav-controls">
+            <button id="lang-toggle" class="btn-icon"><i class="fas fa-language"></i></button>
+            <button id="menu-toggle" class="btn-icon mobile-only"><i class="fas fa-bars"></i></button>
+        </div>
+    </nav>
+
+    <main id="main-content">
+        <!-- Home Section -->
+        <section id="home" class="spa-section">
+            <div class="hero">
+                <h1 id="hero-title">Temporary Disposable Email</h1>
+                <p id="hero-subtitle">Protect your privacy and keep your inbox clean.</p>
+                <button id="btn-get-started" class="btn-primary">Get Started</button>
+            </div>
+
+            <div class="features-grid">
+                <div class="feature-card">
+                    <i class="fas fa-shield-alt"></i>
+                    <h3 id="f1-title">Stay Private</h3>
+                    <p id="f1-desc">Avoid spam and tracking by using a temporary address.</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-bolt"></i>
+                    <h3 id="f2-title">Fast & Easy</h3>
+                    <p id="f2-desc">One click to generate a new mailbox. No registration.</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-sync"></i>
+                    <h3 id="f3-title">Real-time Polling</h3>
+                    <p id="f3-desc">Messages appear instantly with auto-refresh.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Inbox Section -->
+        <section id="inbox" class="spa-section hidden">
+            <div class="inbox-container">
+                <div class="inbox-header">
+                    <h2 id="inbox-title">Your Mailboxes</h2>
+                    <div class="mailbox-controls">
+                        <button id="btn-add-mail" class="btn-primary"><i class="fas fa-plus"></i> <span id="add-mail-text">New Mail</span></button>
+                        <button id="refresh-now-btn" class="btn-secondary"><i class="fas fa-sync-alt"></i></button>
+                    </div>
+                </div>
+                <div class="progress-container">
+                    <div class="progress-bar" id="refresh-progress"></div>
+                </div>
+                <div id="mailbox-list" class="mailbox-list"></div>
+                <div id="email-list-container" class="email-list-container">
+                    <div id="empty-inbox" class="empty-state">
+                        <i class="fas fa-envelope-open"></i>
+                        <p id="empty-msg">Your inbox is empty.</p>
+                    </div>
+                    <ul id="email-list" class="email-list"></ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section id="about" class="spa-section hidden">
+            <div class="content-card">
+                <h2 id="about-title">About Tamp Mail</h2>
+                <p id="about-p1">Tamp Mail is a free, secure service that provides temporary email addresses. We help you stay safe from spam and unwanted marketing emails.</p>
+                <div class="team-grid">
+                     <!-- Content will be added later -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Help Section -->
+        <section id="help" class="spa-section hidden">
+            <div class="content-card">
+                <h2 id="help-title">Help & Support</h2>
+                <div id="help-content"></div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Modals -->
+    <div id="email-modal" class="modal hidden">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <div id="email-detail"></div>
+        </div>
+    </div>
+
+    <div id="qr-modal" class="modal hidden">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <h3>QR Code</h3>
+            <div id="qr-code-img"></div>
+        </div>
+    </div>
+
+    <div id="toast-container"></div>
+
+    <script src="script.js"></script>
+</body>
+</html>
