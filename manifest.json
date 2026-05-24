@@ -1,0 +1,16 @@
+{
+  "name": "Tamp Mail",
+  "short_name": "TampMail",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#1f1c2c",
+  "theme_color": "#4a90e2",
+  "description": "Fast and Secure Temporary Disposable Email",
+  "icons": [
+    {
+      "src": "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/svgs/solid/envelope-open-text.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml"
+    }
+  ]
+}
