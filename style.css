@@ -1,0 +1,336 @@
+:root {
+    --primary: #4f46e5;
+    --primary-hover: #4338ca;
+    --bg-dark: #1f1c2c;
+    --bg-dark-2: #2c3e50;
+    --text-light: #f8fafc;
+    --text-muted: #94a3b8;
+    --card-bg: rgba(255, 255, 255, 0.05);
+    --glass-border: rgba(255, 255, 255, 0.1);
+    --transition: all 0.3s ease;
+    --progress-width: 0%;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', -apple-system, sans-serif;
+}
+
+body {
+    background: linear-gradient(135deg, var(--bg-dark), var(--bg-dark-2));
+    background-attachment: fixed;
+    color: var(--text-light);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+body.light-theme {
+    --bg-dark: #f1f5f9;
+    --bg-dark-2: #e2e8f0;
+    --text-light: #1e293b;
+    --text-muted: #64748b;
+    --card-bg: rgba(0, 0, 0, 0.05);
+    --glass-border: rgba(0, 0, 0, 0.1);
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* Navbar */
+.navbar {
+    background: rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--glass-border);
+    padding: 1rem 2rem;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.nav-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text-light);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.nav-links {
+    display: flex;
+    gap: 1.5rem;
+    align-items: center;
+}
+
+.nav-link {
+    color: var(--text-muted);
+    text-decoration: none;
+    font-weight: 500;
+    transition: var(--transition);
+}
+
+.nav-link:hover, .nav-link.active {
+    color: var(--text-light);
+}
+
+.menu-toggle {
+    display: none;
+    background: none;
+    border: none;
+    color: var(--text-light);
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+/* Main Content */
+main {
+    flex: 1;
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+    width: 100%;
+}
+
+.spa-section {
+    animation: fadeIn 0.5s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Cards */
+.card {
+    background: var(--card-bg);
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--glass-border);
+    border-radius: 1rem;
+    padding: 2rem;
+    margin-bottom: 2rem;
+}
+
+/* Buttons */
+.btn-primary, .btn-secondary {
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.5rem;
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: var(--transition);
+}
+
+.btn-primary {
+    background: var(--primary);
+    color: white;
+}
+
+.btn-primary:hover {
+    background: var(--primary-hover);
+}
+
+.btn-secondary {
+    background: var(--card-bg);
+    color: var(--text-light);
+    border: 1px solid var(--glass-border);
+}
+
+.btn-icon {
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.btn-icon:hover {
+    color: var(--text-light);
+}
+
+/* Inbox Styles */
+.inbox-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.mailbox-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.mailbox-card {
+    background: var(--card-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: 0.75rem;
+    padding: 1rem;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.mailbox-card.active {
+    border-color: var(--primary);
+    box-shadow: 0 0 10px rgba(79, 70, 229, 0.3);
+}
+
+.mailbox-card .mb-actions {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+}
+
+.mailbox-card .mb-info strong {
+    word-break: break-all;
+}
+
+/* Progress Bar */
+.refresh-status {
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+.progress-container {
+    width: 100%;
+    height: 4px;
+    background: var(--card-bg);
+    border-radius: 2px;
+    overflow: hidden;
+    margin-bottom: 0.5rem;
+}
+
+.progress-bar {
+    height: 100%;
+    background: var(--primary);
+    width: var(--progress-width);
+    transition: width 0.1s linear;
+}
+
+/* Modals */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(5px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+}
+
+.modal-content {
+    background: var(--bg-dark-2);
+    width: 90%;
+    max-width: 800px;
+    max-height: 90vh;
+    border-radius: 1rem;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.modal-content.small {
+    max-width: 400px;
+}
+
+.modal-header {
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid var(--glass-border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modal-body {
+    padding: 1.5rem;
+    overflow-y: auto;
+}
+
+.email-body-container {
+    background: white;
+    border-radius: 0.5rem;
+    margin-top: 1rem;
+    height: 400px;
+}
+
+#email-iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+}
+
+/* Toast */
+.toast-container {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    z-index: 3000;
+}
+
+.toast {
+    background: var(--bg-dark-2);
+    color: var(--text-light);
+    padding: 1rem 1.5rem;
+    border-radius: 0.5rem;
+    border-left: 4px solid var(--primary);
+    margin-top: 1rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+    animation: slideIn 0.3s ease;
+}
+
+@keyframes slideIn {
+    from { transform: translateX(100%); }
+    to { transform: translateX(0); }
+}
+
+/* Footer */
+.footer {
+    padding: 2rem;
+    text-align: center;
+    border-top: 1px solid var(--glass-border);
+    color: var(--text-muted);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .nav-links {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background: var(--bg-dark-2);
+        flex-direction: column;
+        padding: 1rem;
+    }
+
+    .nav-links.active {
+        display: flex;
+    }
+
+    .menu-toggle {
+        display: block;
+    }
+}
