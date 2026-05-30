@@ -1,0 +1,17 @@
+{
+    "name": "Tamp Mail - Disposable Temporary Email",
+    "short_name": "Tamp Mail",
+    "description": "Fast & Free Disposable Temporary Email",
+    "start_url": "./index.html",
+    "display": "standalone",
+    "background_color": "#1f1c2c",
+    "theme_color": "#1f1c2c",
+    "icons": [
+        {
+            "src": "https://cdn-icons-png.flaticon.com/512/281/281769.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "any maskable"
+        }
+    ]
+}
