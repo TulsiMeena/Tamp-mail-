@@ -1,0 +1,16 @@
+{
+  "name": "Tamp Mail",
+  "short_name": "TampMail",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#1f1c2c",
+  "theme_color": "#4a90e2",
+  "icons": [
+    {
+      "src": "https://cdn-icons-png.flaticon.com/512/281/281769.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

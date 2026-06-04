@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tamp Mail - Fast & Secure Temporary Email</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#1f1c2c">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <i class="fas fa-envelope-open-text"></i>
+                <span>Tamp Mail</span>
+            </div>
+
+            <button class="menu-toggle" id="menu-toggle">
+                <i class="fas fa-bars"></i>
+            </button>
+
+            <div class="nav-links" id="nav-links">
+                <a href="#home" class="nav-link active" data-section="home" id="nav-home">Home</a>
+                <a href="#inbox" class="nav-link" data-section="inbox" id="nav-inbox">Inbox</a>
+                <a href="#about" class="nav-link" data-section="about" id="nav-about">About</a>
+                <a href="#help" class="nav-link" id="nav-help">Help</a>
+
+                <div class="nav-controls">
+                    <button id="lang-toggle" class="btn-icon" title="Change Language">
+                        <i class="fas fa-language"></i>
+                        <span id="lang-text">Hindi</span>
+                    </button>
+                    <div class="theme-picker">
+                        <span class="dot blue active" data-color="blue"></span>
+                        <span class="dot green" data-color="green"></span>
+                        <span class="dot red" data-color="red"></span>
+                        <span class="dot pink" data-color="pink"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="content-wrapper">
+        <!-- Home Section -->
+        <section id="home-section" class="spa-section">
+            <div class="hero">
+                <h1 id="hero-title">Your Private Inbox, Instantly</h1>
+                <p id="hero-subtitle">Protect your primary email from spam and trackers with Tamp Mail.</p>
+                <div class="hero-actions">
+                    <button id="btn-create-mail" class="btn-primary">
+                        <i class="fas fa-plus"></i>
+                        <span id="btn-add-mail">Get Random Email</span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="features-grid">
+                <div class="feature-card">
+                    <i class="fas fa-shield-alt"></i>
+                    <h3 id="f1-title">Anonymous</h3>
+                    <p id="f1-desc">No registration required. Use it instantly without giving away personal info.</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-bolt"></i>
+                    <h3 id="f2-title">Fast Polling</h3>
+                    <p id="f2-desc">10-second auto-refresh keeps your inbox updated in real-time.</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-trash"></i>
+                    <h3 id="f3-title">Self-Destruct</h3>
+                    <p id="f3-desc">Accounts are temporary and messages expire automatically.</p>
+                </div>
+            </div>
+
+            <div class="reviews-section">
+                <h2 id="rev-title">User Reviews & Feedback</h2>
+                <div class="reviews-grid">
+                    <div class="review-card">
+                        <div class="user-info">
+                            <img src="https://ui-avatars.com/api/?name=John+Doe&background=random" alt="User">
+                            <div>
+                                <h4>John Doe</h4>
+                                <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                            </div>
+                        </div>
+                        <p id="rev1-text">Best temp mail service I've used. The multiple mailbox feature is a lifesaver!</p>
+                    </div>
+                    <div class="review-card">
+                        <div class="user-info">
+                            <img src="https://ui-avatars.com/api/?name=Anjali+S&background=random" alt="User">
+                            <div>
+                                <h4>Anjali S.</h4>
+                                <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i></div>
+                            </div>
+                        </div>
+                        <p id="rev2-text">Bahut hi badhiya service hai. Hindi support dekh kar khushi hui.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Inbox Section -->
+        <section id="inbox-section" class="spa-section hidden">
+            <div class="inbox-header">
+                <h2 id="inbox-title">Active Mailboxes</h2>
+                <div class="mailbox-controls">
+                    <button id="refresh-now-btn" class="btn-secondary">
+                        <i class="fas fa-sync"></i>
+                        <span id="btn-refresh-text">Refresh Now</span>
+                    </button>
+                    <button id="add-another-btn" class="btn-primary">
+                        <i class="fas fa-plus"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div id="mailbox-list" class="mailbox-list">
+                <!-- Dynamic Content -->
+            </div>
+
+            <div class="refresh-status">
+                <div class="progress-container">
+                    <div class="progress-bar" id="refresh-progress"></div>
+                </div>
+                <p id="refresh-status-text">Refreshing in 10s...</p>
+            </div>
+
+            <div id="messages-container" class="messages-container">
+                <div class="empty-state">
+                    <i class="fas fa-inbox"></i>
+                    <p id="empty-inbox-text">Select a mailbox to view messages</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section id="about-section" class="spa-section hidden">
+            <div class="about-content">
+                <h2 id="about-title">About Tamp Mail</h2>
+                <p id="about-desc1">Tamp Mail provides free, temporary email addresses to help you stay safe online. Our mission is to eliminate spam and protect user privacy through innovative web technologies.</p>
+
+                <div class="team-grid">
+                    <div class="team-member">
+                        <img src="https://ui-avatars.com/api/?name=Admin&background=0D8ABC&color=fff" alt="Admin">
+                        <h4>Admin</h4>
+                        <p>Lead Developer</p>
+                    </div>
+                    <div class="team-member">
+                        <img src="https://ui-avatars.com/api/?name=Support&background=random" alt="Support">
+                        <h4>Support</h4>
+                        <p>Community Manager</p>
+                    </div>
+                </div>
+
+                <div class="glossary">
+                    <h3 id="glos-title">Privacy Glossary</h3>
+                    <div class="glossary-grid">
+                        <div class="glos-item">
+                            <strong id="term1">Disposable Email</strong>
+                            <p id="def1">A temporary address that expires after a set period.</p>
+                        </div>
+                        <div class="glos-item">
+                            <strong id="term2">End-to-End</strong>
+                            <p id="def2">Privacy where only the sender and recipient can read content.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq">
+                    <h3 id="faq-title">Frequently Asked Questions</h3>
+                    <div class="faq-list">
+                        <div class="faq-item">
+                            <h4 id="q1">Is it free?</h4>
+                            <p id="a1">Yes, Tamp Mail is 100% free for everyone.</p>
+                        </div>
+                        <div class="faq-item">
+                            <h4 id="q2">How long do emails last?</h4>
+                            <p id="a2">Emails stay active as long as you keep the browser session or saved accounts.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Modals -->
+    <div id="email-modal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="email-subject-display">Email Details</h3>
+                <button class="close-modal"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-body">
+                <div class="email-meta">
+                    <p><strong>From:</strong> <span id="email-from"></span></p>
+                    <p><strong>Date:</strong> <span id="email-date"></span></p>
+                    <div class="email-actions">
+                        <button id="btn-print" class="btn-icon-text">
+                            <i class="fas fa-print"></i>
+                            <span id="btn-print-text">Print</span>
+                        </button>
+                        <button id="btn-share" class="btn-icon-text">
+                            <i class="fas fa-share-alt"></i>
+                            <span id="btn-share-text">Share</span>
+                        </button>
+                    </div>
+                </div>
+                <div id="email-body-container" class="email-body-container">
+                    <!-- Sandboxed Iframe here -->
+                </div>
+                <div id="attachments-list" class="attachments-list"></div>
+            </div>
+        </div>
+    </div>
+
+    <div id="qr-modal" class="modal hidden">
+        <div class="modal-content small-modal">
+            <div class="modal-header">
+                <h3>QR Code</h3>
+                <button class="close-modal"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-body qr-body">
+                <img id="qr-image" src="" alt="QR Code">
+                <p id="qr-email-text"></p>
+            </div>
+        </div>
+    </div>
+
+    <div id="help-modal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="help-modal-title">How to use Tamp Mail</h3>
+                <button class="close-modal"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-body" id="help-content">
+                <!-- Tutorial steps added via JS -->
+            </div>
+        </div>
+    </div>
+
+    <div id="toast-container" class="toast-container"></div>
+
+    <script src="script.js"></script>
+</body>
+</html>
