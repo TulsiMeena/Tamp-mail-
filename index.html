@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tamp Mail - Fast & Secure Disposable Email</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="manifest" href="manifest.json">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <meta name="theme-color" content="#4a90e2">
+</head>
+<body>
+    <header>
+        <nav class="glass">
+            <div class="logo">
+                <i class="fas fa-envelope-open-text"></i> <span id="brand-name">Tamp Mail</span>
+            </div>
+            <ul id="nav-links">
+                <li><a href="#" class="nav-link active" data-section="home" id="nav-home">Home</a></li>
+                <li><a href="#" class="nav-link" data-section="inbox" id="nav-inbox">Inbox</a></li>
+                <li><a href="#" class="nav-link" data-section="about" id="nav-about">About Us</a></li>
+                <li><a href="#" class="nav-link" data-section="glossary" id="nav-glossary">Privacy Glossary</a></li>
+            </ul>
+            <div class="nav-controls">
+                <button id="theme-toggle" class="btn-icon"><i class="fas fa-moon"></i></button>
+                <button id="lang-toggle" class="btn-secondary">Hindi</button>
+                <button id="menu-toggle" class="btn-icon mobile-only"><i class="fas fa-bars"></i></button>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Home Section -->
+        <section id="home-section" class="spa-section">
+            <div class="hero">
+                <h1 id="hero-title">Your Secure Temporary Inbox</h1>
+                <p id="hero-subtitle">Generate disposable email addresses to keep your real inbox clean and safe from spam.</p>
+                <div class="hero-actions">
+                    <button id="btn-get-started" class="btn-primary">Get Started</button>
+                    <button id="btn-learn-more" class="btn-secondary">Learn More</button>
+                </div>
+            </div>
+
+            <div class="features-grid">
+                <div class="feature-card glass">
+                    <i class="fas fa-bolt"></i>
+                    <h3 id="feat-fast">Fast & Instant</h3>
+                    <p id="feat-fast-desc">Get a temporary email address in seconds.</p>
+                </div>
+                <div class="feature-card glass">
+                    <i class="fas fa-shield-alt"></i>
+                    <h3 id="feat-secure">Secure</h3>
+                    <p id="feat-secure-desc">End-to-end encryption for your messages.</p>
+                </div>
+                <div class="feature-card glass">
+                    <i class="fas fa-user-secret"></i>
+                    <h3 id="feat-private">Private</h3>
+                    <p id="feat-private-desc">No personal information required.</p>
+                </div>
+            </div>
+
+            <div class="reviews-section">
+                <h2 id="reviews-title">User Reviews & Feedback</h2>
+                <div class="reviews-grid">
+                    <div class="review-card glass">
+                        <div class="review-header">
+                            <img src="https://ui-avatars.com/api/?name=John+Doe&background=random" alt="User">
+                            <div>
+                                <h4>John Doe</h4>
+                                <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                            </div>
+                        </div>
+                        <p>"Best temporary mail service I've ever used. Simple and fast!"</p>
+                    </div>
+                    <div class="review-card glass">
+                        <div class="review-header">
+                            <img src="https://ui-avatars.com/api/?name=Sara+Smith&background=random" alt="User">
+                            <div>
+                                <h4>Sara Smith</h4>
+                                <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i></div>
+                            </div>
+                        </div>
+                        <p>"Helped me avoid so much spam. The Hindi support is a great touch."</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Inbox Section -->
+        <section id="inbox-section" class="spa-section hidden">
+            <div class="mailbox-container glass">
+                <div class="inbox-header">
+                    <h2 id="inbox-title">My Mailboxes</h2>
+                    <div class="mailbox-controls">
+                        <div class="accent-picker">
+                            <span class="dot blue active" data-color="blue"></span>
+                            <span class="dot green" data-color="green"></span>
+                            <span class="dot red" data-color="red"></span>
+                            <span class="dot pink" data-color="pink"></span>
+                        </div>
+                        <button id="btn-add-mail" class="btn-primary"><i class="fas fa-plus"></i> <span id="btn-add-mail-text">Add Mailbox</span></button>
+                    </div>
+                </div>
+
+                <div id="mailbox-tabs" class="tabs">
+                    <!-- Dynamic tabs go here -->
+                </div>
+
+                <div class="active-mail-info glass">
+                    <div class="mail-address-row">
+                        <span id="current-email-display">Generating...</span>
+                        <div class="mail-actions">
+                            <button id="copy-btn" class="btn-icon" title="Copy"><i class="fas fa-copy"></i></button>
+                            <button id="qr-btn" class="btn-icon" title="QR Code"><i class="fas fa-qrcode"></i></button>
+                            <button id="share-btn" class="btn-icon" title="Share"><i class="fas fa-share-alt"></i></button>
+                        </div>
+                    </div>
+                    <div class="refresh-status">
+                        <span id="refresh-text">Refreshing in {s}s</span>
+                        <div class="progress-container">
+                            <div class="progress-bar" id="refresh-progress"></div>
+                        </div>
+                        <button id="refresh-now-btn" class="btn-secondary btn-sm"><i class="fas fa-sync-alt"></i> <span id="refresh-now-text">Refresh Now</span></button>
+                    </div>
+                </div>
+
+                <div id="email-list" class="email-list">
+                    <!-- Emails will be rendered here -->
+                    <div class="empty-inbox">
+                        <i class="fas fa-inbox"></i>
+                        <p id="empty-msg">Your inbox is empty</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section id="about-section" class="spa-section hidden">
+            <div class="about-container glass">
+                <h2 id="about-title">About Tamp Mail</h2>
+                <p id="about-desc">Tamp Mail is a free service that provides temporary email addresses to help you protect your privacy and stay away from unwanted emails.</p>
+
+                <div class="team-grid">
+                    <div class="team-card">
+                        <img src="https://ui-avatars.com/api/?name=Admin&background=random" alt="Admin">
+                        <h3>Admin</h3>
+                        <p id="role-admin">Lead Developer</p>
+                    </div>
+                    <div class="team-card">
+                        <img src="https://ui-avatars.com/api/?name=Support&background=random" alt="Support">
+                        <h3>Support</h3>
+                        <p id="role-support">Customer Care</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Glossary Section -->
+        <section id="glossary-section" class="spa-section hidden">
+            <div class="glossary-container glass">
+                <h2 id="glos-title">Privacy Glossary</h2>
+                <div class="glossary-grid" id="glossary-grid">
+                    <!-- Dynamic glossary items -->
+                </div>
+
+                <div class="faq-section">
+                    <h2 id="faq-title">Frequently Asked Questions</h2>
+                    <div class="faq-list" id="faq-list">
+                        <!-- Dynamic FAQ items -->
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Modals -->
+    <div id="email-modal" class="modal hidden">
+        <div class="modal-content glass">
+            <div class="modal-header">
+                <h3 id="modal-subject">Subject</h3>
+                <button class="close-btn">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="email-meta">
+                    <p><strong>From:</strong> <span id="modal-from"></span></p>
+                    <p><strong>Date:</strong> <span id="modal-date"></span></p>
+                </div>
+                <div class="email-body-container">
+                    <iframe id="email-iframe" sandbox="allow-popups allow-forms"></iframe>
+                </div>
+                <div id="attachments-area" class="attachments hidden">
+                    <h4 id="att-title">Attachments</h4>
+                    <ul id="attachments-list"></ul>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="btn-print" class="btn-secondary"><i class="fas fa-print"></i> <span id="btn-print-text">Print</span></button>
+                <button id="btn-share-mail" class="btn-secondary"><i class="fas fa-share-alt"></i> <span id="btn-share-mail-text">Share</span></button>
+            </div>
+        </div>
+    </div>
+
+    <div id="qr-modal" class="modal hidden">
+        <div class="modal-content glass narrow">
+            <div class="modal-header">
+                <h3 id="qr-modal-title">Email QR Code</h3>
+                <button class="close-btn">&times;</button>
+            </div>
+            <div class="modal-body center">
+                <img id="qr-image" src="" alt="QR Code">
+                <p id="qr-email-text"></p>
+            </div>
+        </div>
+    </div>
+
+    <div id="help-modal" class="modal hidden">
+        <div class="modal-content glass">
+            <div class="modal-header">
+                <h3 id="help-title">How to Use</h3>
+                <button class="close-btn">&times;</button>
+            </div>
+            <div class="modal-body" id="help-content">
+                <!-- Help content dynamic -->
+            </div>
+            <div class="modal-footer">
+                <button id="btn-close-help" class="btn-primary">Got it!</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="toast" class="toast hidden"></div>
+
+    <script src="script.js"></script>
+    <script>
+        // Register SW
+        if ('serviceWorker' in navigator) {
+            window.onload = () => {
+                navigator.serviceWorker.register('./sw.js')
+                    .then(reg => console.log('SW Registered'))
+                    .catch(err => console.log('SW Error', err));
+            }
+        }
+    </script>
+</body>
+</html>
