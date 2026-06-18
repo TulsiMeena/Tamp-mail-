@@ -1,0 +1,17 @@
+{
+  "name": "Tamp Mail",
+  "short_name": "TampMail",
+  "description": "Fast & Secure Disposable Email Service",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#1f1c2c",
+  "theme_color": "#4f46e5",
+  "icons": [
+    {
+      "src": "https://cdn-icons-png.flaticon.com/512/561/561127.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
